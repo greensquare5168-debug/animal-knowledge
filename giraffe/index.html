@@ -156,6 +156,17 @@ function sW(v){return v/100*W} function sH(v){return v/100*H}
 function groundY(){return sH(76)}
 function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
 
+// 身體輪廓偵測（點是否在長頸鹿身體內）— 讓斑塊可以鋪滿到邊緣
+function inBodyShape(px, py, x, by, hw, hh){
+  const P = [[0.55,0.62],[1.02,0.05],[1.08,-0.14],[0.85,-0.72],[0.42,-0.92],[-0.05,-1.0],[-0.45,-0.88],[-0.88,-0.45],[-1.1,0.0],[-1.05,0.38],[-0.8,0.68],[-0.2,0.8],[0.35,0.75],[0.55,0.62]];
+  let inside = false;
+  for(let i=0,j=P.length-1;i<P.length;j=i++){
+    const xi = x+P[i][0]*hw, yi = by+P[i][1]*hh;
+    const xj = x+P[j][0]*hw, yj = by+P[j][1]*hh;
+    if(((yi>py)!==(yj>py)) && (px < (xj-xi)*(py-yi)/(yj-yi)+xi)) inside = !inside;
+  }
+  return inside;
+}
 function giraffe(x, ground, bodyH, neckH, mood, t){
   // 對照教學圖重畫：長脖子 + 兩隻角 + 細長腿 + 棕白網狀花紋
   const hh = bodyH*0.5;               // 身體半高
@@ -197,17 +208,18 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.quadraticCurveTo(x + hw*0.48, by + hh*0.7, x + hw*0.55, by + hh*0.62);
   ctx.closePath(); ctx.fill();
   // ---- 自然斑塊（圓潤不規則、密集、部分中心更深，像真實長頸鹿皮毛）----
-  // 網格均勻生成斑塊：貼合身體（右肩高左臀低）、不超出輪廓、大小適中
+  // 斑塊：抖動網格 + 身體輪廓偵測 → 鋪滿整個身體（含邊緣）、密度平均
   const blobs = [];
-  for(let r=0;r<5;r++){
-    for(let c=0;c<5;c++){
-      const jx = (((r*7+c*13)%10)-5)*0.014;   // 固定抖動（不閃爍）
-      const jy = (((r*11+c*5)%10)-5)*0.014;
-      const cx2 = -0.66 + c*0.33 + jx;
-      let cy2 = 0.46 - r*0.21 - cx2*0.16 + jy;
-      if(cy2 < -0.58 || cy2 > 0.5) continue;    // 跳過圓角外區域
-      const sz = 0.14 + ((r*3+c*17)%6)*0.013;   // 大小混合 0.14~0.2
-      blobs.push([cx2, cy2, sz, sz*0.7, (((r*5+c*7)%10)-5)*0.07]);
+  for(let r=0;r<6;r++){
+    for(let c=0;c<8;c++){
+      const jx = (((r*31+c*17)%9)-4)*0.02;
+      const jy = (((r*13+c*29)%9)-4)*0.02;
+      const cx3 = -1.0 + c*0.29 + jx;
+      const cy3 = -0.76 + r*0.3 + jy;
+      const px = x + cx3*hw, py = by + cy3*hh;
+      if(!inBodyShape(px, py, x, by, hw, hh)) continue;   // 只放在身體內（含邊緣）
+      const sz = 0.12 + ((r*7+c*11)%5)*0.014;              // 大小混合 0.12~0.176
+      blobs.push([cx3, cy3, sz, sz*0.7, (((r*3+c*5)%7)-3)*0.09]);
     }
   }
   blobs.forEach((b,idx)=>{
@@ -246,11 +258,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.fillStyle = bodyCol;
   ctx.beginPath(); ctx.ellipse(hx, hy, hw*0.54, hw*0.36, -0.1, 0, 6.29); ctx.fill();
   ctx.beginPath(); ctx.ellipse(hx+hw*0.62, hy+hw*0.12, hw*0.3, hw*0.18, 0.06, 0, 6.29); ctx.fill();
-  // 頭部斑塊（額頭大、臉頰中、吻上小）
-  ctx.fillStyle = patchCol;
-  blob(hx+hw*0.05, hy-hw*0.16, hw*0.14, hw*0.09, -0.15, 31);
-  blob(hx-hw*0.28, hy-hw*0.02, hw*0.1, hw*0.07, 0.4, 32);
-  blob(hx+hw*0.42, hy+hw*0.02, hw*0.07, hw*0.05, 0.1, 33);
+
   // 兩隻角（從頭頂長出，基部沒入頭部，頂端圓球）
   ctx.fillStyle = darkCol;
   ctx.beginPath(); ctx.ellipse(hx-hw*0.16, hy-hw*0.42, hw*0.065, hw*0.24, -0.08, 0, 6.29); ctx.fill();
@@ -262,6 +270,11 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.fillStyle = bodyCol;
   ctx.beginPath(); ctx.ellipse(hx-hw*0.58, hy-hw*0.05, hw*0.2, hw*0.1, -0.7, 0, 6.29); ctx.fill();
   ctx.beginPath(); ctx.ellipse(hx-hw*0.66, hy-hw*0.1, hw*0.12, hw*0.06, -0.7, 0, 6.29); ctx.fill();
+  // 頭部斑塊（角後畫、明顯可見：額頭大、臉頰中、吻上小）
+  ctx.fillStyle = patchCol;
+  blob(hx+hw*0.0, hy-hw*0.1, hw*0.17, hw*0.11, -0.1, 71);
+  blob(hx-hw*0.32, hy+hw*0.06, hw*0.12, hw*0.08, 0.5, 72);
+  blob(hx+hw*0.45, hy+hw*0.06, hw*0.1, hw*0.065, 0.15, 73);
   // 眼睛（大而有神）
   ctx.fillStyle = '#2b2b2b';
   ctx.beginPath(); ctx.ellipse(hx+hw*0.14, hy-hw*0.02, hw*0.065, hw*0.09, 0, 0, 6.29); ctx.fill();

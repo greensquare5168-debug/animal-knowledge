@@ -165,7 +165,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   const hpX = x + hw*0.55, hpY = by - hh - neckH;   // 頭中心（靠身體右邊）
   const bodyCol = '#f5d48a';          // 淺黃棕
   const cream = '#fdf6e3';            // 縫隙（近白）
-  const patchCol = '#8a5420';         // 深棕斑
+  const patchCol = '#a06a28';         // 暖淺棕斑（參考圖）
   const darkCol = '#5e3810';
   // ---- 遠側雙腿（淡色）----
   leg(x - hw*0.85, by+hh*0.82, legH+hh*0.18, -0.10, cream, darkCol);
@@ -198,23 +198,24 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.closePath(); ctx.fill();
   // ---- 自然斑塊（圓潤不規則、密集、部分中心更深，像真實長頸鹿皮毛）----
   const blobs = [
-    // [x, y, rx, ry, rot, 深心] 大小混合（大 0.30↑ / 中 0.22 / 小 0.15↓）
-    [-0.80,-0.72, 0.30,0.22, 0.15, true], [-0.48,-0.55, 0.34,0.24, 0.4, true],
-    [-0.1,-0.68, 0.26,0.19,-0.1, false], [0.26,-0.58, 0.32,0.23, 0.22, true],
-    [0.58,-0.45, 0.22,0.16, -0.12, false],[0.88,-0.25, 0.28,0.2,-0.3, true],
-    [-0.68,0.0, 0.24,0.17, 0.5, false],  [-0.32,0.08, 0.3,0.21,-0.35, true],
-    [0.05,0.08, 0.2,0.15, 0.2, false],   [0.4,0.02, 0.24,0.17,-0.15, false],
-    [0.75,0.1, 0.3,0.21, 0.45, true],    [-0.5,0.4, 0.16,0.12, -0.2, false],
-    [-0.12,0.42, 0.22,0.15, 0.1, false], [0.3,0.38, 0.15,0.11, 0.3, false],
-    [0.66,0.38, 0.2,0.14, -0.25, false], [-0.25,0.62, 0.13,0.1, 0.2, false],
-    [0.12,0.6, 0.17,0.12, -0.1, false],  [0.5,0.6, 0.13,0.1, 0.4, false]
+    // 上緣沿背（右肩高→左臀低，貼合身體）
+    [0.6,-0.55, 0.26,0.19, 0.2],  [0.28,-0.58, 0.32,0.22, 0.0],
+    [-0.02,-0.55, 0.24,0.17, -0.2],[-0.3,-0.48, 0.27,0.18, 0.15],
+    [-0.58,-0.36, 0.22,0.15, -0.1],[-0.78,-0.18, 0.19,0.13, 0.3],
+    // 中排
+    [0.78,-0.28, 0.2,0.15, -0.25],[0.52,-0.3, 0.16,0.12, 0.35],
+    [0.2,-0.22, 0.18,0.13, 0.1],  [-0.12,-0.15, 0.2,0.14, -0.3],
+    [-0.42,-0.05, 0.17,0.12, 0.25],[-0.66,0.08, 0.14,0.1, -0.15],
+    // 下排（腹部）
+    [0.72,0.0, 0.16,0.12, 0.3],   [0.42,0.08, 0.14,0.1, -0.1],
+    [0.12,0.12, 0.16,0.11, 0.2],  [-0.18,0.18, 0.15,0.11, -0.25],
+    [-0.45,0.28, 0.13,0.09, 0.1], [0.5,0.3, 0.12,0.09, 0.4],
+    [0.2,0.35, 0.11,0.08, -0.2],  [-0.15,0.42, 0.1,0.07, 0.15]
   ];
   blobs.forEach((b,idx)=>{
     ctx.fillStyle = patchCol;
     blob(x + hw*b[0], by - hh*b[1], hw*b[2], hw*b[3], b[4], idx*3+1);
-    if(b[5]){ ctx.fillStyle = '#6e4215'; blob(x + hw*b[0] + hw*0.04, by - hh*b[1] - hh*0.03, hw*b[2]*0.6, hw*b[3]*0.52, b[4]+0.4, idx*3+2); }
-    // 大斑內部紋路（像拼圖塊的紋理）
-    if(hw*b[2] >= hw*0.24){
+    if(hw*b[2] >= hw*0.17){
       crack(x + hw*b[0], by - hh*b[1], hw*b[2], hw*b[3], b[4]);
     }
   });
@@ -230,8 +231,8 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
     const ny = shY - hh*0.08 + (hpY + hw*0.12 - (shY - hh*0.08))*p;
     const side = (i%2===0)? 1 : -1;
     ctx.fillStyle = patchCol;
-    blob(nx + side*hw*0.13, ny, hw*0.11, hw*0.075, side*0.5, i*5+7);
-    if(i%3===0){ ctx.fillStyle='#6e4215'; blob(nx + side*hw*0.13, ny, hw*0.05, hw*0.035, 0, i*5+8); }
+    blob(nx + side*hw*0.14, ny, hw*(0.11+(i%3)*0.02), hw*0.075, side*0.5, i*5+7);
+    if(i%4===0){ crack(nx + side*hw*0.14, ny, hw*0.12, hw*0.08, side*0.5); }
   }
   // ---- 近側雙腿（細長、四腳著地）----
   leg(x - hw*0.68, by+hh*0.88, legH+hh*0.12, -0.14, bodyCol, darkCol);
@@ -252,13 +253,13 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   blob(hx+hw*0.05, hy-hw*0.16, hw*0.14, hw*0.09, -0.15, 31);
   blob(hx-hw*0.28, hy-hw*0.02, hw*0.1, hw*0.07, 0.4, 32);
   blob(hx+hw*0.42, hy+hw*0.02, hw*0.07, hw*0.05, 0.1, 33);
-  // 兩隻角（粗、頂端圓球，像教學圖）
+  // 兩隻角（從頭頂長出，基部沒入頭部，頂端圓球）
   ctx.fillStyle = darkCol;
-  ctx.beginPath(); ctx.ellipse(hx-hw*0.18, hy-hw*0.66, hw*0.06, hw*0.16, -0.1, 0, 6.29); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(hx+hw*0.14, hy-hw*0.7, hw*0.06, hw*0.16, 0.12, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(hx-hw*0.16, hy-hw*0.42, hw*0.065, hw*0.24, -0.08, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(hx+hw*0.15, hy-hw*0.44, hw*0.065, hw*0.24, 0.1, 0, 6.29); ctx.fill();
   ctx.fillStyle = patchCol;
-  ctx.beginPath(); ctx.arc(hx-hw*0.19, hy-hw*0.8, hw*0.05, 0, 6.29); ctx.fill();
-  ctx.beginPath(); ctx.arc(hx+hw*0.15, hy-hw*0.84, hw*0.05, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.arc(hx-hw*0.165, hy-hw*0.66, hw*0.055, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.arc(hx+hw*0.155, hy-hw*0.68, hw*0.055, 0, 6.29); ctx.fill();
   // 耳朵（兩側）
   ctx.fillStyle = bodyCol;
   ctx.beginPath(); ctx.ellipse(hx-hw*0.58, hy-hw*0.05, hw*0.2, hw*0.1, -0.7, 0, 6.29); ctx.fill();
@@ -306,19 +307,24 @@ function blob(cx, cy, rx, ry, rot, seed){
     const p = P[i], p2 = P[(i+1)%n];
     ctx.quadraticCurveTo(p[0], p[1], (p[0]+p2[0])/2, (p[1]+p2[1])/2);
   }
-  ctx.closePath(); ctx.fill(); ctx.restore();
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(253,246,227,.8)'; ctx.lineWidth = 1.6;
+  ctx.stroke();
+  ctx.restore();
 }
 
 // 腿上斑塊（大腿一塊 + 小腿一塊，大小不同）
 function legSpots(lx, topY, len, bend, col){
   ctx.fillStyle = col;
-  blob(lx + bend*len*0.6, topY + len*0.22, len*0.082, len*0.05, bend*2+0.3, 51);
-  blob(lx + bend*len*0.42, topY + len*0.8, len*0.058, len*0.038, bend*1.5, 52);
+  blob(lx + bend*len*0.62, topY + len*0.18, len*0.07, len*0.045, bend*2+0.3, 51);
+  blob(lx + bend*len*0.45, topY + len*0.42, len*0.052, len*0.034, bend*1.2, 52);
+  blob(lx + bend*len*0.4, topY + len*0.82, len*0.06, len*0.04, bend*1.5, 53);
 }
 // 斑塊內部紋路（拼圖質感：兩條深色裂紋）
 function crack(cx, cy, rx, ry, rot){
   ctx.save(); ctx.translate(cx, cy); ctx.rotate(rot||0);
-  ctx.strokeStyle = 'rgba(70,38,10,.65)'; ctx.lineWidth = Math.max(1.2, rx*0.09); ctx.lineCap='round';
+  ctx.strokeStyle = 'rgba(70,38,10,.7)'; ctx.lineWidth = Math.max(1.5, rx*0.13); ctx.lineCap='round';
   ctx.beginPath(); ctx.moveTo(-rx*0.22, -ry*0.08); ctx.quadraticCurveTo(0, ry*0.18, rx*0.2, -ry*0.12); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(rx*0.12, ry*0.12); ctx.quadraticCurveTo(rx*0.22, -ry*0.06, rx*0.06, -ry*0.2); ctx.stroke();
   ctx.restore();

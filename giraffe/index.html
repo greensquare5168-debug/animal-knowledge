@@ -218,34 +218,34 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   // ---- 自然斑塊（圓潤不規則、密集、部分中心更深，像真實長頸鹿皮毛）----
   // 斑塊：寬網格生成 + 身體 clip 裁切 → 貼著輪廓鋪滿、絕不跑出身體
   const blobs = [];
-  for(let r=0;r<6;r++){
-    for(let c=0;c<10;c++){
-      const jx = (((r*31+c*17)%9)-4)*0.018;
-      const jy = (((r*13+c*29)%9)-4)*0.018;
-      const cx3 = -0.99 + c*0.22 + jx;
-      const cy3 = -0.76 + r*0.21 + jy;     // -0.76 .. 0.29（腹部不長斑）
-      if(cy3 > 0.28) continue;
-      // 上（背脊）大斑 → 下（近腹）小斑
+  for(let r=0;r<4;r++){
+    for(let c=0;c<7;c++){
+      const jx = (((r*31+c*17)%9)-4)*0.022;
+      const jy = (((r*13+c*29)%9)-4)*0.022;
+      const cx3 = -0.9 + c*0.3 + jx;        // 間距 0.3 → 斑間有縫
+      const cy3 = -0.72 + r*0.26 + jy;      // -0.72,-0.46,-0.2,0.06
+      if(cy3 > 0.04) continue;              // 腹部留給乾淨區
+      // 上大下小，全部小於間距的一半（保留縫隙）
       let sz;
-      if(cy3 < -0.25) sz = 0.15 + ((r*7+c*11)%4)*0.009;   // 0.15~0.177 大
-      else if(cy3 < 0.05) sz = 0.11 + ((r*7+c*11)%4)*0.007; // 0.11~0.131 中
-      else sz = 0.07 + ((r*7+c*11)%3)*0.006;               // 0.07~0.082 小
+      if(cy3 < -0.35) sz = 0.115 + ((r*7+c*11)%3)*0.008;   // 0.115~0.131
+      else if(cy3 < -0.1) sz = 0.085 + ((r*7+c*11)%3)*0.007;
+      else sz = 0.06 + ((r*7+c*11)%3)*0.005;
       blobs.push([cx3, cy3, sz, sz*0.72, (((r*3+c*5)%7)-3)*0.08]);
     }
   }
   ctx.save();
   traceBodyPath(x, by, hw, hh);
   ctx.clip();   // 之後畫的斑塊絕不會超出身體輪廓
-  // 腹部大片乾淨淺色（米白），不長斑
-  ctx.fillStyle = cream;
-  ctx.beginPath(); ctx.ellipse(x - hw*0.12, by + hh*0.52, hw*0.9, hh*0.42, 0, 0, 6.29); ctx.fill();
   blobs.forEach((b,idx)=>{
     ctx.fillStyle = patchCol;
     blob(x + hw*b[0], by - hh*b[1], hw*b[2], hw*b[3], b[4], idx*3+1);
-    if(b[2] >= 0.15){
+    if(b[2] >= 0.11){
       crack(x + hw*b[0], by - hh*b[1], hw*b[2], hw*b[3], b[4]);
     }
   });
+  // 腹部大片乾淨淺色（米白）蓋在下緣 → 腹部無斑
+  ctx.fillStyle = cream;
+  ctx.beginPath(); ctx.ellipse(x - hw*0.1, by + hh*0.6, hw*0.95, hh*0.42, 0, 0, 6.29); ctx.fill();
   ctx.restore();
   // ---- 脖子（長、微前傾、寬度漸細）----
   ctx.strokeStyle = bodyCol; ctx.lineWidth = hw*0.4; ctx.lineCap='round';

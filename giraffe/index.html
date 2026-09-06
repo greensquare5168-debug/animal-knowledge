@@ -151,7 +151,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   // 比例：長腿 + 長脖子 + 扁長身體（前高後低，參考真實長頸鹿）
   const hh = bodyH*0.46;              // 身體基準半高
   const hw = bodyH*0.52;              // 身體基準半寬
-  const legH = bodyH*1.6;             // 腿長
+  const legH = bodyH*1.12;            // 腿長（適中，不要過長）
   const by = ground - legH - hh;      // 身體中心Y
   const hpX = x + hw*0.15, hpY = by - hh - neckH;   // 頭中心
   const bodyCol = '#f2c96b', bodyLight = '#f7d98c', patchCol = '#9c6426', darkCol = '#7a4a1a';

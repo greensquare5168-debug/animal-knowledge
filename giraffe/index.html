@@ -218,9 +218,6 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   // ---- 近側雙腿（細長、四腳著地）----
   leg(x - hw*0.34, by+hh*0.6, legH+hh*0.4, -0.13, bodyCol, darkCol);
   leg(x + hw*0.66, by+hh*0.6, legH+hh*0.4, -0.15, bodyCol, darkCol);
-  // 前腿膝蓋斑
-  ctx.fillStyle = patchCol;
-  ctx.beginPath(); ctx.ellipse(x+hw*0.72, by+hh*0.88+legH*0.3, hw*0.08, hw*0.05, 0.1, 0, 6.29); ctx.fill();
   // ---- 頭部（兩隻角明顯）----
   const bob = mood==='talk'? Math.sin(t*10)*bodyH*0.02 : 0;
   const hx = hpX, hy = hpY + bob;
@@ -232,16 +229,14 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.fillStyle = darkCol;
   ctx.beginPath(); ctx.ellipse(hx-hw*0.16, hy-hw*0.42, hw*0.065, hw*0.24, -0.08, 0, 6.29); ctx.fill();
   ctx.beginPath(); ctx.ellipse(hx+hw*0.15, hy-hw*0.44, hw*0.065, hw*0.24, 0.1, 0, 6.29); ctx.fill();
-  ctx.fillStyle = patchCol;
   ctx.beginPath(); ctx.arc(hx-hw*0.165, hy-hw*0.66, hw*0.055, 0, 6.29); ctx.fill();
   ctx.beginPath(); ctx.arc(hx+hw*0.155, hy-hw*0.68, hw*0.055, 0, 6.29); ctx.fill();
   // 耳朵（兩側）
   ctx.fillStyle = bodyCol;
   ctx.beginPath(); ctx.ellipse(hx-hw*0.58, hy-hw*0.05, hw*0.2, hw*0.1, -0.7, 0, 6.29); ctx.fill();
   ctx.beginPath(); ctx.ellipse(hx-hw*0.66, hy-hw*0.1, hw*0.12, hw*0.06, -0.7, 0, 6.29); ctx.fill();
-  // 頭部斑塊（角後畫、明顯可見：額頭大、臉頰中、吻上小）
-  ctx.fillStyle = patchCol;
-  // 眼睛（大而有神）  ctx.fillStyle = '#2b2b2b';
+  // 眼睛（大而有神）
+  ctx.fillStyle = '#2b2b2b';
   ctx.beginPath(); ctx.ellipse(hx+hw*0.14, hy-hw*0.02, hw*0.065, hw*0.09, 0, 0, 6.29); ctx.fill();
   ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(hx+hw*0.17, hy-hw*0.06, hw*0.025, 0, 6.29); ctx.fill();
   // 鼻孔 + 微笑嘴

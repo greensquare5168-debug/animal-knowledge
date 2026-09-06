@@ -203,8 +203,11 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   blob(x-hw*1.25+twx, by+legH*0.22, hw*0.048, hw*0.032, -0.3, 82);
   blob(x-hw*1.28+twx, by+legH*0.38, hw*0.038, hw*0.026, 0.4, 83);
   // ---- 身體（前高後低的長形：右肩高、左臀低）----
+  const shY = by - hh*0.95;   // 肩峰高（脖子起點參考）
+  const rpY = by - hh*0.4;    // 臀高
   ctx.fillStyle = bodyCol;
-  traceBodyPath(x, by, hw, hh);  ctx.closePath(); ctx.fill();
+  traceBodyPath(x, by, hw, hh);
+  ctx.fill();
   // ---- 自然斑塊（圓潤不規則、密集、部分中心更深，像真實長頸鹿皮毛）----
   // 斑塊：寬網格生成 + 身體 clip 裁切 → 貼著輪廓鋪滿、絕不跑出身體
   const blobs = [];

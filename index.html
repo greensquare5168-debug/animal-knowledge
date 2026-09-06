@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>動物知識・動畫解說</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Microsoft JhengHei','PingFang TC',sans-serif;background:linear-gradient(160deg,#fff6e8,#eaf6e0);min-height:100vh}
+.wrap{max-width:900px;margin:0 auto;padding:30px 20px}
+h1{text-align:center;color:#5a8a3a;font-size:26px;margin-bottom:6px}
+.sub{text-align:center;color:#8a7a5a;font-size:14px;margin-bottom:26px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+.card{background:#fff;border-radius:20px;padding:26px 18px;text-align:center;text-decoration:none;color:#4a3b2a;box-shadow:0 4px 16px rgba(0,0,0,.08);transition:transform .15s,box-shadow .15s;border:3px solid #f0e6d2}
+.card:hover{transform:translateY(-5px);box-shadow:0 10px 26px rgba(0,0,0,.14)}
+.card .ico{font-size:52px;display:block;margin-bottom:8px}
+.card .nm{font-size:19px;font-weight:bold;color:#5a4632}
+.card .ds{font-size:13px;color:#9a8a6a;margin-top:6px;line-height:1.6}
+.card .bdg{display:inline-block;margin-top:10px;font-size:12px;background:#ffe9c4;color:#c07a22;border-radius:14px;padding:3px 12px}
+.foot{text-align:center;margin-top:30px;color:#b0a080;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🦁 動物知識・動畫解說</h1>
+  <div class="sub">點選動物，看可愛的動畫解說學知識！🎬（持續新增中）</div>
+  <div class="grid">
+    <a class="card" href="giraffe/">
+      <span class="ico">🦒</span>
+      <div class="nm">長頸鹿</div>
+      <div class="ds">為什麼脖子這麼長？<br>舌頭為什麼是紫色的？<br>脖子長怎麼喝水？</div>
+      <span class="bdg">🎬 動畫解說</span>
+    </a>
+    <a class="card" href="#" style="opacity:.55;pointer-events:none">
+      <span class="ico">🐫</span>
+      <div class="nm">駱駝</div>
+      <div class="ds">製作中…</div>
+    </a>
+    <a class="card" href="#" style="opacity:.55;pointer-events:none">
+      <span class="ico">🐨</span>
+      <div class="nm">無尾熊</div>
+      <div class="ds">製作中…</div>
+    </a>
+  </div>
+  <div class="foot">知識補給站・動物知識 延伸內容</div>
+</div>
+</body>
+</html>

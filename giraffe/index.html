@@ -170,13 +170,13 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   // ---- 遠側雙腿（淡色）----
   leg(x - hw*0.8, by+hh*0.82, legH+hh*0.18, -0.04, cream, darkCol);
   leg(x + hw*0.52, by+hh*0.82, legH+hh*0.18, 0.05, cream, darkCol);
-  // ---- 尾巴（身體後，細長、末端黑毛）----
+  // ---- 尾巴（身體左側=屁股後方；長頸鹿頭朝右）----
   ctx.strokeStyle = bodyCol; ctx.lineWidth = hw*0.09; ctx.lineCap='round';
   const tw = 5+Math.sin(t*4)*3;
-  ctx.beginPath(); ctx.moveTo(x+hw*1.02, by-hh*0.3);
-  ctx.quadraticCurveTo(x+hw*1.55, by-hh*0.75, x+hw*1.52+tw*0.2, by-hh*1.55); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x-hw*0.98, by-hh*0.42);
+  ctx.quadraticCurveTo(x-hw*1.55, by-hh*0.9, x-hw*1.52-tw*0.2, by-hh*1.7); ctx.stroke();
   ctx.strokeStyle = '#3a2a15'; ctx.lineWidth = hw*0.14;
-  ctx.beginPath(); ctx.moveTo(x+hw*1.52+tw*0.2, by-hh*1.42); ctx.lineTo(x+hw*1.52+tw*0.2, by-hh*1.66); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x-hw*1.52-tw*0.2, by-hh*1.56); ctx.lineTo(x-hw*1.52-tw*0.2, by-hh*1.8); ctx.stroke();
   // ---- 身體（前高後低的長形）----
   const shY = by - hh*0.92;   // 肩（高）
   const rpY = by - hh*0.42;   // 臀（低）
@@ -194,11 +194,14 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   // ---- 自然斑塊（圓潤不規則、暖棕、部分中心更深，像真實長頸鹿皮毛）----
   const blobs = [
     // [中心x(相對hw), 中心y(相對hh), rx, ry, rot, 深心?]
-    [-0.72,-0.55, 0.30,0.22, 0.2, true],  [-0.2,-0.62, 0.27,0.20,-0.15, false],
-    [0.38,-0.5, 0.30,0.22, 0.12, true],   [0.86,-0.18, 0.28,0.19,-0.25, false],
-    [-0.5,0.15, 0.26,0.19, 0.45, false],  [0.0,0.28, 0.27,0.20,-0.3, true],
-    [0.52,0.22, 0.24,0.18, 0.3, false],   [-0.28,0.42, 0.22,0.16,-0.1, false],
-    [0.2,0.5, 0.2,0.15, 0.15, false],     [0.72,0.38, 0.2,0.14, 0.4, false]
+    [-0.78,-0.68, 0.24,0.17, 0.15, true], [-0.45,-0.52, 0.26,0.18, 0.35, false],
+    [-0.12,-0.66, 0.26,0.18,-0.1, false], [0.22,-0.55, 0.25,0.18, 0.25, true],
+    [0.52,-0.42, 0.27,0.19, -0.1, false], [0.85,-0.22, 0.26,0.18,-0.3, true],
+    [-0.62,0.05, 0.24,0.17, 0.5, false],  [-0.25,0.12, 0.24,0.17,-0.35, false],
+    [0.12,0.1, 0.25,0.18, 0.2, true],     [0.45,0.05, 0.23,0.16,-0.15, false],
+    [0.78,0.15, 0.21,0.15, 0.45, false],  [-0.45,0.42, 0.2,0.14, -0.2, true],
+    [-0.05,0.45, 0.21,0.15, 0.1, false],  [0.35,0.42, 0.2,0.14, 0.3, false],
+    [0.68,0.4, 0.17,0.12, -0.25, false],  [-0.15,0.62, 0.17,0.11, 0.2, false]
   ];
   blobs.forEach(b=>{
     ctx.fillStyle = patchCol;
@@ -212,7 +215,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.stroke();
   // 脖子自然斑（圓潤小塊、錯開分佈）
   ctx.fillStyle = patchCol;
-  for(let i=0;i<9;i++){
+  for(let i=0;i<12;i++){
     const p=(i+0.5)/9;
     const nx = x - hw*0.02 + (hpX + hw*0.24 - (x - hw*0.02))*p;
     const ny = shY - hh*0.1 + (hpY + hw*0.12 - (shY - hh*0.1))*p;

@@ -299,7 +299,6 @@ function togglePlay(){
         else playScene(0); }
 }
 function restart(){ if(audio)audio.pause(); playScene(0); }
-document.getElementById('playBtn').addEventListener('click',togglePlay);
 
 function loop(ts){
   requestAnimationFrame(loop);

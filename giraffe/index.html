@@ -202,10 +202,10 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
     [-0.05,0.45, 0.21,0.15, 0.1, false],  [0.35,0.42, 0.2,0.14, 0.3, false],
     [0.68,0.4, 0.17,0.12, -0.25, false],  [-0.15,0.62, 0.17,0.11, 0.2, false]
   ];
-  blobs.forEach(b=>{
+  blobs.forEach((b,idx)=>{
     ctx.fillStyle = patchCol;
-    blob(x + hw*b[0], by - hh*b[1], hw*b[2], hw*b[3], b[4]);
-    if(b[5]){ ctx.fillStyle = '#6e4215'; blob(x + hw*b[0] + hw*0.04, by - hh*b[1] - hh*0.03, hw*b[2]*0.62, hw*b[3]*0.55, b[4]+0.4); }
+    blob(x + hw*b[0], by - hh*b[1], hw*b[2], hw*b[3], b[4], idx*3+1);
+    if(b[5]){ ctx.fillStyle = '#6e4215'; blob(x + hw*b[0] + hw*0.04, by - hh*b[1] - hh*0.03, hw*b[2]*0.62, hw*b[3]*0.55, b[4]+0.4, idx*3+2); }
   });
   // ---- 脖子（長、微前傾、寬度漸細）----
   ctx.strokeStyle = bodyCol; ctx.lineWidth = hw*0.4; ctx.lineCap='round';
@@ -219,8 +219,8 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
     const ny = shY - hh*0.1 + (hpY + hw*0.12 - (shY - hh*0.1))*p;
     const side = (i%2===0)? 1 : -1;
     ctx.fillStyle = patchCol;
-    blob(nx + side*hw*0.13, ny, hw*0.11, hw*0.075, side*0.5);
-    if(i%3===0){ ctx.fillStyle='#6e4215'; blob(nx + side*hw*0.13, ny, hw*0.05, hw*0.035, 0); }
+    blob(nx + side*hw*0.13, ny, hw*0.11, hw*0.075, side*0.5, i*5+7);
+    if(i%3===0){ ctx.fillStyle='#6e4215'; blob(nx + side*hw*0.13, ny, hw*0.05, hw*0.035, 0, i*5+8); }
   }
   // ---- 近側雙腿（細長、四腳著地）----
   leg(x - hw*0.62, by+hh*0.88, legH+hh*0.12, -0.05, bodyCol, darkCol);
@@ -276,14 +276,22 @@ function poly(cx, cy, pts, hw){
 
 // 長腿（兩段：大腿+小腿，膝蓋微彎）
 
-// 自然斑塊 helper：圓潤有機形（主塊+兩個併生小塊）
-function blob(cx, cy, rx, ry, rot){
+// 自然斑塊 helper：不規則有機形（不圓不方，seed 固定避免閃爍）
+function blob(cx, cy, rx, ry, rot, seed){
   ctx.save(); ctx.translate(cx, cy); ctx.rotate(rot||0);
+  const n = 9, P = [];
+  for(let i=0;i<n;i++){
+    const a = i/n*Math.PI*2;
+    const rf = 0.7 + 0.5*Math.abs(Math.sin((seed||1)*13.7 + i*2.31));
+    P.push([Math.cos(a)*rx*rf, Math.sin(a)*ry*rf]);
+  }
   ctx.beginPath();
-  ctx.ellipse(0, 0, rx, ry, 0, 0, 6.29);
-  ctx.ellipse(rx*0.55, -ry*0.25, rx*0.5, ry*0.6, 0.6, 0, 6.29);
-  ctx.ellipse(-rx*0.5, ry*0.2, rx*0.45, ry*0.55, -0.5, 0, 6.29);
-  ctx.fill(); ctx.restore();
+  ctx.moveTo((P[0][0]+P[n-1][0])/2, (P[0][1]+P[n-1][1])/2);
+  for(let i=0;i<n;i++){
+    const p = P[i], p2 = P[(i+1)%n];
+    ctx.quadraticCurveTo(p[0], p[1], (p[0]+p2[0])/2, (p[1]+p2[1])/2);
+  }
+  ctx.closePath(); ctx.fill(); ctx.restore();
 }
 function leg(lx, topY, len, bend, col, hoofCol, t){
   const kx = lx + bend*len*0.4;

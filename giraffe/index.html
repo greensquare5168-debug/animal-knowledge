@@ -162,34 +162,34 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   const hw = bodyH*0.56;              // 身體半寬
   const legH = bodyH*1.25;            // 細長腿
   const by = ground - legH - hh;      // 身體中心Y
-  const hpX = x + hw*0.1, hpY = by - hh - neckH;   // 頭中心
+  const hpX = x + hw*0.55, hpY = by - hh - neckH;   // 頭中心（靠身體右邊）
   const bodyCol = '#f5d48a';          // 淺黃棕
   const cream = '#fdf6e3';            // 縫隙（近白）
   const patchCol = '#8a5420';         // 深棕斑
   const darkCol = '#5e3810';
   // ---- 遠側雙腿（淡色）----
-  leg(x - hw*0.8, by+hh*0.82, legH+hh*0.18, -0.04, cream, darkCol);
-  leg(x + hw*0.52, by+hh*0.82, legH+hh*0.18, 0.05, cream, darkCol);
-  // ---- 尾巴（身體左側=屁股後方；長頸鹿頭朝右）----
-  ctx.strokeStyle = bodyCol; ctx.lineWidth = hw*0.09; ctx.lineCap='round';
-  const tw = 5+Math.sin(t*4)*3;
-  ctx.beginPath(); ctx.moveTo(x-hw*0.98, by-hh*0.42);
-  ctx.quadraticCurveTo(x-hw*1.55, by-hh*0.9, x-hw*1.52-tw*0.2, by-hh*1.7); ctx.stroke();
-  ctx.strokeStyle = '#3a2a15'; ctx.lineWidth = hw*0.14;
-  ctx.beginPath(); ctx.moveTo(x-hw*1.52-tw*0.2, by-hh*1.56); ctx.lineTo(x-hw*1.52-tw*0.2, by-hh*1.8); ctx.stroke();
+  leg(x - hw*0.85, by+hh*0.82, legH+hh*0.18, -0.10, cream, darkCol);
+  leg(x + hw*0.5, by+hh*0.82, legH+hh*0.18, -0.08, cream, darkCol);
+  // ---- 尾巴（身體左側、自然朝下垂，末端黑毛）----
+  const twx = Math.sin(t*3)*1.5;
+  ctx.strokeStyle = bodyCol; ctx.lineWidth = hw*0.08; ctx.lineCap='round';
+  ctx.beginPath(); ctx.moveTo(x-hw*0.95, by-hh*0.35);
+  ctx.quadraticCurveTo(x-hw*1.3, by-hh*0.1, x-hw*1.28+twx, by+legH*0.62); ctx.stroke();
+  ctx.strokeStyle = '#3a2a15'; ctx.lineWidth = hw*0.13;
+  ctx.beginPath(); ctx.moveTo(x-hw*1.28+twx, by+legH*0.55); ctx.lineTo(x-hw*1.28+twx, by+legH*0.72); ctx.stroke();
   // ---- 身體（前高後低的長形）----
-  const shY = by - hh*0.92;   // 肩（高）
-  const rpY = by - hh*0.42;   // 臀（低）
+  const shY = by - hh*0.92;   // 肩（身體右邊、較高）
+  const rpY = by - hh*0.45;   // 臀（身體左邊、較低）
   ctx.fillStyle = bodyCol;
   ctx.beginPath();
-  ctx.moveTo(x - hw*0.52, by + hh*0.6);
-  ctx.quadraticCurveTo(x - hw*1.1, by + hh*0.32, x - hw*1.0, by - hh*0.12);
-  ctx.quadraticCurveTo(x - hw*0.97, shY - hh*0.3, x - hw*0.3, shY);
-  ctx.quadraticCurveTo(x + hw*0.4, shY - hh*0.1, x + hw*0.95, rpY);
-  ctx.quadraticCurveTo(x + hw*1.24, rpY + hh*0.12, x + hw*1.12, by + hh*0.16);
-  ctx.lineTo(x + hw*1.0, by + hh*0.52);
-  ctx.quadraticCurveTo(x + hw*0.4, by + hh*0.8, x - hw*0.15, by + hh*0.72);
-  ctx.quadraticCurveTo(x - hw*0.42, by + hh*0.68, x - hw*0.52, by + hh*0.6);
+  ctx.moveTo(x + hw*0.55, by + hh*0.62);
+  ctx.quadraticCurveTo(x + hw*1.18, by + hh*0.3, x + hw*1.08, by - hh*0.14);
+  ctx.quadraticCurveTo(x + hw*1.0, shY - hh*0.22, x + hw*0.42, shY);
+  ctx.quadraticCurveTo(x - hw*0.2, shY - hh*0.12, x - hw*0.88, rpY);
+  ctx.quadraticCurveTo(x - hw*1.22, rpY + hh*0.16, x - hw*1.1, by + hh*0.2);
+  ctx.lineTo(x - hw*0.98, by + hh*0.55);
+  ctx.quadraticCurveTo(x - hw*0.3, by + hh*0.82, x + hw*0.3, by + hh*0.74);
+  ctx.quadraticCurveTo(x + hw*0.48, by + hh*0.7, x + hw*0.55, by + hh*0.62);
   ctx.closePath(); ctx.fill();
   // ---- 自然斑塊（圓潤不規則、密集、部分中心更深，像真實長頸鹿皮毛）----
   const blobs = [
@@ -209,22 +209,22 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   });
   // ---- 脖子（長、微前傾、寬度漸細）----
   ctx.strokeStyle = bodyCol; ctx.lineWidth = hw*0.4; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(x - hw*0.05, shY - hh*0.15);
-  ctx.quadraticCurveTo(x + hw*0.28, (shY-hh*0.15+hpY)/2, hpX + hw*0.22, hpY + hw*0.05);
+  ctx.beginPath(); ctx.moveTo(x + hw*0.42, shY - hh*0.08);
+  ctx.quadraticCurveTo(x + hw*0.62, (shY-hh*0.08+hpY)/2, hpX + hw*0.2, hpY + hw*0.05);
   ctx.stroke();
   // 脖子自然斑（圓潤小塊、錯開分佈、密集）
   for(let i=0;i<12;i++){
     const p=(i+0.5)/12;
-    const nx = x - hw*0.02 + (hpX + hw*0.24 - (x - hw*0.02))*p;
-    const ny = shY - hh*0.1 + (hpY + hw*0.12 - (shY - hh*0.1))*p;
+    const nx = x + hw*0.42 + (hpX + hw*0.18 - (x + hw*0.42))*p;
+    const ny = shY - hh*0.08 + (hpY + hw*0.12 - (shY - hh*0.08))*p;
     const side = (i%2===0)? 1 : -1;
     ctx.fillStyle = patchCol;
     blob(nx + side*hw*0.13, ny, hw*0.11, hw*0.075, side*0.5, i*5+7);
     if(i%3===0){ ctx.fillStyle='#6e4215'; blob(nx + side*hw*0.13, ny, hw*0.05, hw*0.035, 0, i*5+8); }
   }
   // ---- 近側雙腿（細長、四腳著地）----
-  leg(x - hw*0.62, by+hh*0.88, legH+hh*0.12, -0.05, bodyCol, darkCol);
-  leg(x + hw*0.66, by+hh*0.88, legH+hh*0.12, 0.06, bodyCol, darkCol);
+  leg(x - hw*0.68, by+hh*0.88, legH+hh*0.12, -0.14, bodyCol, darkCol);
+  leg(x + hw*0.7, by+hh*0.88, legH+hh*0.12, -0.16, bodyCol, darkCol);
   // 前腿膝蓋斑
   ctx.fillStyle = patchCol;
   ctx.beginPath(); ctx.ellipse(x+hw*0.72, by+hh*0.88+legH*0.3, hw*0.08, hw*0.05, 0.1, 0, 6.29); ctx.fill();
@@ -294,16 +294,27 @@ function blob(cx, cy, rx, ry, rot, seed){
   ctx.closePath(); ctx.fill(); ctx.restore();
 }
 function leg(lx, topY, len, bend, col, hoofCol, t){
-  const kx = lx + bend*len*0.4;
-  const ky = topY + len*0.55;
-  ctx.strokeStyle = col; ctx.lineWidth = len*0.055;
+  // 有曲度的腿：大腿→明顯膝蓋→小腿（膝蓋向後凸）
+  const kx = lx + bend*len*1.0;    // 膝蓋 x（向後，明顯曲度）
+  const ky = topY + len*0.52;      // 膝蓋高度
+  const ankleX = lx + bend*len*0.3;
+  const footX = lx + bend*len*0.18; // 蹄微回收（站立自然）
+  ctx.strokeStyle = col; ctx.lineWidth = len*0.06; ctx.lineCap='round';
+  // 大腿（微弧向膝）
   ctx.beginPath(); ctx.moveTo(lx, topY);
-  ctx.quadraticCurveTo(lx+bend*len*0.15, topY+len*0.28, kx, ky); ctx.stroke();
+  ctx.quadraticCurveTo(lx + bend*len*0.1, topY+len*0.26, kx, ky); ctx.stroke();
+  // 膝蓋關節（鼓起的小圓）
+  ctx.fillStyle = col;
+  ctx.beginPath(); ctx.arc(kx, ky, len*0.07, 0, 6.29); ctx.fill();
+  ctx.fillStyle = 'rgba(90,50,20,.28)';
+  ctx.beginPath(); ctx.arc(kx, ky, len*0.042, 0, 6.29); ctx.fill();
+  // 小腿（膝→踝，微弧）
+  ctx.strokeStyle = col; ctx.lineWidth = len*0.048;
   ctx.beginPath(); ctx.moveTo(kx, ky);
-  ctx.quadraticCurveTo(lx+bend*len*0.5, topY+len*0.75, lx+bend*len*0.55, topY+len); ctx.stroke();
+  ctx.quadraticCurveTo(kx - bend*len*0.12, topY+len*0.76, ankleX, topY+len*0.97); ctx.stroke();
   // 蹄
   ctx.strokeStyle = hoofCol; ctx.lineWidth = len*0.075; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(lx+bend*len*0.52, topY+len-2); ctx.lineTo(lx+bend*len*0.58, topY+len+2); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(ankleX, topY+len-3); ctx.lineTo(footX, topY+len+3); ctx.stroke();
 }
 
 function zebra(x, ground, t){

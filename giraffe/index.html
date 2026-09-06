@@ -82,6 +82,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
         </div>
       </div>
       <div class="wow">💡 <b>你知道嗎？</b>成年長頸鹿的脖子可以長到 <b>2 公尺</b>，裡面跟人類一樣只有 <b>7 節</b>頸椎骨！只是每一節都超長～</div>
+      <div style="text-align:center;font-size:11px;color:#c0b098;margin-top:10px">🎵 背景音樂：Fluffing a Duck · Kevin MacLeod (incompetech.com) · CC-BY</div>
     </section>
 
     <!-- Q2 暫以文字解說（動畫製作中） -->
@@ -140,6 +141,14 @@ const AUDIO=[
  {f:'voice/q1_s6.mp3',t:'一代一代傳下去，脖子長的長頸鹿越來越多，最後就變成現在的我啦！我的脖子，就是這樣，越伸越長的喲！'},
 ];
 let scene=0, playing=false, audio=null, t0=0, raf=null;
+let bgm=null; // 背景音樂（輕快墊樂）
+function ensureBgm(){
+  if(!bgm){
+    bgm=new Audio('voice/bgm.mp3');
+    bgm.loop=true; bgm.volume=0.13;
+  }
+  return bgm;
+}
 
 // 場景繪製用基礎函數
 const uniq=Math.random().toString(36).slice(2);
@@ -378,13 +387,14 @@ function playScene(i){
   if(audio){audio.pause();audio=null;}
   audio=new Audio(AUDIO[i].f);
   audio.playbackRate=1;
-  audio.onended=()=>{ if(scene<AUDIO.length-1){ playScene(scene+1);} else { playing=false; document.getElementById('playBtn').textContent='▶'; } };
+  audio.onended=()=>{ if(scene<AUDIO.length-1){ playScene(scene+1);} else { playing=false; document.getElementById('playBtn').textContent='▶'; if(bgm){bgm.pause();} } };
   audio.play().catch(()=>{});
+  ensureBgm().play().catch(()=>{});
   playing=true; document.getElementById('playBtn').textContent='⏸';
 }
 function togglePlay(){
-  if(playing){ if(audio)audio.pause(); playing=false; document.getElementById('playBtn').textContent='▶'; }
-  else{ if(audio&&audio.currentTime>0&&audio.currentTime<audio.duration){audio.play();playing=true;document.getElementById('playBtn').textContent='⏸';}
+  if(playing){ if(audio)audio.pause(); if(bgm)bgm.pause(); playing=false; document.getElementById('playBtn').textContent='▶'; }
+  else{ if(audio&&audio.currentTime>0&&audio.currentTime<audio.duration){audio.play();ensureBgm().play().catch(()=>{});playing=true;document.getElementById('playBtn').textContent='⏸';}
         else playScene(0); }
 }
 function restart(){ if(audio)audio.pause(); playScene(0); }

@@ -303,7 +303,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   for(let nk=2;nk<=14;nk+=4){
     const pk=nSide[nk];
     ctx.fillStyle=patchCol;
-    blob(pk.x, pk.y, pk.hw2*1.1, pk.hw2*0.75, ((nk%3)-1)*0.15, nk*11+5);
+    blob(pk.x, pk.y, pk.hw2*0.85, pk.hw2*0.58, ((nk%3)-1)*0.15, nk*11+5);
   }
   // 鬃毛（脖子背緣一整條：沿背側緣外側的連續深棕脊線，上窄下寬同脖子）
   ctx.strokeStyle=darkCol; ctx.lineWidth=hw*0.18; ctx.lineCap='round'; ctx.lineJoin='round';

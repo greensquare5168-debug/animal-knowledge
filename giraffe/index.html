@@ -266,6 +266,9 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   for(let ni=1;ni<=16;ni++) ctx.lineTo(nSide[ni].x+nSide[ni].nx*nSide[ni].hw2, nSide[ni].y+nSide[ni].ny*nSide[ni].hw2);
   for(let ni=16;ni>=0;ni--) ctx.lineTo(nSide[ni].x-nSide[ni].nx*nSide[ni].hw2, nSide[ni].y-nSide[ni].ny*nSide[ni].hw2);
   ctx.closePath(); ctx.fill();
+  // 寬端圓頭（讓脖子底部圓弧融入身體，不與身體分離）
+  ctx.fillStyle = bodyCol;
+  ctx.beginPath(); ctx.arc(nP0x, nP0y, nWB/2, 0, 6.29); ctx.fill();
   // 鬃毛（脖子背緣一整條：沿背側緣外側的連續深棕脊線，上窄下寬同脖子）
   ctx.strokeStyle=darkCol; ctx.lineWidth=hw*0.18; ctx.lineCap='round'; ctx.lineJoin='round';
   ctx.beginPath();

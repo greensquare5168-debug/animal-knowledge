@@ -310,14 +310,16 @@ function leg(lx, topY, len, bend, col, hoofCol, t){
   const ky = topY + len*0.52;      // 膝蓋高度
   const ankleX = lx + bend*len*0.3;
   const footX = lx + bend*len*0.18; // 蹄微回收（站立自然）
-  // 整條腿一次畫完：大腿→膝蓋→小腿（lineJoin round 讓膝蓋轉角自然平滑，不畫圓球關節）
-  ctx.strokeStyle = col; ctx.lineWidth = len*0.06; ctx.lineCap='round'; ctx.lineJoin='round';
+  // 大腿（加粗，微弧向膝）
+  ctx.strokeStyle = col; ctx.lineWidth = len*0.088; ctx.lineCap='round';
   ctx.beginPath(); ctx.moveTo(lx, topY);
-  ctx.quadraticCurveTo(lx + bend*len*0.1, topY+len*0.26, kx, ky);
-  ctx.quadraticCurveTo(kx - bend*len*0.12, topY+len*0.76, ankleX, topY+len*0.97);
-  ctx.stroke();
+  ctx.quadraticCurveTo(lx + bend*len*0.1, topY+len*0.26, kx, ky); ctx.stroke();
+  // 小腿（比大腿略細，round cap 與大腿在膝蓋自然相接，不畫圓球）
+  ctx.strokeStyle = col; ctx.lineWidth = len*0.07;
+  ctx.beginPath(); ctx.moveTo(kx, ky);
+  ctx.quadraticCurveTo(kx - bend*len*0.12, topY+len*0.76, ankleX, topY+len*0.97); ctx.stroke();
   // 蹄
-  ctx.strokeStyle = hoofCol; ctx.lineWidth = len*0.075; ctx.lineCap='round';
+  ctx.strokeStyle = hoofCol; ctx.lineWidth = len*0.095; ctx.lineCap='round';
   ctx.beginPath(); ctx.moveTo(ankleX, topY+len-3); ctx.lineTo(footX, topY+len+3); ctx.stroke();
 }
 

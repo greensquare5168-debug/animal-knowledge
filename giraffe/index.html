@@ -343,16 +343,16 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.beginPath(); ctx.ellipse(hx+hw*0.771, hy+hw*0.04, hw*0.07, hw*0.10, 0.1, 0, 6.29); ctx.fill();
   ctx.lineCap='round';
   if(mood==='sad'){
-    ctx.strokeStyle='#2b1a08'; ctx.lineWidth=hw*0.045;
-    ctx.beginPath(); ctx.arc(hx+hw*0.545, hy+hw*0.15, hw*0.085, Math.PI*1.2, Math.PI*1.8); ctx.stroke();
+    ctx.strokeStyle='#1f1f1f'; ctx.lineWidth=hw*0.055;
+    ctx.beginPath(); ctx.arc(hx+hw*0.545, hy+hw*0.115, hw*0.075, Math.PI*1.2, Math.PI*1.8); ctx.stroke();
     ctx.fillStyle='#8ec9f0';
     ctx.beginPath(); ctx.ellipse(hx-hw*0.093, hy+hw*0.02, hw*0.05, hw*0.085, 0.3, 0, 6.29); ctx.fill();
   } else if(mood==='happy'){
-    ctx.strokeStyle='rgba(253,246,227,.95)'; ctx.lineWidth=hw*0.07;
-    ctx.beginPath(); ctx.arc(hx+hw*0.580, hy+hw*0.17, hw*0.105, 0.2, Math.PI*0.8); ctx.stroke();
+    ctx.strokeStyle='#1f1f1f'; ctx.lineWidth=hw*0.055;
+    ctx.beginPath(); ctx.arc(hx+hw*0.580, hy+hw*0.13, hw*0.09, 0.2, Math.PI*0.8); ctx.stroke();
   } else {
-    ctx.strokeStyle='rgba(253,246,227,.95)'; ctx.lineWidth=hw*0.07;
-    ctx.beginPath(); ctx.moveTo(hx+hw*0.522, hy+hw*0.15); ctx.quadraticCurveTo(hx+hw*0.661, hy+hw*0.21, hx+hw*0.800, hy+hw*0.145); ctx.stroke();
+    ctx.strokeStyle='#1f1f1f'; ctx.lineWidth=hw*0.055;
+    ctx.beginPath(); ctx.moveTo(hx+hw*0.53, hy+hw*0.125); ctx.quadraticCurveTo(hx+hw*0.66, hy+hw*0.17, hx+hw*0.79, hy+hw*0.115); ctx.stroke();
   }
 
 }

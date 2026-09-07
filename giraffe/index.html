@@ -224,7 +224,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.fillStyle = bodyCol;
   ctx.beginPath(); ctx.ellipse(hx, hy, hw*0.54, hw*0.36, -0.1, 0, 6.29); ctx.fill();
   ctx.fillStyle = '#a06a28';
-  ctx.beginPath(); ctx.ellipse(hx+hw*0.62, hy+hw*0.12, hw*0.3, hw*0.18, 0.06, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(hx+hw*0.58, hy+hw*0.05, hw*0.27, hw*0.15, 0.06, 0, 6.29); ctx.fill();
   ctx.fillStyle = bodyCol;
 
   // 兩隻角（從頭頂長出，基部沒入頭部，頂端圓球）
@@ -241,10 +241,10 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.fillStyle = '#2b2b2b';
   ctx.beginPath(); ctx.ellipse(hx+hw*0.14, hy-hw*0.02, hw*0.065, hw*0.09, 0, 0, 6.29); ctx.fill();
   ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(hx+hw*0.17, hy-hw*0.06, hw*0.025, 0, 6.29); ctx.fill();
-  // 鼻孔 + 微笑嘴
+  // 鼻孔（在吻部上緣）+ 微笑嘴（在吻部下方，不疊在鼻子上）
   ctx.fillStyle = darkCol;
-  ctx.beginPath(); ctx.arc(hx+hw*0.5, hy+hw*0.12, hw*0.024, 0, 6.29); ctx.fill();
-  ctx.beginPath(); ctx.arc(hx+hw*0.62, hy+hw*0.13, hw*0.024, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.arc(hx+hw*0.50, hy+hw*0.04, hw*0.024, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.arc(hx+hw*0.63, hy+hw*0.05, hw*0.024, 0, 6.29); ctx.fill();
   ctx.strokeStyle = darkCol; ctx.lineWidth = hw*0.035; ctx.lineCap='round';
   if(mood==='sad'){
     ctx.beginPath(); ctx.arc(hx+hw*0.22, hy+hw*0.14, hw*0.1, Math.PI*1.15, Math.PI*1.85); ctx.stroke();
@@ -253,7 +253,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   } else if(mood==='happy'){
     ctx.beginPath(); ctx.arc(hx+hw*0.2, hy+hw*0.12, hw*0.1, 0.15, Math.PI*0.85); ctx.stroke();
   } else {
-    ctx.beginPath(); ctx.moveTo(hx+hw*0.4, hy+hw*0.16); ctx.quadraticCurveTo(hx+hw*0.55, hy+hw*0.26, hx+hw*0.7, hy+hw*0.16); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(hx+hw*0.34, hy+hw*0.19); ctx.quadraticCurveTo(hx+hw*0.50, hy+hw*0.30, hx+hw*0.66, hy+hw*0.20); ctx.stroke();
   }
 }
 // 多邊形斑塊 helper：pts 為相對座標陣列（單位 hw），x,y 中心

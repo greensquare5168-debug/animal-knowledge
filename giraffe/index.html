@@ -299,11 +299,14 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   // 寬端圓頭（讓脖子底部圓弧融入身體，不與身體分離）
   ctx.fillStyle = bodyCol;
   ctx.beginPath(); ctx.arc(nP0x, nP0y, nWB/2, 0, 6.29); ctx.fill();
-  // 脖子斑（沿頸中線，隨錐形寬度漸小）
+  // 脖子斑（左右交錯不併排：有的偏背側、有的偏腹側）
+  const nkOff=[0.42,-0.38,0.30,-0.34];
   for(let nk=2;nk<=14;nk+=4){
     const pk=nSide[nk];
+    const oi=(nk-2)/4;
+    const off=nkOff[oi]*pk.hw2;
     ctx.fillStyle=patchCol;
-    blob(pk.x, pk.y, pk.hw2*0.85, pk.hw2*0.58, ((nk%3)-1)*0.15, nk*11+5);
+    blob(pk.x+pk.nx*off, pk.y+pk.ny*off, pk.hw2*0.62, pk.hw2*0.42, ((nk%3)-1)*0.22, nk*11+5);
   }
   // 鬃毛（脖子背緣一整條：沿背側緣外側的連續深棕脊線，上窄下寬同脖子）
   ctx.strokeStyle=darkCol; ctx.lineWidth=hw*0.18; ctx.lineCap='round'; ctx.lineJoin='round';

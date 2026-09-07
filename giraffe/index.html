@@ -324,10 +324,10 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.restore();
   // 兩隻角（頭頂：短粗圓鈍，基部沒入頭部）
   ctx.fillStyle = darkCol;
-  ctx.beginPath(); ctx.ellipse(hx-hw*0.311, hy-hw*0.40, hw*0.05, hw*0.15, -0.1, 0, 6.29); ctx.fill();  // 遠角（後）
-  ctx.beginPath(); ctx.arc(hx-hw*0.311, hy-hw*0.555, hw*0.045, 0, 6.29); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(hx-hw*0.065, hy-hw*0.45, hw*0.06, hw*0.17, 0.06, 0, 6.29); ctx.fill();   // 近角（前）
-  ctx.beginPath(); ctx.arc(hx-hw*0.065, hy-hw*0.62, hw*0.052, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(hx-hw*0.311, hy-hw*0.42, hw*0.075, hw*0.19, -0.1, 0, 6.29); ctx.fill();  // 遠角（後）
+  ctx.beginPath(); ctx.arc(hx-hw*0.311, hy-hw*0.61, hw*0.06, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(hx-hw*0.065, hy-hw*0.47, hw*0.09, hw*0.22, 0.06, 0, 6.29); ctx.fill();   // 近角（前）
+  ctx.beginPath(); ctx.arc(hx-hw*0.065, hy-hw*0.69, hw*0.075, 0, 6.29); ctx.fill();
   // 耳朵（頭後側，寬大略向後下斜）
   ctx.fillStyle = bodyCol;
   ctx.beginPath(); ctx.ellipse(hx-hw*0.650, hy-hw*0.04, hw*0.46, hw*0.23, -0.5, 0, 6.29); ctx.fill();

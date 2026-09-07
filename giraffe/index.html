@@ -253,16 +253,17 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.fill();
   // ---- 自然斑塊（只加身體：clip 貼輪廓、腹部留乾淨）----
   const blobs=[];
-  for(let r=0;r<4;r++){
+  for(let r=0;r<5;r++){
     for(let c=0;c<8;c++){
       const jx=(((r*31+c*17)%9)-4)*0.022;
       const jy=(((r*13+c*29)%9)-4)*0.022;
       const cx3=-1.05+c*0.30+jx;
-      const cy3=-0.72+r*0.26+jy;
-      if(cy3>0.02) continue;
+      const cy3=-0.98+r*0.24+jy;      // 從背脊到腹部
+      if(cy3>0.18) continue;          // 只留最下緣一點淺色
       let sz;
-      if(cy3<-0.35) sz=0.115+((r*7+c*11)%3)*0.008;
-      else if(cy3<-0.1) sz=0.085+((r*7+c*11)%3)*0.007;
+      if(cy3<-0.6) sz=0.12+((r*7+c*11)%3)*0.008;
+      else if(cy3<-0.35) sz=0.095+((r*7+c*11)%3)*0.007;
+      else if(cy3<-0.1) sz=0.075+((r*7+c*11)%3)*0.006;
       else sz=0.06+((r*7+c*11)%3)*0.005;
       blobs.push([cx3,cy3,sz,sz*0.72,(((r*3+c*5)%7)-3)*0.08]);
     }
@@ -275,8 +276,6 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
     blob(x+hw*b[0], by-hh*b[1], hw*b[2], hw*b[3], b[4], idx*3+1);
     if(b[2]>=0.11) crack(x+hw*b[0], by-hh*b[1], hw*b[2], hw*b[3], b[4]);
   });
-  ctx.fillStyle=cream;
-  ctx.beginPath(); ctx.ellipse(x-hw*0.1, by+hh*0.62, hw*1.05, hh*0.42, 0, 0, 6.29); ctx.fill();
   ctx.restore();
   // ---- 脖子（上窄下寬錐形：身體端粗、頭端細；短脖子接近直線、長脖子微前弓）----
   const nP0x=x+hw*0.72, nP0y=shY-hh*0.05;          // 頸根（肩，寬端）
@@ -306,7 +305,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.fillStyle = bodyCol;
   ctx.beginPath(); ctx.arc(nP0x, nP0y, nWB/2, 0, 6.29); ctx.fill();
   // 脖子斑（沿頸中線，隨錐形寬度漸小）
-  for(let nk=1;nk<=15;nk+=2){
+  for(let nk=1;nk<=14;nk+=3){
     const pk=nSide[nk];
     ctx.fillStyle=patchCol;
     blob(pk.x, pk.y, pk.hw2*1.1, pk.hw2*0.72, ((nk%3)-1)*0.18, nk*11+5);

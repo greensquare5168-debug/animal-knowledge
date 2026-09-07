@@ -241,43 +241,70 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   // ---- 近側雙腿（細長、四腳著地）----
   leg(x - hw*0.34*bodyS, by+hh*0.6, legH+hh*0.4, -0.13, bodyCol, darkCol);
   leg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol);
-  // ---- 頭部（兩隻角明顯）----
+  // ---- 頭部（淚滴形：額圓、吻部突出圓鈍，參考真實長頸鹿側面）----
   const bob = mood==='talk'? Math.sin(t*10)*bodyH*0.02 : 0;
   const hx = hpX, hy = hpY + bob;
+  // 頭部輪廓（面向右：後腦→額→鼻樑→吻部圓鈍→下巴→喉）
   ctx.fillStyle = bodyCol;
-  ctx.beginPath(); ctx.ellipse(hx, hy, hw*0.54, hw*0.36, -0.1, 0, 6.29); ctx.fill();
-  ctx.fillStyle = '#a06a28';
-  ctx.beginPath(); ctx.ellipse(hx+hw*0.60, hy-hw*0.01, hw*0.22, hw*0.13, 0.08, 0, 6.29); ctx.fill();
-  ctx.fillStyle = bodyCol;
-
-  // 兩隻角（從頭頂長出，基部沒入頭部，頂端圓球）
+  ctx.beginPath();
+  ctx.moveTo(hx-hw*0.28, hy+hw*0.30);                       // 頸後連接
+  ctx.quadraticCurveTo(hx-hw*0.44, hy+hw*0.12, hx-hw*0.37, hy-hw*0.08);  // 後腦
+  ctx.quadraticCurveTo(hx-hw*0.30, hy-hw*0.30, hx-hw*0.12, hy-hw*0.35);  // 頭頂後
+  ctx.quadraticCurveTo(hx+hw*0.10, hy-hw*0.40, hx+hw*0.30, hy-hw*0.29);  // 額頭
+  ctx.quadraticCurveTo(hx+hw*0.52, hy-hw*0.16, hx+hw*0.62, hy-hw*0.02);  // 臉→鼻樑
+  ctx.quadraticCurveTo(hx+hw*0.73, hy+hw*0.10, hx+hw*0.66, hy+hw*0.17);  // 吻部前端圓鈍
+  ctx.quadraticCurveTo(hx+hw*0.50, hy+hw*0.23, hx+hw*0.34, hy+hw*0.25);  // 上唇→下巴
+  ctx.quadraticCurveTo(hx+hw*0.12, hy+hw*0.31, hx-hw*0.12, hy+hw*0.33);  // 下顎
+  ctx.quadraticCurveTo(hx-hw*0.22, hy+hw*0.32, hx-hw*0.28, hy+hw*0.30);  // 收合
+  ctx.closePath(); ctx.fill();
+  // 深色吻部（吻部前端 + 鼻樑，clip 貼頭緣）
+  ctx.save(); ctx.beginPath();
+  ctx.moveTo(hx-hw*0.28, hy+hw*0.30);
+  ctx.quadraticCurveTo(hx-hw*0.44, hy+hw*0.12, hx-hw*0.37, hy-hw*0.08);
+  ctx.quadraticCurveTo(hx-hw*0.30, hy-hw*0.30, hx-hw*0.12, hy-hw*0.35);
+  ctx.quadraticCurveTo(hx+hw*0.10, hy-hw*0.40, hx+hw*0.30, hy-hw*0.29);
+  ctx.quadraticCurveTo(hx+hw*0.52, hy-hw*0.16, hx+hw*0.62, hy-hw*0.02);
+  ctx.quadraticCurveTo(hx+hw*0.73, hy+hw*0.10, hx+hw*0.66, hy+hw*0.17);
+  ctx.quadraticCurveTo(hx+hw*0.50, hy+hw*0.23, hx+hw*0.34, hy+hw*0.25);
+  ctx.quadraticCurveTo(hx+hw*0.12, hy+hw*0.31, hx-hw*0.12, hy+hw*0.33);
+  ctx.quadraticCurveTo(hx-hw*0.22, hy+hw*0.32, hx-hw*0.28, hy+hw*0.30);
+  ctx.closePath(); ctx.clip();
+  ctx.fillStyle = '#8a5522';
+  ctx.beginPath(); ctx.ellipse(hx+hw*0.44, hy+hw*0.04, hw*0.30, hw*0.17, -0.12, 0, 6.29); ctx.fill();
+  ctx.restore();
+  // 兩隻角（頭頂：短粗圓鈍，基部沒入頭部）
   ctx.fillStyle = darkCol;
-  ctx.beginPath(); ctx.ellipse(hx-hw*0.16, hy-hw*0.42, hw*0.065, hw*0.24, -0.08, 0, 6.29); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(hx+hw*0.15, hy-hw*0.44, hw*0.065, hw*0.24, 0.1, 0, 6.29); ctx.fill();
-  ctx.beginPath(); ctx.arc(hx-hw*0.165, hy-hw*0.66, hw*0.055, 0, 6.29); ctx.fill();
-  ctx.beginPath(); ctx.arc(hx+hw*0.155, hy-hw*0.68, hw*0.055, 0, 6.29); ctx.fill();
-  // 耳朵（兩側）
+  ctx.beginPath(); ctx.ellipse(hx-hw*0.24, hy-hw*0.40, hw*0.05, hw*0.15, -0.1, 0, 6.29); ctx.fill();  // 遠角（後）
+  ctx.beginPath(); ctx.arc(hx-hw*0.24, hy-hw*0.555, hw*0.045, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(hx-hw*0.05, hy-hw*0.45, hw*0.06, hw*0.17, 0.06, 0, 6.29); ctx.fill();   // 近角（前）
+  ctx.beginPath(); ctx.arc(hx-hw*0.05, hy-hw*0.62, hw*0.052, 0, 6.29); ctx.fill();
+  // 耳朵（頭後側，寬大略向後下斜）
   ctx.fillStyle = bodyCol;
-  ctx.beginPath(); ctx.ellipse(hx-hw*0.58, hy-hw*0.05, hw*0.2, hw*0.1, -0.7, 0, 6.29); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(hx-hw*0.66, hy-hw*0.1, hw*0.12, hw*0.06, -0.7, 0, 6.29); ctx.fill();
-  // 眼睛（大而有神）
+  ctx.beginPath(); ctx.ellipse(hx-hw*0.36, hy-hw*0.02, hw*0.17, hw*0.085, -0.55, 0, 6.29); ctx.fill();
+  ctx.fillStyle = '#c4914f';
+  ctx.beginPath(); ctx.ellipse(hx-hw*0.38, hy-hw*0.015, hw*0.09, hw*0.045, -0.55, 0, 6.29); ctx.fill();
+  // 眼睛（大而友善，額頭下方、吻部後上方）
   ctx.fillStyle = '#2b2b2b';
-  ctx.beginPath(); ctx.ellipse(hx+hw*0.14, hy-hw*0.02, hw*0.065, hw*0.09, 0, 0, 6.29); ctx.fill();
-  ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(hx+hw*0.17, hy-hw*0.06, hw*0.025, 0, 6.29); ctx.fill();
-  // 鼻孔（吻部上兩點）+ 嘴巴（眼睛正下方，短微笑，不超出頭）
-  ctx.fillStyle = darkCol;
-  ctx.beginPath(); ctx.arc(hx+hw*0.53, hy-hw*0.01, hw*0.024, 0, 6.29); ctx.fill();
-  ctx.beginPath(); ctx.arc(hx+hw*0.66, hy-hw*0.00, hw*0.024, 0, 6.29); ctx.fill();
-  ctx.strokeStyle = darkCol; ctx.lineWidth = hw*0.032; ctx.lineCap='round';
+  ctx.beginPath(); ctx.ellipse(hx+hw*0.07, hy-hw*0.12, hw*0.075, hw*0.105, -0.08, 0, 6.29); ctx.fill();
+  ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(hx+hw*0.10, hy-hw*0.16, hw*0.028, 0, 6.29); ctx.fill();
+  // 鼻孔（吻部前端上方兩點）+ 嘴巴（吻部最前端下方，表情依 mood）
+  ctx.fillStyle = '#2b1a08';
+  ctx.beginPath(); ctx.ellipse(hx+hw*0.55, hy+hw*0.005, hw*0.075, hw*0.105, -0.2, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(hx+hw*0.665, hy+hw*0.04, hw*0.07, hw*0.10, 0.1, 0, 6.29); ctx.fill();
+  ctx.lineCap='round';
   if(mood==='sad'){
-    ctx.beginPath(); ctx.arc(hx+hw*0.14, hy+hw*0.17, hw*0.09, Math.PI*1.15, Math.PI*1.85); ctx.stroke();
+    ctx.strokeStyle='#2b1a08'; ctx.lineWidth=hw*0.045;
+    ctx.beginPath(); ctx.arc(hx+hw*0.47, hy+hw*0.15, hw*0.085, Math.PI*1.2, Math.PI*1.8); ctx.stroke();
     ctx.fillStyle='#8ec9f0';
-    ctx.beginPath(); ctx.ellipse(hx-hw*0.12, hy+hw*0.1, hw*0.045, hw*0.08, 0.3, 0, 6.29); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(hx-hw*0.08, hy+hw*0.02, hw*0.05, hw*0.085, 0.3, 0, 6.29); ctx.fill();
   } else if(mood==='happy'){
-    ctx.beginPath(); ctx.arc(hx+hw*0.14, hy+hw*0.17, hw*0.09, 0.15, Math.PI*0.85); ctx.stroke();
+    ctx.strokeStyle='rgba(253,246,227,.95)'; ctx.lineWidth=hw*0.07;
+    ctx.beginPath(); ctx.arc(hx+hw*0.50, hy+hw*0.17, hw*0.105, 0.2, Math.PI*0.8); ctx.stroke();
   } else {
-    ctx.beginPath(); ctx.moveTo(hx+hw*0.02, hy+hw*0.16); ctx.quadraticCurveTo(hx+hw*0.14, hy+hw*0.22, hx+hw*0.26, hy+hw*0.16); ctx.stroke();
+    ctx.strokeStyle='rgba(253,246,227,.95)'; ctx.lineWidth=hw*0.07;
+    ctx.beginPath(); ctx.moveTo(hx+hw*0.45, hy+hw*0.15); ctx.quadraticCurveTo(hx+hw*0.57, hy+hw*0.21, hx+hw*0.69, hy+hw*0.145); ctx.stroke();
   }
+
 }
 // 多邊形斑塊 helper：pts 為相對座標陣列（單位 hw），x,y 中心
 function poly(cx, cy, pts, hw){

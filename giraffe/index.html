@@ -242,29 +242,36 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   traceBodyPath(x, by, hw, hh, bodyS);
   ctx.fill();
   // ---- 自然斑塊（圓潤不規則、密集、部分中心更深，像真實長頸鹿皮毛）----
-  // ---- 脖子（短脖子接近直線、長脖子微前弓）----
-  const nP0x=x+hw*0.72, nP0y=shY-hh*0.05;          // 頸根（肩）
-  const nP1x=hpX-hw*0.14, nP1y=hpY+hw*0.45;        // 頸頂（頭下）
+  // ---- 脖子（上窄下寬錐形：身體端粗、頭端細；短脖子接近直線、長脖子微前弓）----
+  const nP0x=x+hw*0.72, nP0y=shY-hh*0.05;          // 頸根（肩，寬端）
+  const nP1x=hpX-hw*0.12, nP1y=hpY+hw*0.34;        // 頸頂（頭下，窄端）
   const nBow=Math.min(1, neckH/(sH(13)||1));        // 脖子越短弓越小（越直）
   const nCx=(nP0x+nP1x)/2 + (x+hw*1.02-(nP0x+nP1x)/2)*nBow;
   const nCy=(nP0y+hpY)/2;
-  ctx.strokeStyle = bodyCol; ctx.lineWidth = hw*0.6; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(nP0x, nP0y);
-  ctx.quadraticCurveTo(nCx, nCy, nP1x, nP1y);
-  ctx.stroke();
-  // 鬃毛（脖子背緣一整條：沿頸背側的連續深棕脊線，與脖子同彎度）
-  ctx.strokeStyle=darkCol; ctx.lineWidth=hw*0.22; ctx.lineCap='round'; ctx.lineJoin='round';
+  const nWB=hw*0.74, nWT=hw*0.24;                   // 下寬上窄（明顯錐形）
+  const nSide=[];                                    // 每取樣點：中心/法線/半寬
+  for(let ni=0;ni<=16;ni++){
+    const ns=ni/16;
+    const bxx=(1-ns)*(1-ns)*nP0x+2*ns*(1-ns)*nCx+ns*ns*nP1x;
+    const byy=(1-ns)*(1-ns)*nP0y+2*ns*(1-ns)*nCy+ns*ns*nP1y;
+    const txx=2*(1-ns)*(nCx-nP0x)+2*ns*(nP1x-nCx);
+    const tyy=2*(1-ns)*(nCy-nP0y)+2*ns*(nP1y-nCy);
+    const tll=Math.hypot(txx,tyy)||1;
+    nSide.push({x:bxx, y:byy, nx:tyy/tll, ny:-txx/tll, hw2:(nWB+(nWT-nWB)*ns)/2});
+  }
+  // 錐形脖子填色（背側緣 → 腹側緣）
+  ctx.fillStyle = bodyCol;
   ctx.beginPath();
-  for(let mi=0;mi<=14;mi++){
-    const ms=0.02+mi/14*0.96;
-    const mX=(1-ms)*(1-ms)*nP0x + 2*ms*(1-ms)*nCx + ms*ms*nP1x;
-    const mY=(1-ms)*(1-ms)*nP0y + 2*ms*(1-ms)*nCy + ms*ms*nP1y;
-    // 背側法線（朝左上）
-    const mTx=2*(1-ms)*(nCx-nP0x)+2*ms*(nP1x-nCx);
-    const mTy=2*(1-ms)*(nCy-nP0y)+2*ms*(nP1y-nCy);
-    const mTl=Math.hypot(mTx,mTy)||1;
-    const mNx=mTy/mTl, mNy=-mTx/mTl;
-    const ox=mX+mNx*hw*0.29, oy=mY+mNy*hw*0.29;
+  ctx.moveTo(nSide[0].x+nSide[0].nx*nSide[0].hw2, nSide[0].y+nSide[0].ny*nSide[0].hw2);
+  for(let ni=1;ni<=16;ni++) ctx.lineTo(nSide[ni].x+nSide[ni].nx*nSide[ni].hw2, nSide[ni].y+nSide[ni].ny*nSide[ni].hw2);
+  for(let ni=16;ni>=0;ni--) ctx.lineTo(nSide[ni].x-nSide[ni].nx*nSide[ni].hw2, nSide[ni].y-nSide[ni].ny*nSide[ni].hw2);
+  ctx.closePath(); ctx.fill();
+  // 鬃毛（脖子背緣一整條：沿背側緣外側的連續深棕脊線，上窄下寬同脖子）
+  ctx.strokeStyle=darkCol; ctx.lineWidth=hw*0.18; ctx.lineCap='round'; ctx.lineJoin='round';
+  ctx.beginPath();
+  for(let mi=0;mi<=16;mi++){
+    const p=nSide[mi];
+    const ox=p.x+p.nx*(p.hw2+hw*0.05), oy=p.y+p.ny*(p.hw2+hw*0.05);
     if(mi===0) ctx.moveTo(ox,oy); else ctx.lineTo(ox,oy);
   }
   ctx.stroke();

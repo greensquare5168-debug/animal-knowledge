@@ -221,7 +221,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.quadraticCurveTo(nCx, nCy, nP1x, nP1y);
   ctx.stroke();
   // 鬃毛（脖子背緣一整條：沿頸背側的連續深棕脊線，與脖子同彎度）
-  ctx.strokeStyle=darkCol; ctx.lineWidth=hw*0.11; ctx.lineCap='round'; ctx.lineJoin='round';
+  ctx.strokeStyle=darkCol; ctx.lineWidth=hw*0.22; ctx.lineCap='round'; ctx.lineJoin='round';
   ctx.beginPath();
   for(let mi=0;mi<=14;mi++){
     const ms=0.02+mi/14*0.96;

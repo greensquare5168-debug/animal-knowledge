@@ -253,18 +253,18 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.fill();
   // ---- 自然斑塊（只加身體：clip 貼輪廓、腹部留乾淨）----
   const blobs=[];
-  for(let r=0;r<6;r++){
+  for(let r=0;r<8;r++){
     for(let c=0;c<8;c++){
       const jx=(((r*31+c*17)%9)-4)*0.022;
       const jy=(((r*13+c*29)%9)-4)*0.022;
       const cx3=-1.05+c*0.30+jx;
-      const cy3=0.95-r*0.21+jy;       // 正值 = 上半身（背脊 0.95 → 中線 -0.1）
-      if(cy3< -0.16) continue;        // 腹部下緣留淺
+      const cy3=0.95-r*0.27+jy;       // 背脊 0.95 → 腹底 -0.94，全身鋪滿
       let sz;
       if(cy3>0.6) sz=0.115+((r*7+c*11)%3)*0.008;
-      else if(cy3>0.32) sz=0.09+((r*7+c*11)%3)*0.007;
-      else if(cy3>0.05) sz=0.07+((r*7+c*11)%3)*0.006;
-      else sz=0.055+((r*7+c*11)%3)*0.005;
+      else if(cy3>0.3) sz=0.095+((r*7+c*11)%3)*0.007;
+      else if(cy3>0.0) sz=0.08+((r*7+c*11)%3)*0.006;
+      else if(cy3>-0.35) sz=0.09+((r*7+c*11)%3)*0.006;
+      else sz=0.085+((r*7+c*11)%3)*0.005;
       blobs.push([cx3,cy3,sz,sz*0.72,(((r*3+c*5)%7)-3)*0.08]);
     }
   }

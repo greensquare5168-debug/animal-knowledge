@@ -218,7 +218,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   const nBow=Math.min(1, neckH/(sH(13)||1));        // 脖子越短弓越小（越直）
   const nCx=(nP0x+nP1x)/2 + (x+hw*1.02-(nP0x+nP1x)/2)*nBow;
   const nCy=(nP0y+hpY)/2;
-  ctx.strokeStyle = bodyCol; ctx.lineWidth = hw*0.4; ctx.lineCap='round';
+  ctx.strokeStyle = bodyCol; ctx.lineWidth = hw*0.6; ctx.lineCap='round';
   ctx.beginPath(); ctx.moveTo(nP0x, nP0y);
   ctx.quadraticCurveTo(nCx, nCy, nP1x, nP1y);
   ctx.stroke();
@@ -234,7 +234,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
     const mTy=2*(1-ms)*(nCy-nP0y)+2*ms*(nP1y-nCy);
     const mTl=Math.hypot(mTx,mTy)||1;
     const mNx=mTy/mTl, mNy=-mTx/mTl;
-    const ox=mX+mNx*hw*0.19, oy=mY+mNy*hw*0.19;
+    const ox=mX+mNx*hw*0.29, oy=mY+mNy*hw*0.29;
     if(mi===0) ctx.moveTo(ox,oy); else ctx.lineTo(ox,oy);
   }
   ctx.stroke();

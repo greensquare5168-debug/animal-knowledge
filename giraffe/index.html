@@ -215,6 +215,24 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.beginPath(); ctx.moveTo(x + hw*0.72, shY - hh*0.05);
   ctx.quadraticCurveTo(x + hw*1.02, (shY-hh*0.05+hpY)/2, hpX - hw*0.14, hpY + hw*0.45);
   ctx.stroke();
+  // 鬃毛（脖子背緣：沿頸背側一排深棕短毛，從肩到頭後側）
+  const mP0x=x+hw*0.72, mP0y=shY-hh*0.05, mP1x=hpX-hw*0.14, mP1y=hpY+hw*0.45;
+  const mCx=x+hw*1.02, mCy=(shY-hh*0.05+hpY)/2;
+  ctx.strokeStyle=darkCol; ctx.lineWidth=hw*0.055; ctx.lineCap='round';
+  for(let mi=0;mi<=8;mi++){
+    const ms=mi/8;
+    const mX=(1-ms)*(1-ms)*mP0x + 2*ms*(1-ms)*mCx + ms*ms*mP1x;
+    const mY=(1-ms)*(1-ms)*mP0y + 2*ms*(1-ms)*mCy + ms*ms*mP1y;
+    // 背側法線（朝左上）
+    const mTx=2*(1-ms)*(mCx-mP0x)+2*ms*(mP1x-mCx);
+    const mTy=2*(1-ms)*(mCy-mP0y)+2*ms*(mP1y-mCy);
+    const mTl=Math.hypot(mTx,mTy)||1;
+    const mNx=mTy/mTl, mNy=-mTx/mTl;
+    ctx.beginPath();
+    ctx.moveTo(mX+mNx*hw*0.17, mY+mNy*hw*0.17);
+    ctx.lineTo(mX+mNx*hw*0.42, mY+mNy*hw*0.42);
+    ctx.stroke();
+  }
   // ---- 近側雙腿（細長、四腳著地）----
   leg(x - hw*0.34, by+hh*0.6, legH+hh*0.4, -0.13, bodyCol, darkCol);
   leg(x + hw*0.72, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol);

@@ -210,23 +210,26 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   traceBodyPath(x, by, hw, hh);
   ctx.fill();
   // ---- 自然斑塊（圓潤不規則、密集、部分中心更深，像真實長頸鹿皮毛）----
-  // ---- 脖子（長、微前傾、寬度漸細）----
+  // ---- 脖子（短脖子接近直線、長脖子微前弓）----
+  const nP0x=x+hw*0.72, nP0y=shY-hh*0.05;          // 頸根（肩）
+  const nP1x=hpX-hw*0.14, nP1y=hpY+hw*0.45;        // 頸頂（頭下）
+  const nBow=Math.min(1, neckH/(sH(13)||1));        // 脖子越短弓越小（越直）
+  const nCx=(nP0x+nP1x)/2 + (x+hw*1.02-(nP0x+nP1x)/2)*nBow;
+  const nCy=(nP0y+hpY)/2;
   ctx.strokeStyle = bodyCol; ctx.lineWidth = hw*0.4; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(x + hw*0.72, shY - hh*0.05);
-  ctx.quadraticCurveTo(x + hw*1.02, (shY-hh*0.05+hpY)/2, hpX - hw*0.14, hpY + hw*0.45);
+  ctx.beginPath(); ctx.moveTo(nP0x, nP0y);
+  ctx.quadraticCurveTo(nCx, nCy, nP1x, nP1y);
   ctx.stroke();
-  // 鬃毛（脖子背緣一整條：沿頸背側的連續深棕脊線，從肩到頭後側）
-  const mP0x=x+hw*0.72, mP0y=shY-hh*0.05, mP1x=hpX-hw*0.14, mP1y=hpY+hw*0.45;
-  const mCx=x+hw*1.02, mCy=(shY-hh*0.05+hpY)/2;
+  // 鬃毛（脖子背緣一整條：沿頸背側的連續深棕脊線，與脖子同彎度）
   ctx.strokeStyle=darkCol; ctx.lineWidth=hw*0.11; ctx.lineCap='round'; ctx.lineJoin='round';
   ctx.beginPath();
   for(let mi=0;mi<=14;mi++){
     const ms=0.02+mi/14*0.96;
-    const mX=(1-ms)*(1-ms)*mP0x + 2*ms*(1-ms)*mCx + ms*ms*mP1x;
-    const mY=(1-ms)*(1-ms)*mP0y + 2*ms*(1-ms)*mCy + ms*ms*mP1y;
+    const mX=(1-ms)*(1-ms)*nP0x + 2*ms*(1-ms)*nCx + ms*ms*nP1x;
+    const mY=(1-ms)*(1-ms)*nP0y + 2*ms*(1-ms)*nCy + ms*ms*nP1y;
     // 背側法線（朝左上）
-    const mTx=2*(1-ms)*(mCx-mP0x)+2*ms*(mP1x-mCx);
-    const mTy=2*(1-ms)*(mCy-mP0y)+2*ms*(mP1y-mCy);
+    const mTx=2*(1-ms)*(nCx-nP0x)+2*ms*(nP1x-nCx);
+    const mTy=2*(1-ms)*(nCy-nP0y)+2*ms*(nP1y-nCy);
     const mTl=Math.hypot(mTx,mTy)||1;
     const mNx=mTy/mTl, mNy=-mTx/mTl;
     const ox=mX+mNx*hw*0.19, oy=mY+mNy*hw*0.19;

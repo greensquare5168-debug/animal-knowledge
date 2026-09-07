@@ -253,19 +253,15 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.fill();
   // ---- 自然斑塊（只加身體：clip 貼輪廓、腹部留乾淨）----
   const blobs=[];
-  for(let r=0;r<8;r++){
-    for(let c=0;c<8;c++){
-      const jx=(((r*31+c*17)%9)-4)*0.022;
-      const jy=(((r*13+c*29)%9)-4)*0.022;
-      const cx3=-1.05+c*0.30+jx;
-      const cy3=0.95-r*0.27+jy;       // 背脊 0.95 → 腹底 -0.94，全身鋪滿
-      let sz;
-      if(cy3>0.6) sz=0.115+((r*7+c*11)%3)*0.008;
-      else if(cy3>0.3) sz=0.095+((r*7+c*11)%3)*0.007;
-      else if(cy3>0.0) sz=0.08+((r*7+c*11)%3)*0.006;
-      else if(cy3>-0.35) sz=0.09+((r*7+c*11)%3)*0.006;
-      else sz=0.085+((r*7+c*11)%3)*0.005;
-      blobs.push([cx3,cy3,sz,sz*0.72,(((r*3+c*5)%7)-3)*0.08]);
+  for(let r=0;r<6;r++){
+    for(let c=0;c<5;c++){
+      const jx=(((r*31+c*17)%5)-2)*0.05;
+      const jy=(((r*13+c*29)%5)-2)*0.05;
+      const cx3=-1.16+c*0.58+jx;
+      const cy3=0.9-r*0.36+jy;        // 大塊斑：背脊 → 腹底
+      const sizes=[0.205,0.19,0.175,0.165,0.155,0.145];
+      const sz=sizes[r]+((r*7+c*11)%3)*0.012;
+      blobs.push([cx3,cy3,sz,sz*0.75,(((r*3+c*5)%7)-3)*0.1]);
     }
   }
   ctx.save();
@@ -308,7 +304,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   for(let nk=1;nk<=14;nk+=3){
     const pk=nSide[nk];
     ctx.fillStyle=patchCol;
-    blob(pk.x, pk.y, pk.hw2*1.1, pk.hw2*0.72, ((nk%3)-1)*0.18, nk*11+5);
+    blob(pk.x, pk.y, pk.hw2*1.45, pk.hw2*0.95, ((nk%3)-1)*0.2, nk*11+5);
   }
   // 鬃毛（脖子背緣一整條：沿背側緣外側的連續深棕脊線，上窄下寬同脖子）
   ctx.strokeStyle=darkCol; ctx.lineWidth=hw*0.18; ctx.lineCap='round'; ctx.lineJoin='round';

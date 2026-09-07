@@ -339,7 +339,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(hx+hw*0.130, hy-hw*0.16, hw*0.028, 0, 6.29); ctx.fill();
   // 鼻孔（側面視角只看到一個，畫在吻部前端）+ 嘴巴（吻部最前端下方，表情依 mood）
   ctx.fillStyle = '#2b1a08';
-  ctx.beginPath(); ctx.ellipse(hx+hw*0.86, hy+hw*0.035, hw*0.075, hw*0.105, 0.05, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(hx+hw*0.83, hy-hw*0.005, hw*0.058, hw*0.078, 0.05, 0, 6.29); ctx.fill();
   ctx.lineCap='round';
   if(mood==='sad'){
     ctx.strokeStyle='#1f1f1f'; ctx.lineWidth=hw*0.055;

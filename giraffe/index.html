@@ -188,7 +188,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   const darkCol = '#5e3810';
   // ---- 遠側雙腿（淡色）----
   leg(x - hw*0.82, by+hh*0.72, legH+hh*0.28, -0.10, bodyCol, darkCol);
-  leg(x + hw*0.32, by+hh*0.72, legH+hh*0.28, -0.08, bodyCol, darkCol);
+  leg(x + hw*0.20, by+hh*0.72, legH+hh*0.28, -0.05, bodyCol, darkCol);
   // ---- 尾巴（身體左側、自然朝下垂，末端黑毛）----
   const twx = Math.sin(t*3)*1.5;
   ctx.strokeStyle = bodyCol; ctx.lineWidth = hw*0.08; ctx.lineCap='round';
@@ -217,7 +217,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   ctx.stroke();
   // ---- 近側雙腿（細長、四腳著地）----
   leg(x - hw*0.34, by+hh*0.6, legH+hh*0.4, -0.13, bodyCol, darkCol);
-  leg(x + hw*0.66, by+hh*0.6, legH+hh*0.4, -0.15, bodyCol, darkCol);
+  leg(x + hw*0.72, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol);
   // ---- 頭部（兩隻角明顯）----
   const bob = mood==='talk'? Math.sin(t*10)*bodyH*0.02 : 0;
   const hx = hpX, hy = hpY + bob;

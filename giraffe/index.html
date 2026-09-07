@@ -254,7 +254,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t){
   // ---- 自然斑塊（圓潤不規則、密集、部分中心更深，像真實長頸鹿皮毛）----
   // ---- 脖子（上窄下寬錐形：身體端粗、頭端細；短脖子接近直線、長脖子微前弓）----
   const nP0x=x+hw*0.72, nP0y=shY-hh*0.05;          // 頸根（肩，寬端）
-  const nP1x=hpX-hw*0.12, nP1y=hpY+hw*0.34;        // 頸頂（頭下，窄端）
+  const nP1x=hpX-hw*0.20, nP1y=hpY+hw*0.26;        // 頸頂（深入頭後下，被頭蓋住不露縫）
   const nBow=Math.min(1, neckH/(sH(13)||1));        // 脖子越短弓越小（越直）
   const nCx=(nP0x+nP1x)/2 + (x+hw*1.02-(nP0x+nP1x)/2)*nBow;
   const nCy=(nP0y+hpY)/2;

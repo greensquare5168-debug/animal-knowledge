@@ -83,7 +83,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
           <button class="navbtn" onclick="nextScene()" title="下一幕">下一個 ▶</button>
           <button onclick="restart()" style="background:#b8c4ce;box-shadow:0 3px 0 #8a98a3;font-size:15px">↺</button>
           <div class="seek"><div id="seekBar"></div></div>
-          <div class="plabel" id="sceneLabel">第 1 / 6 幕</div>
+          <div class="plabel" id="sceneLabel">第 1 / 12 幕</div>
         </div>
       </div>
       <div class="wow">💡 <b>你知道嗎？</b>成年長頸鹿的脖子可以長到 <b>2 公尺</b>，裡面跟人類一樣只有 <b>7 節</b>頸椎骨！只是每一節都超長～</div>
@@ -230,9 +230,9 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   const patchLight = '#c4914f';      // 淺棕斑（頭部/頸上段細碎斑）
   const darkCol = '#5e3810';
   // ---- 遠側雙腿（淡色；reach 時遠前腳騰空）----
-  leg(x - hw*0.82*bodyS, by+hh*0.72, legH+hh*0.28+reachBob, -0.10, bodyCol, darkCol, t, legThick);
+  leg(x - hw*0.82*bodyS, by+hh*0.72, legH+hh*0.28+reachBob, -0.10, bodyCol, darkCol, t, legAbsW/((legH+hh*0.28+reachBob)*0.088));
   if(mood!=='reach'){
-    leg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, -0.05, bodyCol, darkCol, t, legThick);
+    leg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, -0.05, bodyCol, darkCol, t, legAbsW/((legH+hh*0.28)*0.088));
   }
   // （reach 的遠前腿改到近腿之後畫，避免大腿被身體擋住只剩蹄）
   // ---- 尾巴（身體左側、自然朝下垂，末端黑毛）----
@@ -322,12 +322,12 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   }
   ctx.stroke();
   // ---- 近側雙腿（reach 時近前腳騰空、後腳站立）----
-  leg(x - hw*0.34*bodyS, by+hh*0.6, legH+hh*0.4+reachBob, -0.13, bodyCol, darkCol, t, legThick);
+  leg(x - hw*0.34*bodyS, by+hh*0.6, legH+hh*0.4+reachBob, -0.13, bodyCol, darkCol, t, legAbsW/((legH+hh*0.4+reachBob)*0.088));
   if(mood==='reach'){
-    raisedLeg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4+reachBob, bodyH, bodyCol, darkCol, t, legThick);  // 近前腿（連續抬放）
-    raisedLeg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28+reachBob, bodyH, '#dcc98f', '#3a2410', t, legThick); // 遠前腿補畫（身體上層，大腿完整）
+    raisedLeg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4+reachBob, bodyH, bodyCol, darkCol, t, legAbsW/((legH+hh*0.4+reachBob)*0.088));  // 近前腿（連續抬放）
+    raisedLeg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28+reachBob, bodyH, '#dcc98f', '#3a2410', t, legAbsW/((legH+hh*0.28+reachBob)*0.088)); // 遠前腿補畫
   } else {
-    leg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol, t, legThick);
+    leg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol, t, legAbsW/((legH+hh*0.4)*0.088));
   }
   // ---- 頭部（reach 時整顆頭以頸頂為軸旋轉上仰）----
   ctx.save();
@@ -669,13 +669,13 @@ function giraffeDead(x, ground, bodyH){
   // ---- 前後腿大字攤開（趴地：前腳向前伸、後腳向後伸，像「大」字）----
   ctx.lineCap='round';
   // 遠側兩腿（淡黃、微上揚、較短，畫在身體下層）
-  ctx.strokeStyle='#e6cd9c'; ctx.lineWidth=bodyH*0.10;
+  ctx.strokeStyle='#e6cd9c'; ctx.lineWidth=sH(1.5);
   ctx.beginPath(); ctx.moveTo(x-rx*0.62, gy2-ry*1.1);
   ctx.quadraticCurveTo(x-rx*1.0, gy2-ry*0.75, x-rx*1.32, gy2-ry*0.55); ctx.stroke();   // 遠後腿→向左後伸
   ctx.beginPath(); ctx.moveTo(x+rx*0.5, gy2-ry*1.5);
   ctx.quadraticCurveTo(x+rx*0.95, gy2-ry*1.35, x+rx*1.30, gy2-ry*1.15); ctx.stroke();  // 遠前腿→向右前伸
   // 近側兩腿（同身體色、長、貼地：大字主幹）
-  ctx.strokeStyle=bodyCol; ctx.lineWidth=bodyH*0.13;
+  ctx.strokeStyle=bodyCol; ctx.lineWidth=sH(1.7);
   ctx.beginPath(); ctx.moveTo(x-rx*0.72, gy2-bodyH*0.005);
   ctx.quadraticCurveTo(x-rx*1.1, gy2+bodyH*0.075, x-rx*1.45, gy2+bodyH*0.045); ctx.stroke(); // 近後腿
   ctx.beginPath(); ctx.moveTo(x+rx*0.62, gy2-bodyH*0.005);

@@ -83,7 +83,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
           <button class="navbtn" onclick="nextScene()" title="下一幕">▶▶</button>
           <button onclick="restart()" style="background:#b8c4ce;box-shadow:0 3px 0 #8a98a3;font-size:15px">↺</button>
           <div class="seek"><div id="seekBar"></div></div>
-          <div class="plabel" id="sceneLabel">1 / 7</div>
+          <div class="plabel" id="sceneLabel">1 / 6</div>
         </div>
       </div>
       <div class="wow">💡 <b>你知道嗎？</b>成年長頸鹿的脖子可以長到 <b>2 公尺</b>裡面跟人類一樣只有 <b>7 節</b>頸椎骨！只是每一節都超長～</div>
@@ -143,8 +143,7 @@ const AUDIO_EVO=[
 ];
 const AUDIO_LM=[
  {f:null, sub:['其實還有一種說法','叫做「用進廢退說」','很久很久以前','長頸鹿的祖先','脖子都短短的','牠們每天用力伸長脖子','想吃高處的樹葉'], vf:['voice/s05_c1.mp3','voice/s05_c2.mp3','voice/s05_c3.mp3','voice/s05_c4.mp3','voice/s05_c5.mp3','voice/s05_c6.mp3','voice/s05_c7.mp3']},
- {f:null, sub:['伸～伸～再伸長一點！','牠們每天都努力伸長脖子','奇怪的是','脖子好像真的越來越長了！'], vf:['voice/s06_c1.mp3','voice/s06_c2.mp3','voice/s06_c3.mp3','voice/s06_c4.mp3']},
- {f:null, sub:['終於！','脖子變長了','高處的嫩葉子','輕輕鬆鬆就吃到了','原來常常用的部位','會越用越發達！'], vf:['voice/s07_c1.mp3','voice/s07_c2.mp3','voice/s07_c3.mp3','voice/s07_c4.mp3','voice/s07_c5.mp3','voice/s07_c6.mp3']},
+ {f:null, sub:['伸～伸～再伸長一點！','牠們每天都努力伸長脖子','奇怪的是','脖子好像真的越來越長了！','終於！','脖子變長了','高處的嫩葉子','輕輕鬆鬆就吃到了','原來常常用的部位','會越用越發達！'], vf:['voice/s06_c1.mp3','voice/s06_c2.mp3','voice/s06_c3.mp3','voice/s06_c4.mp3','voice/s07_c1.mp3','voice/s07_c2.mp3','voice/s07_c3.mp3','voice/s07_c4.mp3','voice/s07_c5.mp3','voice/s07_c6.mp3']},
   {f:null, sub:['一代傳一代','脖子越來越長','就變成現在的我啦！','你覺得','這個說法有道理嗎？','還是你比較相信「天擇說」呢？'], vf:['voice/s09_c1.mp3','voice/s09_c2.mp3','voice/s09_c3.mp3','voice/s09_c4.mp3','voice/s09_c5.mp3','voice/s09_c6.mp3']},
 ];
 let AUDIO=AUDIO_EVO.concat(AUDIO_LM);   // 兩個學說合一：幕1-6適者生存、幕7-12用進廢退
@@ -822,7 +821,7 @@ function drawTheoryTag(n){
   ctx.textBaseline='alphabetic';
 }
 function drawScene(n,t){
-  if(n>=3){ drawLamarckScene(n-2+(n>=6?1:0),t); drawTheoryTag(n); return; }
+  if(n>=3){ drawLamarckScene(n>=5 ? n : n-2, t); drawTheoryTag(n); return; }   // 幕4-6→LM n1,n2,n5
   ctx.clearRect(0,0,W,H);
   const gy=groundY();
   // 背景漸層(已在CSS) + 遠山
@@ -895,19 +894,28 @@ function drawLamarckScene(n,t){
     ctx.fillText('還有一種說法：用進廢退說！',W*0.5,sH(9));
     ctx.font=`bold ${sH(2.2)}px sans-serif`;
     ctx.fillText('很久以前祖先的脖子都短短的',W*0.5,sH(14.5));
-  } else if(n===2){ // 努力伸長脖子（樹中間、兩隻對稱都伸長）
+  } else if(n===2){ // 伸長脖子→吃到葉（第5+6幕合一，si 0-3 伸長 / 4-9 吃到）
     acacia(W*0.50,gy,sH(44));
-    const neckGrow = sH(4)+Math.min(sH(8),t*sH(5));
-    giraffe(W*0.30,gy,sH(14),neckGrow,'happy',t,0.72);
-    ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
-    giraffe(0,gy,sH(14),sH(4)+Math.min(sH(8),(t*0.8+0.4)*sH(5)),'happy',t*0.8,0.72);
-    ctx.restore();
-    sparkle(W*0.50-sH(2),gy-sH(42),t,'#fff3b0');
-    ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.6)}px sans-serif`;ctx.textAlign='center';
-    ctx.fillText('伸～伸～努力伸長脖子！',W*0.5,sH(9));
-    ctx.font=`bold ${sH(3)}px sans-serif`;
-    ctx.fillStyle='#e07b00';
-    ctx.fillText('用進廢退：常常用就會變長！',W*0.5,sH(14.5));
+    const si = (typeof sentIdx==='number') ? sentIdx : 0;
+    if(si<=3){
+      // 伸長階段：脖子持續變長
+      const neckGrow = sH(4)+Math.min(sH(9),t*sH(5));
+      giraffe(W*0.30,gy,sH(14),neckGrow,'happy',t,0.72);
+      ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
+      giraffe(0,gy,sH(14),sH(4)+Math.min(sH(9),(t*0.8+0.4)*sH(5)),'happy',t*0.8,0.72);
+      ctx.restore();
+      ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.6)}px sans-serif`;ctx.textAlign='center';
+      ctx.fillText('伸～伸～努力伸長脖子！',W*0.5,sH(9));
+    } else {
+      // 吃到葉階段：兩隻長脖子都吃到高處嫩葉
+      giraffe(W*0.30,gy,sH(14),sH(13),'happy',t);
+      ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.545,gy-sH(41),6,4,0,0,6.29);ctx.fill();
+      ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
+      giraffe(0,gy,sH(14),sH(13),'happy',t*0.8);
+      ctx.restore();
+      ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.455,gy-sH(41),6,4,0,0,6.29);ctx.fill();
+      sparkle(W*0.50-sH(2),gy-sH(42),t,'#fff3b0');
+    }
   } else if(n===3){ // 脖子長了終於吃到高處嫩葉
     acacia(W*0.72,gy,sH(46));
     giraffe(W*0.35,gy,sH(14),sH(14),'happy',t);

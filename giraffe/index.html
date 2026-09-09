@@ -351,7 +351,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   if(mood==='reach') ctx.rotate(-0.22-0.08*reachSway);
   ctx.translate(-hpX, -hpY);
   // ---- 頭部（淚滴形：額圓、吻部突出圓鈍，參考真實長頸鹿側面）----
-  const bob = mood==='talk'? Math.sin(t*10)*bodyH*0.035 : 0;
+  const bob = (mood==='talk'||mood==='happy')? Math.sin(t*10)*bodyH*0.035 : 0;   // talk/happy 都會點頭
   const hx = hpX, hy = hpY + bob;
   // 頭部輪廓（面向右：後腦→額→鼻樑→吻部圓鈍→下巴→喉）
   ctx.fillStyle = bodyCol;

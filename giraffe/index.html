@@ -860,13 +860,19 @@ function drawScene(n,t){
     }
   } else if(n===1){ // 天擇：有長有短 → 低頭吃草把草吃光（原第2+3幕合一）
     const si = (typeof sentIdx==='number') ? sentIdx : 0;
-    // 幕2 共 8 個字幕單位：前 5 站綠草，6 低頭吃草(草仍滿)，7-8 草漸少到吃光
-    if(si>=6){
-      const pct = si>=7 ? 52 : 68;
+    // 幕2 共 8 個字幕單位：草地變禿時上緣固定同高(55%)，靠殘留草叢數量表現減少
+    if(si>=5){
       ctx.fillStyle='#dcc98f';
-      ctx.fillRect(0, sH(pct), W, H-sH(pct));
-      ctx.strokeStyle='#c2a96a'; ctx.lineWidth=2; ctx.lineCap='round';
-      for(let i=0;i<14;i++){ const gx=(i*47+13)%W, gy3=sH(pct)+5+((i*11)%12), gh=3+((i*7)%5); ctx.beginPath(); ctx.moveTo(gx,gy3); ctx.lineTo(gx-2,gy3+gh); ctx.stroke(); }
+      ctx.fillRect(0, sH(55), W, H-sH(55));    // 禿地上緣固定與草地頂同高
+      const left = si>=7 ? 0 : (si===6 ? 16 : 42);   // 殘留綠草：42→16→0
+      if(left>0){
+        ctx.fillStyle='#5aa848';
+        for(let i=0;i<left;i++){ const gx=(i*47+17)%W, gh=4+((i*13)%6); ctx.fillRect(gx, gy+2, 2.5, gh); }
+      }
+      if(si>=7){  // 全禿後加幾叢枯草
+        ctx.strokeStyle='#c2a96a'; ctx.lineWidth=2; ctx.lineCap='round';
+        for(let i=0;i<16;i++){ const gx=(i*61+9)%W, gh=3+((i*7)%5); ctx.beginPath(); ctx.moveTo(gx,gy+2); ctx.lineTo(gx-2,gy+2+gh); ctx.stroke(); }
+      }
     }
     if(si>=5){
       // 低頭吃草：先滿草吃，草地再慢慢減少

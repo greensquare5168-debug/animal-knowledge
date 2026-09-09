@@ -462,7 +462,7 @@ function zebra(x, ground, t){
   const hpX = x + hw*1.30*bodyS, hpY = shY - neckH + hh*0.2;  // 頭中心（頸頂、向前伸）
 
   // 1) 遠側兩腿（白色、微外八、頂進身體；四腿同色）
-  ctx.strokeStyle=Wc; ctx.lineWidth=bodyH*0.052; ctx.lineCap='round';
+  ctx.strokeStyle=Wc; ctx.lineWidth=bodyH*0.080; ctx.lineCap='round';
   [[x-hw*0.82*bodyS,-0.10],[x+hw*0.20*bodyS,-0.05]].forEach(p=>{
     const lx=p[0], bend=p[1];
     const ty2=by+hh*0.72, kx=lx+bend*bodyH*0.9, ky=ty2+legH*0.55;
@@ -471,8 +471,8 @@ function zebra(x, ground, t){
     ctx.quadraticCurveTo(lx+bend*bodyH*0.15,ty2+legH*0.82,kx-bend*bodyH*0.1,ground-bodyH*0.03);
     ctx.stroke();
     // 遠蹄（深色、觸地）
-    ctx.strokeStyle=dark; ctx.lineWidth=bodyH*0.09; ctx.lineCap='round';
-    ctx.beginPath(); ctx.moveTo(kx-bend*bodyH*0.12, ground-bodyH*0.16);
+    ctx.strokeStyle=dark; ctx.lineWidth=bodyH*0.095; ctx.lineCap='round';
+    ctx.beginPath(); ctx.moveTo(kx-bend*bodyH*0.12, ground-bodyH*0.115);
     ctx.lineTo(kx-bend*bodyH*0.14, ground-bodyH*0.012); ctx.stroke();
   });
   // 2) 尾巴（白柄垂到腿中段 + 末端黑毛叢，尾柄與黑毛叢分離）
@@ -562,7 +562,7 @@ function zebra(x, ground, t){
   [[x-hw*0.30*bodyS,-0.13],[x+hw*0.62*bodyS,-0.10]].forEach(p=>{
     const lx=p[0], bend=p[1];
     const ty2=by+hh*0.62, kx=lx+bend*bodyH*1.0, ky=ty2+legH*0.52;
-    ctx.strokeStyle=Wc; ctx.lineWidth=bodyH*0.085; ctx.lineCap='round';
+    ctx.strokeStyle=Wc; ctx.lineWidth=bodyH*0.080; ctx.lineCap='round';
     ctx.beginPath(); ctx.moveTo(lx,ty2);
     ctx.quadraticCurveTo(lx+bend*bodyH*0.35,ty2+legH*0.3,kx,ky); ctx.stroke();
     ctx.beginPath(); ctx.moveTo(kx,ky);
@@ -574,8 +574,8 @@ function zebra(x, ground, t){
       ctx.beginPath(); ctx.moveTo(ex-bodyH*0.055,ey); ctx.lineTo(ex+bodyH*0.055,ey); ctx.stroke();
     }
     // 黑蹄（明顯粗短、觸地）
-    ctx.strokeStyle=dark; ctx.lineWidth=bodyH*0.105; ctx.lineCap='round';
-    ctx.beginPath(); ctx.moveTo(lx+bend*bodyH*0.015, ground-bodyH*0.17);
+    ctx.strokeStyle=dark; ctx.lineWidth=bodyH*0.10; ctx.lineCap='round';
+    ctx.beginPath(); ctx.moveTo(lx+bend*bodyH*0.015, ground-bodyH*0.125);
     ctx.lineTo(lx+bend*bodyH*0.0, ground-bodyH*0.012); ctx.stroke();
   });
   // 9) 頭部（淚滴形：額圓、吻部突出圓鈍，參考長頸鹿頭型）

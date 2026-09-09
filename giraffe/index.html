@@ -247,11 +247,10 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   const darkCol = '#5e3810';
   // ---- 遠側雙腿（淡色；reach 時遠前腳騰空）----
   leg(x - hw*0.82*bodyS, by+hh*0.72, legH+hh*0.28+reachBob, -0.10, bodyCol, darkCol, t, legThick);
-  if(mood==='reach'){
-    raisedLeg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28+reachBob, bodyH, '#dcc98f', '#3a2410', t, legThick);  // 連續抬放
-  } else {
+  if(mood!=='reach'){
     leg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, -0.05, bodyCol, darkCol, t, legThick);
   }
+  // （reach 的遠前腿改到近腿之後畫，避免大腿被身體擋住只剩蹄）
   // ---- 尾巴（身體左側、自然朝下垂，末端黑毛）----
   const twx = Math.sin(t*3)*1.5;
   ctx.strokeStyle = bodyCol; ctx.lineWidth = hw*0.08; ctx.lineCap='round';
@@ -341,7 +340,8 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   // ---- 近側雙腿（reach 時近前腳騰空、後腳站立）----
   leg(x - hw*0.34*bodyS, by+hh*0.6, legH+hh*0.4+reachBob, -0.13, bodyCol, darkCol, t, legThick);
   if(mood==='reach'){
-    raisedLeg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4+reachBob, bodyH, bodyCol, darkCol, t, legThick);  // 連續抬放
+    raisedLeg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4+reachBob, bodyH, bodyCol, darkCol, t, legThick);  // 近前腿（連續抬放）
+    raisedLeg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28+reachBob, bodyH, '#dcc98f', '#3a2410', t, legThick); // 遠前腿補畫（身體上層，大腿完整）
   } else {
     leg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol, t, legThick);
   }

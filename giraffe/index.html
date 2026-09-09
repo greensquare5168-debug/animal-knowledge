@@ -791,21 +791,20 @@ function grass(t){
   ctx.fillStyle='#5aa848';
   for(let i=0;i<60;i++){const gx=(i*29+t*10)%(W+40)-20;ctx.fillRect(gx,groundY()+2,2.5,5+((i*13)%7));}
 }
-// 脖子強調線（第一幕最後一句：像時鐘刻度、放射狀一圈包住脖子中段）
+// 脖子強調（第一幕最後一句：三個紅色三角扇形朝上，像傳來的參考圖）
 function neckLines(t){
-  const cx = W*0.45, cy = H*0.375;       // 脖子中段（照片脖子約 25-55% 高）
-  const r1 = W*0.048, r2 = W*0.072;      // 內外半徑（短放射線）
-  const blink = 0.85 + 0.15*Math.sin(t*9);
-  ctx.strokeStyle = 'rgba(58,58,58,'+blink.toFixed(2)+')';
-  ctx.lineWidth = Math.max(2.5, sH(0.42)); ctx.lineCap='round';
-  for(let i=0;i<12;i++){
-    const a = i/12*Math.PI*2;
-    const ca = Math.cos(a), sa = Math.sin(a);
-    ctx.beginPath();
-    ctx.moveTo(cx+ca*r1, cy+sa*r1);
-    ctx.lineTo(cx+ca*r2, cy+sa*r2);
-    ctx.stroke();
-  }
+  const cx = W*0.45, yb = H*0.43;        // 脖子中段底部（照片脖子 25-55% 高）
+  const tw = W*0.042, th = W*0.06;       // 三角寬/高
+  const blink = 0.8 + 0.2*Math.sin(t*9);
+  ctx.fillStyle = 'rgba(224,49,49,'+blink.toFixed(2)+')';
+  const tri = (x0,y0,ang)=>{
+    ctx.save(); ctx.translate(x0,y0); ctx.rotate(ang);
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-tw/2, -th); ctx.lineTo(tw/2, -th);
+    ctx.closePath(); ctx.fill(); ctx.restore();
+  };
+  tri(cx, yb, 0);                  // 中間朝上
+  tri(cx - tw*0.75, yb + th*0.12, -0.30);   // 左：外斜
+  tri(cx + tw*0.75, yb + th*0.12,  0.30);   // 右：外斜
 }
 // 光禿禿地面（整片土黃 + 稀疏枯草）
 function bareGround(){

@@ -138,7 +138,7 @@ window.addEventListener('resize',resize); resize();
 
 const AUDIO_EVO=[
  {f:null, sub:['嗨！','大家好！','我是長頸鹿！','你有沒有想過','我的脖子為什麼這麼長呀？','關於這個問題','有兩種說法喔！'], vf:['voice/s01_c1.mp3','voice/s01_c2.mp3','voice/s01_c3.mp3','voice/s01_c4.mp3','voice/s01_c5.mp3','voice/s01_c6.mp3','voice/s01_c7.mp3']},
- {f:null, sub:['第一種說法','叫做天擇說','長頸鹿一開始','脖子有長有短','天生就不一樣','可是草原上的草越來越少','矮矮的草和樹葉','一下子就被吃光了'], vf:['voice/s02_c1.mp3','voice/s02_c2.mp3','voice/s02_c3.mp3','voice/s02_c4.mp3','voice/s02_c5.mp3','voice/s02_c6.mp3','voice/s02_c7.mp3','voice/s02_c8.mp3']},
+ {f:null, sub:['第一種說法','叫做天擇說','長頸鹿一開始','脖子有長有短','天生就不一樣','可是草原上的草越來越少','草又少了一點','矮矮的草和樹葉也快沒了','只剩下幾根小草','草一下子就被吃光了'], vf:['voice/s02_c1.mp3','voice/s02_c2.mp3','voice/s02_c3.mp3','voice/s02_c4.mp3','voice/s02_c5.mp3','voice/s02_c6.mp3','voice/s02_c7.mp3','voice/s02_c8.mp3','voice/s02_c9.mp3','voice/s02_c10.mp3']},
  {f:null, sub:['高高的樹上','有又嫩又好吃的葉子','脖子長的長頸鹿','輕輕鬆鬆就吃到了','可是脖子短的','伸長了脖子','還是差一點點'], vf:['voice/s03_c1.mp3','voice/s03_c2.mp3','voice/s03_c3.mp3','voice/s03_c4.mp3','voice/s03_c5.mp3','voice/s03_c6.mp3','voice/s03_c7.mp3']},
  {f:null, sub:['日子一天一天過去','草越來越少','脖子短的長頸鹿','吃不到東西','最後餓死了','脖子長的長頸鹿','活了下來','生下小寶寶','一代一代傳下去','脖子長的越來越多','這就是「天擇說」'], vf:['voice/s04_c1.mp3','voice/s04_c2.mp3','voice/s04_c3.mp3','voice/s04_c4.mp3','voice/s04_c5.mp3','voice/s04_c6.mp3','voice/s04_c7.mp3','voice/s04_c8.mp3','voice/s04_c9.mp3','voice/s04_c10.mp3','voice/s04_c11.mp3']},
 ];
@@ -860,22 +860,23 @@ function drawScene(n,t){
     }
   } else if(n===1){ // 天擇：有長有短 → 低頭吃草把草吃光（原第2+3幕合一）
     const si = (typeof sentIdx==='number') ? sentIdx : 0;
-    // 幕2 共 8 個字幕單位：草地變禿時上緣固定同高(55%)，靠殘留草叢數量表現減少
+    // 幕2 共 10 句：站 si0-4 滿草；si5-9 低頭吃草、草分 5 次消失（100→80→60→40→20→0%）
     if(si>=5){
       ctx.fillStyle='#dcc98f';
       ctx.fillRect(0, sH(55), W, H-sH(55));    // 禿地上緣固定與草地頂同高
-      const left = si>=7 ? 0 : (si===6 ? 16 : 42);   // 殘留綠草：42→16→0
+      const lefts = [48,36,24,12,0];           // 滿草 60 叢：每次少 20%
+      const left = lefts[Math.min(si-5, 4)];
       if(left>0){
         ctx.fillStyle='#5aa848';
-        for(let i=0;i<left;i++){ const gx=(i*47+17)%W, gh=4+((i*13)%6); ctx.fillRect(gx, gy+2, 2.5, gh); }
+        for(let i=0;i<left;i++){ const gx=(i*53+17)%W, gh=4+((i*13)%6); ctx.fillRect(gx, gy+2, 2.5, gh); }
       }
-      if(si>=7){  // 全禿後加幾叢枯草
+      if(left===0){  // 全禿後加幾叢枯草
         ctx.strokeStyle='#c2a96a'; ctx.lineWidth=2; ctx.lineCap='round';
         for(let i=0;i<16;i++){ const gx=(i*61+9)%W, gh=3+((i*7)%5); ctx.beginPath(); ctx.moveTo(gx,gy+2); ctx.lineTo(gx-2,gy+2+gh); ctx.stroke(); }
       }
     }
     if(si>=5){
-      // 低頭吃草：先滿草吃，草地再慢慢減少
+      // 低頭吃草：草分五次消失
       giraffe(W*0.30,gy,sH(14),sH(13),'eat',t);
       giraffe(W*0.66,gy,sH(11),sH(4),'eat',t*0.7,0.72);
     } else {

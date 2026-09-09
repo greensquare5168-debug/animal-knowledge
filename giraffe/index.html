@@ -1022,10 +1022,14 @@ function playScene(i){
       audio = new Audio(vfs[myIdx]);
       audio.playbackRate = 1;
       audio.onended = ()=>{ if(sentIdx===myIdx && playing) goNext(); };
-      audio.play().catch(()=>{});
+      audio.play().catch(()=>{ autoTimer = setTimeout(goNext, 3000); });
     }
-    // 計時器主導：這句最多停留 4.5 秒語音先播完會提早換句 → 永不卡帶
-    window._sentTimer = setTimeout(()=>{ if(sentIdx===myIdx && playing) goNext(); }, 4500);
+    // 提前預載接下來 3 句語音（聲音才跟得上字幕）
+    for(let pk=1; pk<=3; pk++){
+      if(vfs[myIdx+pk]){ const pa = new Audio(vfs[myIdx+pk]); pa.preload='auto'; }
+    }
+    // 計時器主導：這句最多停留 6 秒，語音先播完會提早換句 → 永不卡帶
+    window._sentTimer = setTimeout(()=>{ if(sentIdx===myIdx && playing) goNext(); }, 6000);
   }
   step();
   playing=true; document.getElementById('playBtn').textContent='⏸';

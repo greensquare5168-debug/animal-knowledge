@@ -470,15 +470,19 @@ function zebra(x, ground, t){
     ctx.quadraticCurveTo(lx+bend*bodyH*0.5,ty2+legH*0.3,kx,ky);
     ctx.quadraticCurveTo(lx+bend*bodyH*0.15,ty2+legH*0.82,kx-bend*bodyH*0.1,ground-bodyH*0.03);
     ctx.stroke();
+    // 遠蹄（深色、觸地）
+    ctx.strokeStyle=dark; ctx.lineWidth=bodyH*0.09; ctx.lineCap='round';
+    ctx.beginPath(); ctx.moveTo(kx-bend*bodyH*0.12, ground-bodyH*0.16);
+    ctx.lineTo(kx-bend*bodyH*0.14, ground-bodyH*0.012); ctx.stroke();
   });
   // 2) 尾巴（白柄垂到腿中段 + 末端黑毛叢，尾柄與黑毛叢分離）
-  ctx.strokeStyle=Wc; ctx.lineWidth=bodyH*0.042; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(x-hw*1.10*bodyS,by-hh*0.5);
-  ctx.quadraticCurveTo(x-hw*1.42*bodyS,by-hh*0.1,x-hw*1.38*bodyS,by+legH*0.35); ctx.stroke();
+  ctx.strokeStyle=Wc; ctx.lineWidth=bodyH*0.052; ctx.lineCap='round';
+  ctx.beginPath(); ctx.moveTo(x-hw*0.96*bodyS,by-hh*0.26);
+  ctx.quadraticCurveTo(x-hw*1.30*bodyS,by-hh*0.0,x-hw*1.33*bodyS,by+legH*0.38); ctx.stroke();
   ctx.strokeStyle=dark; ctx.lineWidth=bodyH*0.055;
   for(let k=-1;k<=1;k++){
     ctx.beginPath();
-    ctx.moveTo(x-hw*1.36*bodyS+k*bodyH*0.008, by+legH*0.30);
+    ctx.moveTo(x-hw*1.35*bodyS+k*bodyH*0.008, by+legH*0.34);
     ctx.quadraticCurveTo(x-hw*1.52*bodyS+k*bodyH*0.03, by+legH*0.72, x-hw*1.38*bodyS+k*bodyH*0.10, by+legH*0.95);
     ctx.stroke();
   }
@@ -569,10 +573,10 @@ function zebra(x, ground, t){
       const ex=lx+(kx-lx)*s3*1.2, ey=ty2+(ky-ty2)*s3*1.2;
       ctx.beginPath(); ctx.moveTo(ex-bodyH*0.055,ey); ctx.lineTo(ex+bodyH*0.055,ey); ctx.stroke();
     }
-    // 黑蹄
-    ctx.strokeStyle=dark; ctx.lineWidth=bodyH*0.095;
-    ctx.beginPath(); ctx.moveTo(lx+bend*bodyH*0.02,ground-bodyH*0.05);
-    ctx.lineTo(lx+bend*bodyH*0.0,ground-bodyH*0.005); ctx.stroke();
+    // 黑蹄（明顯粗短、觸地）
+    ctx.strokeStyle=dark; ctx.lineWidth=bodyH*0.105; ctx.lineCap='round';
+    ctx.beginPath(); ctx.moveTo(lx+bend*bodyH*0.015, ground-bodyH*0.17);
+    ctx.lineTo(lx+bend*bodyH*0.0, ground-bodyH*0.012); ctx.stroke();
   });
   // 9) 頭部（淚滴形：額圓、吻部突出圓鈍，參考長頸鹿頭型）
   const hx=hpX, hy=hpY;
@@ -603,13 +607,13 @@ function zebra(x, ground, t){
   ctx.fillStyle=snout;
   ctx.beginPath(); ctx.ellipse(hx+hw*0.67, hy+hw*0.05, hw*0.28, hw*0.18, -0.10, 0, 6.29); ctx.fill();
   ctx.restore();
-  // 11) 耳朵（兩片立耳：遠耳淡灰、近耳深色內白）
+  // 11) 耳朵（貼頭頂後緣兩側、前後錯開橫向，看起來是耳朵不是角）
   ctx.fillStyle=far;
-  ctx.beginPath(); ctx.ellipse(hx-hw*0.34, hy-hw*0.46, hw*0.075, hw*0.20, -0.15, 0, 6.29); ctx.fill();
-  ctx.fillStyle=dark;
-  ctx.beginPath(); ctx.ellipse(hx-hw*0.16, hy-hw*0.52, hw*0.085, hw*0.23, -0.05, 0, 6.29); ctx.fill();
-  ctx.fillStyle='#f2f2ef';
-  ctx.beginPath(); ctx.ellipse(hx-hw*0.155, hy-hw*0.50, hw*0.035, hw*0.11, -0.05, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(hx-hw*0.46, hy-hw*0.16, hw*0.17, hw*0.07, -0.55, 0, 6.29); ctx.fill();
+  ctx.fillStyle=Wc;
+  ctx.beginPath(); ctx.ellipse(hx-hw*0.30, hy-hw*0.30, hw*0.21, hw*0.085, -0.28, 0, 6.29); ctx.fill();
+  ctx.fillStyle='#e8e5de';
+  ctx.beginPath(); ctx.ellipse(hx-hw*0.26, hy-hw*0.295, hw*0.12, hw*0.045, -0.28, 0, 6.29); ctx.fill();
   // 12) 眼睛（大而有神：黑圓 + 白高光）
   ctx.fillStyle=dark;
   ctx.beginPath(); ctx.ellipse(hx+hw*0.09, hy-hw*0.10, hw*0.075, hw*0.105, -0.08, 0, 6.29); ctx.fill();

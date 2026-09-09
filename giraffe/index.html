@@ -735,31 +735,28 @@ function giraffeDead(x, ground, bodyH){
   const ex2 = hxx+hs*0.09, ey2 = hyy-hs*0.10;
   ctx.beginPath(); ctx.moveTo(ex2-hs*0.085, ey2-hs*0.085); ctx.lineTo(ex2+hs*0.085, ey2+hs*0.085); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(ex2+hs*0.085, ey2-hs*0.085); ctx.lineTo(ex2-hs*0.085, ey2+hs*0.085); ctx.stroke();
-// ---- 腿（上側兩條：大腿+小腿有膝蓋、蹄深棕，比照站姿腿）----
-  // 後腿（臀部）
-  const hipX = x-bodyH*0.42, hipY = bodyTop+bodyH*0.05;
-  ctx.strokeStyle = bodyCol; ctx.lineWidth = bodyH*0.085; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(hipX, hipY);
-  ctx.quadraticCurveTo(hipX-bodyH*0.14, hipY-bodyH*0.4, hipX+bodyH*0.02, hipY-bodyH*0.52);
+// ---- 腿（跟站姿一樣粗一樣長，在身體下面沿地向前後伸，共四條）----
+  const legW = sH(1.85);
+  const legL = bodyH*0.85;
+  ctx.strokeStyle = bodyCol; ctx.lineWidth = legW; ctx.lineCap='round';
+  const legY = ground - bodyH*0.06;
+  ctx.beginPath(); ctx.moveTo(x+bodyH*0.55, legY);
+  ctx.quadraticCurveTo(x+bodyH*0.85, legY+bodyH*0.05, x+bodyH*1.05, legY+bodyH*0.02);
   ctx.stroke();
-  ctx.strokeStyle = bodyCol; ctx.lineWidth = bodyH*0.07;
-  ctx.beginPath(); ctx.moveTo(hipX+bodyH*0.02, hipY-bodyH*0.52);
-  ctx.quadraticCurveTo(hipX+bodyH*0.1, hipY-bodyH*0.6, hipX+bodyH*0.05, hipY-bodyH*0.68);
+  ctx.beginPath(); ctx.moveTo(x+bodyH*0.42, legY);
+  ctx.quadraticCurveTo(x+bodyH*0.72, legY-bodyH*0.08, x+bodyH*0.93, legY-bodyH*0.10);
   ctx.stroke();
-  ctx.fillStyle = darkCol;
-  ctx.beginPath(); ctx.ellipse(hipX+bodyH*0.05, hipY-bodyH*0.68, bodyH*0.03, bodyH*0.05, 0, 0, 6.29); ctx.fill();
-  // 前腿（肩部）
-  const shX = x+bodyH*0.4, shY = bodyTop+bodyH*0.1;
-  ctx.strokeStyle = bodyCol; ctx.lineWidth = bodyH*0.085;
-  ctx.beginPath(); ctx.moveTo(shX, shY);
-  ctx.quadraticCurveTo(shX+bodyH*0.15, shY-bodyH*0.42, shX-bodyH*0.02, shY-bodyH*0.55);
+  ctx.beginPath(); ctx.moveTo(x-bodyH*0.55, legY);
+  ctx.quadraticCurveTo(x-bodyH*0.85, legY+bodyH*0.05, x-bodyH*1.05, legY+bodyH*0.02);
   ctx.stroke();
-  ctx.strokeStyle = bodyCol; ctx.lineWidth = bodyH*0.07;
-  ctx.beginPath(); ctx.moveTo(shX-bodyH*0.02, shY-bodyH*0.55);
-  ctx.quadraticCurveTo(shX-bodyH*0.08, shY-bodyH*0.64, shX-bodyH*0.04, shY-bodyH*0.72);
+  ctx.beginPath(); ctx.moveTo(x-bodyH*0.42, legY);
+  ctx.quadraticCurveTo(x-bodyH*0.72, legY-bodyH*0.08, x-bodyH*0.93, legY-bodyH*0.10);
   ctx.stroke();
-  ctx.fillStyle = darkCol;
-  ctx.beginPath(); ctx.ellipse(shX-bodyH*0.04, shY-bodyH*0.72, bodyH*0.03, bodyH*0.05, 0, 0, 6.29); ctx.fill();
+  ctx.strokeStyle = darkCol; ctx.lineWidth = legW*0.85;
+  ctx.beginPath(); ctx.moveTo(x+bodyH*1.05, legY+bodyH*0.02); ctx.lineTo(x+bodyH*1.13, legY+bodyH*0.04); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x+bodyH*0.93, legY-bodyH*0.10); ctx.lineTo(x+bodyH*1.01, legY-bodyH*0.11); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x-bodyH*1.05, legY+bodyH*0.02); ctx.lineTo(x-bodyH*1.13, legY+bodyH*0.04); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x-bodyH*0.93, legY-bodyH*0.10); ctx.lineTo(x-bodyH*1.01, legY-bodyH*0.11); ctx.stroke();
 }
 function acacia(x, ground, th){
   // 金合歡（傘狀樹）

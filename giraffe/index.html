@@ -406,8 +406,9 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
     ctx.fillStyle='#8ec9f0';
     ctx.beginPath(); ctx.ellipse(hx-hw*0.104, hy+hw*0.02, hw*0.05, hw*0.085, 0.3, 0, 6.29); ctx.fill();
   } else if(mood==='happy'||mood==='reach'){
-    ctx.strokeStyle='#1f1f1f'; ctx.lineWidth=hw*0.055;
-    ctx.beginPath(); ctx.arc(hx+hw*0.650, hy+hw*0.13, hw*0.09, 0.2, Math.PI*0.8); ctx.stroke();
+    // 微笑畫在吻部下緣外的黃色底上（黑線才看得清楚）
+    ctx.strokeStyle='#1f1f1f'; ctx.lineWidth=hw*0.06;
+    ctx.beginPath(); ctx.arc(hx+hw*0.660, hy+hw*0.235, hw*0.10, 0.15, Math.PI*0.85); ctx.stroke();
   } else {
     ctx.strokeStyle='#1f1f1f'; ctx.lineWidth=hw*0.055;
     ctx.beginPath(); ctx.moveTo(hx+hw*0.594, hy+hw*0.125); ctx.quadraticCurveTo(hx+hw*0.739, hy+hw*0.17, hx+hw*0.885, hy+hw*0.115); ctx.stroke();
@@ -860,7 +861,7 @@ function drawScene(n,t){
   } else if(n===3){ // 高處樹葉：兩隻 + 光禿禿地
     bareGround();
     acacia(W*0.78,gy,sH(46));
-    giraffe(W*0.24,gy,sH(14),sH(13),null,t*0.6);      // 正常長（想吃高處葉）
+    giraffe(W*0.24,gy,sH(14),sH(13),'happy',t*0.6);   // 正常長（微笑+頭會動）
     giraffe(W*0.60,gy,sH(11),sH(4),'happy',t*0.8,0.72); // 短小（微笑同前面）
     sparkle(W*0.75-sH(6),gy-sH(44),t,'#fff3b0');
     sparkle(W*0.8,gy-sH(40),t+1,'#fff3b0');

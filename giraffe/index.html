@@ -993,8 +993,8 @@ function playScene(i){
   function step(){
     if(!playing) return;
     sentT0 = performance.now();
-    document.getElementById('sub').textContent = sents[sentIdx] || '';
     const myIdx = sentIdx;
+    const showSent = ()=>{ document.getElementById('sub').textContent = sents[myIdx] || ''; };
     const goNext = ()=>{
       if(sentIdx !== myIdx) return;
       if(window._sentTimer){ clearTimeout(window._sentTimer); window._sentTimer=null; }
@@ -1014,11 +1014,12 @@ function playScene(i){
         window._sentTimer = setTimeout(()=>{ if(sentIdx===myIdx && playing) goNext(); }, sdur*1000);
       };
       audio.onplaying = startTimer;
-      // 語音開始播了才計時；載入等待最多 4.5 秒（超過→跳句避免卡）
-      const guard = setTimeout(()=>{ if(sentIdx===myIdx && playing && audio && audio.paused && audio.currentTime===0){ goNext(); } }, 4500);
-      audio.play().then(()=>{ clearTimeout(guard); if(audio && !audio.paused) startTimer(); })
-                  .catch(()=>{ clearTimeout(guard); autoTimer = setTimeout(goNext, 3000); });
+      // 語音開始播的瞬間才顯示字幕 → 聲音字幕同步
+      const guard = setTimeout(()=>{ if(sentIdx===myIdx && playing && audio && audio.paused && audio.currentTime===0){ showSent(); goNext(); } }, 4500);
+      audio.play().then(()=>{ clearTimeout(guard); showSent(); if(audio && !audio.paused) startTimer(); })
+                  .catch(()=>{ clearTimeout(guard); showSent(); autoTimer = setTimeout(goNext, 3000); });
     } else {
+      showSent();
       window._sentTimer = setTimeout(()=>{ if(sentIdx===myIdx && playing) goNext(); }, 4000);
     }
     // 提前預載接下來 3 句語音（聲音才跟得上字幕）

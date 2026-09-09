@@ -870,7 +870,7 @@ function drawScene(n,t){
     acacia(W*0.52,gy,sH(44));
     giraffe(W*0.32,gy,sH(14),sH(13),'happy',t);   // 長脖子吃葉子
     ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.56,gy-sH(41),6,4,0,0,6.29);ctx.fill();
-    if(si>=5){
+    if(si>=4){   // 說「時間長了」時切換成趴地死
       // 短小的餓死趴地（鏡像）
       ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
       giraffeDead(0, gy, sH(11));

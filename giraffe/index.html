@@ -205,11 +205,12 @@ function traceBodyPath(x, by, hw, hh, sx){
   ctx.quadraticCurveTo(x+hw*0.5*sx, by+hh*0.7, x+hw*0.55*sx, by+hh*0.6);
   ctx.closePath();
 }
-function giraffe(x, ground, bodyH, neckH, mood, t){
+function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   // 對照教學圖重畫：長脖子 + 兩隻角 + 細長腿 + 棕白網狀花紋
+  legK = legK||1;                     // 腿長縮放（短腿用）
   const hh = bodyH*0.5;               // 身體半高
   const hw = bodyH*0.56;              // 身體半寬
-  const legH = bodyH*1.25;            // 細長腿
+  const legH = bodyH*1.25*legK;       // 細長腿（可縮短）
   const by = ground - legH - hh;      // 身體中心Y
   const bodyS = 1.15;                                  // 身體長度係數（長一點）
   const hpX = x + hw*1.18*bodyS, hpY = by - hh - neckH;   // 頭中心（脖子頂端右側，向前伸出）
@@ -809,7 +810,7 @@ function drawScene(n,t){
     ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.56,gy-sH(41),6,4,0,0,6.29);ctx.fill();
     // 短脖子站右邊、面向左邊的樹（鏡像畫法：想吃吃不到）
     ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
-    giraffe(0,gy,sH(13),sH(4),'sad',t*0.5);
+    giraffe(0,gy,sH(13),sH(4),'sad',t*0.5,0.72);
     ctx.restore();
     ctx.fillStyle='#ffb347';ctx.font=`bold ${sH(5)}px sans-serif`;ctx.textAlign='center';ctx.fillText('好餓……吃不到……',W*0.70,sH(9));
   } else if(n===5){ // 適者生存：短的餓死、長的活下來

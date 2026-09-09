@@ -1024,14 +1024,22 @@ function playScene(i){
       audio = new Audio(vfs[myIdx]);
       audio.playbackRate = 1;
       audio.onended = ()=>{ if(sentIdx===myIdx && playing) goNext(); };
-      audio.play().catch(()=>{ autoTimer = setTimeout(goNext, 3000); });
+      const startTimer = ()=>{
+        if(window._sentTimer){ clearTimeout(window._sentTimer); }
+        window._sentTimer = setTimeout(()=>{ if(sentIdx===myIdx && playing) goNext(); }, 6000);
+      };
+      audio.onplaying = startTimer;
+      // 語音開始播了才計時；載入等待最多 4.5 秒（超過→跳句避免卡）
+      const guard = setTimeout(()=>{ if(sentIdx===myIdx && playing && audio && audio.paused && audio.currentTime===0){ goNext(); } }, 4500);
+      audio.play().then(()=>{ clearTimeout(guard); if(audio && !audio.paused) startTimer(); })
+                  .catch(()=>{ clearTimeout(guard); autoTimer = setTimeout(goNext, 3000); });
+    } else {
+      window._sentTimer = setTimeout(()=>{ if(sentIdx===myIdx && playing) goNext(); }, 4000);
     }
     // 提前預載接下來 3 句語音（聲音才跟得上字幕）
     for(let pk=1; pk<=3; pk++){
       if(vfs[myIdx+pk]){ const pa = new Audio(vfs[myIdx+pk]); pa.preload='auto'; }
     }
-    // 計時器主導：這句最多停留 6 秒，語音先播完會提早換句 → 永不卡帶
-    window._sentTimer = setTimeout(()=>{ if(sentIdx===myIdx && playing) goNext(); }, 6000);
   }
   step();
   playing=true; document.getElementById('playBtn').textContent='⏸';

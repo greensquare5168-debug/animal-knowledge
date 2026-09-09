@@ -450,110 +450,177 @@ function leg(lx, topY, len, bend, col, hoofCol, t){
 }
 
 function zebra(x, ground, t){
-  // 卡通側面斑馬：白底黑弧紋、短鬃毛、黑尾叢、黑蹄（參考真實斑馬）
-  const bh=sH(10), rx=bh*0.72, ry=bh*0.34;  // 身體拉長（2.1:1），不那麼圓
-  const legH=bh*0.78;                       // 腿長
-  const bob=Math.sin(t*6+x)*1.1;
-  const by=ground-legH-ry+bob;              // 身體中心
-  const Wc='#ffffff', dark='#26221e', far='#c9c9c4';
-  // 1) 遠側兩腿（淡灰、微外八）
-  ctx.strokeStyle=far; ctx.lineWidth=bh*0.055; ctx.lineCap='round';
-  [[x-rx*0.44,x-rx*0.56],[x+rx*0.30,x+rx*0.40]].forEach(p=>{
-    ctx.beginPath(); ctx.moveTo(p[0],by+ry*0.7);
-    ctx.quadraticCurveTo(p[0]+rx*0.08,(by+ry*0.7+ground)/2,p[1],ground); ctx.stroke();
-  });
-  // 2) 尾巴：白柄垂到腿中段 + 末端黑毛叢
-  ctx.strokeStyle=Wc; ctx.lineWidth=bh*0.035; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(x-rx*0.94,by-ry*0.35);
-  ctx.quadraticCurveTo(x-rx*1.16,by-ry*0.05,x-rx*1.12,by+ry*0.9); ctx.stroke();
-  ctx.strokeStyle=dark; ctx.lineWidth=bh*0.042;
-  ctx.beginPath(); ctx.moveTo(x-rx*1.11,by+ry*0.8);
-  ctx.quadraticCurveTo(x-rx*1.24,by+ry*1.3,x-rx*1.06,by+ry*1.45); ctx.stroke();
-  // 3) 身體（白）+ 細輪廓
-  ctx.fillStyle=Wc;
-  ctx.beginPath(); ctx.ellipse(x,by,rx,ry,0,0,6.29); ctx.fill();
-  ctx.strokeStyle='rgba(60,50,40,.18)'; ctx.lineWidth=1.2; ctx.stroke();
-  // 4) 身體條紋（clip：背脊垂直、向腹緣微弧收窄）
-  ctx.save(); ctx.beginPath(); ctx.ellipse(x,by,rx,ry,0,0,6.29); ctx.clip();
-  ctx.fillStyle=dark;
-  for(let i=0;i<9;i++){
-    const u=(i+0.5)/9-0.5;                 // -0.44..0.44
-    const cx2=x+u*rx*1.6;
-    const wTop=bh*0.095*(1-Math.abs(u)*0.5), wBot=bh*0.05;
-    const lean=(cx2-x)*0.10;
-    ctx.beginPath();
-    ctx.moveTo(cx2-wTop/2,by-ry-2);
-    ctx.quadraticCurveTo(cx2-wTop/2+lean,by,(cx2+lean)-wBot/2,by+ry+2);
-    ctx.lineTo((cx2+lean)+wBot/2,by+ry+2);
-    ctx.quadraticCurveTo(cx2+wTop/2+lean,by,cx2+wTop/2,by-ry-2);
-    ctx.closePath(); ctx.fill();
-  }
-  ctx.restore();
-  // 5) 脖子（白粗弧，較粗較長，朝右上伸）
-  const nx1=x+rx*0.36, ny1=by-ry*0.2;      // 頸根（身體前上）
-  const hx=x+rx*1.15, hy=by-bh*0.80;       // 頭中心（更高，脖子更長）
-  ctx.strokeStyle=Wc; ctx.lineWidth=bh*0.19; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(nx1,ny1);
-  ctx.quadraticCurveTo(x+rx*0.62,by-bh*0.92,hx-bh*0.16,hy+bh*0.06); ctx.stroke();
-  // 頸紋（垂直頸的短黑線）
-  const ndx=(hx-bh*0.16)-nx1, ndy=(hy+bh*0.06)-ny1;
-  const nvl=Math.hypot(ndx,ndy)||1;
-  ctx.strokeStyle=dark; ctx.lineWidth=bh*0.022; ctx.lineCap='round';
-  for(let s4=0.3;s4<0.95;s4+=0.26){
-    const px2=nx1+ndx*s4, py2=ny1+ndy*s4;
-    ctx.beginPath();
-    ctx.moveTo(px2+(-ndy/nvl)*bh*0.085,py2+(ndx/nvl)*bh*0.085);
-    ctx.lineTo(px2-(-ndy/nvl)*bh*0.085,py2-(ndx/nvl)*bh*0.085); ctx.stroke();
-  }
-  // 6) 鬃毛（短直立黑毛，沿頸背側）
-  const mx1=x+rx*0.56, my1=by-ry*0.75, mx2=hx-bh*0.24, my2=hy-bh*0.17;
-  let dvx=mx2-mx1, dvy=my2-my1;
-  let vx=-dvy, vy=dvx; if(vy>0){vx=-vx; vy=-vy;}
-  const vl=Math.hypot(vx,vy)||1; vx/=vl; vy/=vl;
-  ctx.strokeStyle=dark; ctx.lineWidth=bh*0.03; ctx.lineCap='round';
-  for(let i2=0;i2<=7;i2++){
-    const s2=i2/7, px3=mx1+(mx2-mx1)*s2, py3=my1+(my2-my1)*s2;
-    ctx.beginPath(); ctx.moveTo(px3+vx*bh*0.025,py3+vy*bh*0.025);
-    ctx.lineTo(px3+vx*bh*0.095,py3+vy*bh*0.095); ctx.stroke();
-  }
-  // 7) 頭部（白底橢圓，放大，略前傾）
-  ctx.fillStyle=Wc;
-  ctx.beginPath(); ctx.ellipse(hx,hy,bh*0.25,bh*0.19,-0.06,0,6.29); ctx.fill();
-  ctx.strokeStyle='rgba(60,50,40,.18)'; ctx.lineWidth=1; ctx.stroke();
-  // 8) 深色口鼻（貼頭前緣）+ 微笑嘴
-  ctx.save(); ctx.beginPath(); ctx.ellipse(hx,hy,bh*0.25,bh*0.19,-0.06,0,6.29); ctx.clip();
-  ctx.fillStyle='#3a3a3a';
-  ctx.beginPath(); ctx.ellipse(hx+bh*0.115,hy+bh*0.015,bh*0.16,bh*0.195,0,0,6.29); ctx.fill();
-  ctx.restore();
-  ctx.strokeStyle='rgba(255,255,255,.85)'; ctx.lineWidth=1.5; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(hx+bh*0.115,hy+bh*0.085);
-  ctx.quadraticCurveTo(hx+bh*0.155,hy+bh*0.115,hx+bh*0.19,hy+bh*0.07); ctx.stroke();
-  // 9) 耳朵（遠耳淡灰 + 近耳深色內白，放大）
-  ctx.fillStyle='#a8a8a3';
-  ctx.beginPath(); ctx.ellipse(hx-bh*0.125,hy-bh*0.18,bh*0.04,bh*0.105,-0.1,0,6.29); ctx.fill();
-  ctx.fillStyle=dark;
-  ctx.beginPath(); ctx.ellipse(hx-bh*0.005,hy-bh*0.185,bh*0.046,bh*0.12,-0.12,0,6.29); ctx.fill();
-  ctx.fillStyle='#f2f2ef';
-  ctx.beginPath(); ctx.ellipse(hx-bh*0.002,hy-bh*0.165,bh*0.02,bh*0.062,-0.12,0,6.29); ctx.fill();
-  // 10) 眼睛（黑圓 + 白高光，放大）
-  ctx.fillStyle=dark;
-  ctx.beginPath(); ctx.arc(hx-bh*0.06,hy-bh*0.045,bh*0.042,0,6.29); ctx.fill();
-  ctx.fillStyle='#fff';
-  ctx.beginPath(); ctx.arc(hx-bh*0.048,hy-bh*0.06,bh*0.014,0,6.29); ctx.fill();
-  // 11) 近側兩腿（白底 + 黑環紋 + 黑蹄）
-  [[x+rx*0.34,x+rx*0.48],[x-rx*0.36,x-rx*0.50]].forEach(p=>{
-    const lx=p[0], fx=p[1], ty2=by+ry*0.6;
-    ctx.strokeStyle=Wc; ctx.lineWidth=bh*0.085; ctx.lineCap='round';
+  // 畫風參考長頸鹿：有機馬形身體(肩峰/臀低) + 錐形脖子 + 淚滴頭 + 黑吻 + 整條鬃毛
+  const bodyH = sH(10);                 // 比長頸鹿略小（同為草原動物）
+  const bob = Math.sin(t*6+x)*1.1;
+  const hh = bodyH*0.42, hw = bodyH*0.60, bodyS = 1.15;   // 身體半高/半寬（矮壯馬形、加長同長頸鹿）
+  const legH = bodyH*0.82;              // 腿長（短粗）
+  const by = ground + bob - legH - hh*0.85;               // 身體中心Y
+  const Wc='#ffffff', dark='#26221e', far='#c9c9c4', snout='#3a3a3a';
+  const shY = by - hh*0.95;             // 肩峰高
+  const neckH = bodyH*0.52;             // 脖子短
+  const hpX = x + hw*1.30*bodyS, hpY = shY - neckH + hh*0.2;  // 頭中心（頸頂、向前伸）
+
+  // 1) 遠側兩腿（白色、微外八、頂進身體；四腿同色）
+  ctx.strokeStyle=Wc; ctx.lineWidth=bodyH*0.052; ctx.lineCap='round';
+  [[x-hw*0.82*bodyS,-0.10],[x+hw*0.20*bodyS,-0.05]].forEach(p=>{
+    const lx=p[0], bend=p[1];
+    const ty2=by+hh*0.72, kx=lx+bend*bodyH*0.9, ky=ty2+legH*0.55;
     ctx.beginPath(); ctx.moveTo(lx,ty2);
-    ctx.quadraticCurveTo(lx+rx*0.10,(ty2+ground)/2,fx,ground-bh*0.02); ctx.stroke();
-    ctx.strokeStyle=dark; ctx.lineWidth=bh*0.026;
-    for(let s3=0.3;s3<0.9;s3+=0.24){
-      const ex=lx+(fx-lx)*s3, ey=ty2+(ground-bh*0.02-ty2)*s3;
-      ctx.beginPath(); ctx.moveTo(ex-bh*0.055,ey); ctx.lineTo(ex+bh*0.055,ey); ctx.stroke();
-    }
-    ctx.strokeStyle=dark; ctx.lineWidth=bh*0.10;
-    ctx.beginPath(); ctx.moveTo(fx,ground-bh*0.055); ctx.lineTo(fx-bh*0.02,ground); ctx.stroke();
+    ctx.quadraticCurveTo(lx+bend*bodyH*0.5,ty2+legH*0.3,kx,ky);
+    ctx.quadraticCurveTo(lx+bend*bodyH*0.15,ty2+legH*0.82,kx-bend*bodyH*0.1,ground-bodyH*0.03);
+    ctx.stroke();
   });
+  // 2) 尾巴（白柄垂到腿中段 + 末端黑毛叢，尾柄與黑毛叢分離）
+  ctx.strokeStyle=Wc; ctx.lineWidth=bodyH*0.042; ctx.lineCap='round';
+  ctx.beginPath(); ctx.moveTo(x-hw*1.10*bodyS,by-hh*0.5);
+  ctx.quadraticCurveTo(x-hw*1.42*bodyS,by-hh*0.1,x-hw*1.38*bodyS,by+legH*0.35); ctx.stroke();
+  ctx.strokeStyle=dark; ctx.lineWidth=bodyH*0.055;
+  for(let k=-1;k<=1;k++){
+    ctx.beginPath();
+    ctx.moveTo(x-hw*1.36*bodyS+k*bodyH*0.008, by+legH*0.30);
+    ctx.quadraticCurveTo(x-hw*1.52*bodyS+k*bodyH*0.03, by+legH*0.72, x-hw*1.38*bodyS+k*bodyH*0.10, by+legH*0.95);
+    ctx.stroke();
+  }
+  // 3) 身體（白底，前高後低馬形，同長頸鹿輪廓）
+  ctx.fillStyle=Wc;
+  traceBodyPath(x,by,hw,hh,bodyS); ctx.fill();
+  ctx.strokeStyle='rgba(60,50,40,.15)'; ctx.lineWidth=1.2; ctx.stroke();
+  // 4) 身體條紋（clip 貼輪廓：順身體曲線自然彎、寬窄不一、末端圓鈍、偶爾分岔）
+  ctx.save(); traceBodyPath(x,by,hw,hh,bodyS); ctx.clip();
+  ctx.fillStyle=dark;
+  for(let i=0;i<11;i++){
+    const u=(i+0.5)/11-0.5;               // -0.45..0.45（胸→臀）
+    const topX = x + (u*hw*1.55 + Math.sin(i*2.1)*hw*0.12)*bodyS;  // 頂端微交錯
+    const botX = topX + Math.sin(i*1.7+1.2)*hw*0.24*bodyS;         // 底端偏位→整條自然傾斜
+    const topY = by - hh*1.22;
+    const botY = by + hh*(0.66+((i*37)%5)*0.11);                   // 長短參差
+    const wTop = bodyH*(0.055+((i*13)%3)*0.011)*(1-Math.abs(u)*0.35);
+    const wBot = bodyH*(0.030+((i*29)%3)*0.009);
+    const midX = (topX+botX)/2, midY = (topY+botY)/2;
+    const bendL = (botX-topX)*0.22 + Math.sin(i*2.9)*hw*0.20*bodyS;  // 兩側不同彎度
+    const bendR = (botX-topX)*0.22 + Math.cos(i*2.3)*hw*0.20*bodyS;
+    ctx.beginPath();
+    ctx.moveTo(topX-wTop/2, topY);
+    ctx.quadraticCurveTo(midX+bendL, midY, botX-wBot/2, botY);      // 左緣（彎）
+    ctx.quadraticCurveTo(botX, botY+hh*0.10, botX+wBot/2, botY);    // 底部圓收
+    ctx.quadraticCurveTo(midX+bendR, midY, topX+wTop/2, topY);      // 右緣（不同彎）
+    ctx.closePath(); ctx.fill();
+    if(i%3===1){ // 末端小分岔（Y 形，像真斑馬紋）
+      ctx.strokeStyle=dark; ctx.lineWidth=bodyH*0.020; ctx.lineCap='round';
+      ctx.beginPath(); ctx.moveTo(botX-wBot*0.3, botY); ctx.lineTo(botX-wBot*0.62, botY+hh*0.16); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(botX+wBot*0.3, botY); ctx.lineTo(botX+wBot*0.58, botY+hh*0.13); ctx.stroke();
+      ctx.fillStyle=dark;
+    }
+  }
+  ctx.restore();
+  // 5) 脖子（短錐形填色：身體端寬、頭端窄，寬端圓弧融入身體，同長頸鹿）
+  const nP0x=x+hw*0.66*bodyS, nP0y=shY-hh*0.05;         // 頸根（肩）
+  const nP1x=hpX-hw*0.14, nP1y=hpY+hw*0.30;             // 頸頂（深入頭下）
+  const nCx=(nP0x+nP1x)/2+hw*0.25, nCy=(nP0y+nP1y)/2-hh*0.1;
+  const nWB=hw*0.62, nWT=hw*0.26;                        // 下寬上窄
+  const nSide=[];
+  for(let ni=0;ni<=12;ni++){
+    const ns=ni/12;
+    const bxx=(1-ns)*(1-ns)*nP0x+2*ns*(1-ns)*nCx+ns*ns*nP1x;
+    const byy=(1-ns)*(1-ns)*nP0y+2*ns*(1-ns)*nCy+ns*ns*nP1y;
+    const txx=2*(1-ns)*(nCx-nP0x)+2*ns*(nP1x-nCx);
+    const tyy=2*(1-ns)*(nCy-nP0y)+2*ns*(nP1y-nCy);
+    const tll=Math.hypot(txx,tyy)||1;
+    nSide.push({x:bxx, y:byy, nx:tyy/tll, ny:-txx/tll, hw2:(nWB+(nWT-nWB)*ns)/2});
+  }
+  ctx.fillStyle=Wc;
+  ctx.beginPath();
+  ctx.moveTo(nSide[0].x+nSide[0].nx*nSide[0].hw2, nSide[0].y+nSide[0].ny*nSide[0].hw2);
+  for(let ni=1;ni<=12;ni++) ctx.lineTo(nSide[ni].x+nSide[ni].nx*nSide[ni].hw2, nSide[ni].y+nSide[ni].ny*nSide[ni].hw2);
+  for(let ni=12;ni>=0;ni--) ctx.lineTo(nSide[ni].x-nSide[ni].nx*nSide[ni].hw2, nSide[ni].y-nSide[ni].ny*nSide[ni].hw2);
+  ctx.closePath(); ctx.fill();
+  ctx.fillStyle=Wc;
+  ctx.beginPath(); ctx.arc(nP0x,nP0y,nWB/2,0,6.29); ctx.fill();
+  // 6) 頸紋（垂直頸軸的短黑紋）
+  ctx.strokeStyle=dark; ctx.lineWidth=Math.max(1.5,bodyH*0.02); ctx.lineCap='round';
+  for(let nk=2;nk<=10;nk+=2){
+    const pk=nSide[nk];
+    ctx.beginPath();
+    ctx.moveTo(pk.x+pk.nx*pk.hw2*0.5, pk.y+pk.ny*pk.hw2*0.5);
+    ctx.lineTo(pk.x-pk.nx*pk.hw2*0.5, pk.y-pk.ny*pk.hw2*0.5); ctx.stroke();
+  }
+  // 7) 鬃毛（脖子背緣一整條黑脊，同長頸鹿鬃毛畫法）
+  ctx.strokeStyle=dark; ctx.lineWidth=bodyH*0.11; ctx.lineCap='round'; ctx.lineJoin='round';
+  ctx.beginPath();
+  for(let mi=0;mi<=12;mi++){
+    const p=nSide[mi];
+    const ox=p.x+p.nx*(p.hw2+bodyH*0.045), oy=p.y+p.ny*(p.hw2+bodyH*0.045);
+    if(mi===0) ctx.moveTo(ox,oy); else ctx.lineTo(ox,oy);
+  }
+  ctx.stroke();
+  // 8) 近側雙腿（白底、膝蓋平滑、環紋、黑蹄，間距拉開）
+  [[x-hw*0.30*bodyS,-0.13],[x+hw*0.62*bodyS,-0.10]].forEach(p=>{
+    const lx=p[0], bend=p[1];
+    const ty2=by+hh*0.62, kx=lx+bend*bodyH*1.0, ky=ty2+legH*0.52;
+    ctx.strokeStyle=Wc; ctx.lineWidth=bodyH*0.085; ctx.lineCap='round';
+    ctx.beginPath(); ctx.moveTo(lx,ty2);
+    ctx.quadraticCurveTo(lx+bend*bodyH*0.35,ty2+legH*0.3,kx,ky); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(kx,ky);
+    ctx.quadraticCurveTo(lx+bend*bodyH*0.12,ty2+legH*0.8,lx+bend*bodyH*0.02,ground-bodyH*0.04); ctx.stroke();
+    // 大腿環紋（膝蓋以上 2 條）
+    ctx.strokeStyle=dark; ctx.lineWidth=bodyH*0.024;
+    for(let s3=0.28;s3<0.52;s3+=0.2){
+      const ex=lx+(kx-lx)*s3*1.2, ey=ty2+(ky-ty2)*s3*1.2;
+      ctx.beginPath(); ctx.moveTo(ex-bodyH*0.055,ey); ctx.lineTo(ex+bodyH*0.055,ey); ctx.stroke();
+    }
+    // 黑蹄
+    ctx.strokeStyle=dark; ctx.lineWidth=bodyH*0.095;
+    ctx.beginPath(); ctx.moveTo(lx+bend*bodyH*0.02,ground-bodyH*0.05);
+    ctx.lineTo(lx+bend*bodyH*0.0,ground-bodyH*0.005); ctx.stroke();
+  });
+  // 9) 頭部（淚滴形：額圓、吻部突出圓鈍，參考長頸鹿頭型）
+  const hx=hpX, hy=hpY;
+  ctx.fillStyle=Wc;
+  ctx.beginPath();
+  ctx.moveTo(hx-hw*0.364, hy+hw*0.30);
+  ctx.quadraticCurveTo(hx-hw*0.571, hy+hw*0.12, hx-hw*0.480, hy-hw*0.08);
+  ctx.quadraticCurveTo(hx-hw*0.390, hy-hw*0.30, hx-hw*0.156, hy-hw*0.35);
+  ctx.quadraticCurveTo(hx+hw*0.130, hy-hw*0.40, hx+hw*0.390, hy-hw*0.29);
+  ctx.quadraticCurveTo(hx+hw*0.675, hy-hw*0.16, hx+hw*0.805, hy-hw*0.02);
+  ctx.quadraticCurveTo(hx+hw*0.949, hy+hw*0.10, hx+hw*0.858, hy+hw*0.17);
+  ctx.quadraticCurveTo(hx+hw*0.650, hy+hw*0.23, hx+hw*0.441, hy+hw*0.25);
+  ctx.quadraticCurveTo(hx+hw*0.156, hy+hw*0.31, hx-hw*0.156, hy+hw*0.33);
+  ctx.quadraticCurveTo(hx-hw*0.286, hy+hw*0.32, hx-hw*0.364, hy+hw*0.30);
+  ctx.closePath(); ctx.fill();
+  // 10) 黑吻部（clip 貼頭緣：只蓋鼻吻部，同長頸鹿棕區邏輯）
+  ctx.save(); ctx.beginPath();
+  ctx.moveTo(hx-hw*0.364, hy+hw*0.30);
+  ctx.quadraticCurveTo(hx-hw*0.571, hy+hw*0.12, hx-hw*0.480, hy-hw*0.08);
+  ctx.quadraticCurveTo(hx-hw*0.390, hy-hw*0.30, hx-hw*0.156, hy-hw*0.35);
+  ctx.quadraticCurveTo(hx+hw*0.130, hy-hw*0.40, hx+hw*0.390, hy-hw*0.29);
+  ctx.quadraticCurveTo(hx+hw*0.675, hy-hw*0.16, hx+hw*0.805, hy-hw*0.02);
+  ctx.quadraticCurveTo(hx+hw*0.949, hy+hw*0.10, hx+hw*0.858, hy+hw*0.17);
+  ctx.quadraticCurveTo(hx+hw*0.650, hy+hw*0.23, hx+hw*0.441, hy+hw*0.25);
+  ctx.quadraticCurveTo(hx+hw*0.156, hy+hw*0.31, hx-hw*0.156, hy+hw*0.33);
+  ctx.quadraticCurveTo(hx-hw*0.286, hy+hw*0.32, hx-hw*0.364, hy+hw*0.30);
+  ctx.closePath(); ctx.clip();
+  ctx.fillStyle=snout;
+  ctx.beginPath(); ctx.ellipse(hx+hw*0.67, hy+hw*0.05, hw*0.28, hw*0.18, -0.10, 0, 6.29); ctx.fill();
+  ctx.restore();
+  // 11) 耳朵（兩片立耳：遠耳淡灰、近耳深色內白）
+  ctx.fillStyle=far;
+  ctx.beginPath(); ctx.ellipse(hx-hw*0.34, hy-hw*0.46, hw*0.075, hw*0.20, -0.15, 0, 6.29); ctx.fill();
+  ctx.fillStyle=dark;
+  ctx.beginPath(); ctx.ellipse(hx-hw*0.16, hy-hw*0.52, hw*0.085, hw*0.23, -0.05, 0, 6.29); ctx.fill();
+  ctx.fillStyle='#f2f2ef';
+  ctx.beginPath(); ctx.ellipse(hx-hw*0.155, hy-hw*0.50, hw*0.035, hw*0.11, -0.05, 0, 6.29); ctx.fill();
+  // 12) 眼睛（大而有神：黑圓 + 白高光）
+  ctx.fillStyle=dark;
+  ctx.beginPath(); ctx.ellipse(hx+hw*0.09, hy-hw*0.10, hw*0.075, hw*0.105, -0.08, 0, 6.29); ctx.fill();
+  ctx.fillStyle='#fff';
+  ctx.beginPath(); ctx.arc(hx+hw*0.13, hy-hw*0.145, hw*0.03, 0, 6.29); ctx.fill();
+  // 13) 鼻孔（側面一個，黑吻部上，淺色才看得見）+ 微笑嘴
+  ctx.fillStyle='#e8e5de';
+  ctx.beginPath(); ctx.ellipse(hx+hw*0.74, hy+hw*0.03, hw*0.05, hw*0.065, 0.05, 0, 6.29); ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,.9)'; ctx.lineWidth=Math.max(1.2,bodyH*0.02); ctx.lineCap='round';
+  ctx.beginPath(); ctx.moveTo(hx+hw*0.594, hy+hw*0.125);
+  ctx.quadraticCurveTo(hx+hw*0.739, hy+hw*0.17, hx+hw*0.885, hy+hw*0.115); ctx.stroke();
 }
 function acacia(x, ground, th){
   // 金合歡（傘狀樹）
@@ -605,12 +672,12 @@ function drawScene(n,t){
     acacia(W*0.78,gy,sH(28));
     giraffe(W*0.4,gy,sH(14),sH(4),'talk',t);
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.4)}px sans-serif`;ctx.textAlign='center';
-    ctx.fillText('很久很久以前……',W*0.4,sH(28));
-  } else if(n===2){ // 搶食
+    ctx.fillText('很久很久以前……',W*0.5,sH(9));
+  } else if(n===2){ // 搶食（斑馬一隻代表）
     giraffe(W*0.2,gy,sH(13),sH(4),'sad',t);
-    zebra(W*0.55,gy,t); zebra(W*0.68,gy,t+2); zebra(W*0.8,gy,t+1);
+    zebra(W*0.68,gy,t);
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3)}px sans-serif`;ctx.textAlign='center';
-    ctx.fillText('羚羊和斑馬：草都我們的啦！',W*0.68,sH(40));
+    ctx.fillText('羚羊和斑馬：草都我們的啦！',W*0.66,sH(9));
   } else if(n===3){ // 高處樹葉
     acacia(W*0.75,gy,sH(46));
     giraffe(W*0.25,gy,sH(14),sH(9),'talk',t);
@@ -619,7 +686,7 @@ function drawScene(n,t){
     sparkle(W*0.7,gy-sH(38),t+2,'#fff3b0');
   } else if(n===4){ // 脖子長才吃得到
     giraffe(W*0.3,gy,sH(14),sH(4),'sad',t);
-    ctx.fillStyle='#ffb347';ctx.font=`bold ${sH(5)}px sans-serif`;ctx.textAlign='center';ctx.fillText('好餓……吃不到……',W*0.3,sH(26));
+    ctx.fillStyle='#ffb347';ctx.font=`bold ${sH(5)}px sans-serif`;ctx.textAlign='center';ctx.fillText('好餓……吃不到……',W*0.3,sH(9));
     acacia(W*0.78,gy,sH(44));
     giraffe(W*0.66,gy,sH(14),sH(13),'happy',t);
     // 長脖鹿吃到高葉：嘴邊葉子
@@ -634,13 +701,13 @@ function drawScene(n,t){
     ctx.beginPath();ctx.moveTo(W*0.22-sH(1.6),sH(13));ctx.lineTo(W*0.22+sH(1.6),sH(17.5));ctx.stroke();
     ctx.beginPath();ctx.moveTo(W*0.22+sH(1.6),sH(13));ctx.lineTo(W*0.22-sH(1.6),sH(17.5));ctx.stroke();
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.2)}px sans-serif`;ctx.textAlign='center';
-    ctx.fillText('短的：餓死了……',W*0.22,sH(31));
+    ctx.fillText('短的：餓死了……',W*0.22,sH(9));
     // 右：長脖子活下來吃葉子
     acacia(W*0.82,gy,sH(46));
     giraffe(W*0.68,gy,sH(13),sH(17),'happy',t*0.5);
     ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.815,gy-sH(44),6,4,0,0,6.29);ctx.fill();
     ctx.fillStyle='#2e7d32';ctx.font=`bold ${sH(3.2)}px sans-serif`;
-    ctx.fillText('長的：活下來！',W*0.68,sH(22));
+    ctx.fillText('長的：活下來！',W*0.68,sH(9));
     sparkle(W*0.88,sH(12),t,'#ffd98a');
   }
 }
@@ -658,42 +725,42 @@ function drawLamarckScene(n,t){
     acacia(W*0.72,gy,sH(34));
     giraffe(W*0.3,gy,sH(15),sH(19),'talk',t);
     ctx.font=`bold ${sH(3.4)}px sans-serif`;
-    ctx.fillText('（其實還有一個古老的說法……）',W*0.3,sH(30));
+    ctx.fillText('（其實還有一個古老的說法……）',W*0.5,sH(9));
   } else if(n===1){ // 祖先短脖子
     acacia(W*0.78,gy,sH(28));
     giraffe(W*0.4,gy,sH(14),sH(4),'talk',t);
     ctx.font=`bold ${sH(3.4)}px sans-serif`;
-    ctx.fillText('很久很久以前，祖先的脖子短短的',W*0.4,sH(28));
-    zebra(W*0.72,gy,t*0.5); zebra(W*0.85,gy,t*0.8+1);
+    ctx.fillText('很久很久以前，祖先的脖子短短的',W*0.5,sH(9));
+    zebra(W*0.78,gy,t*0.5);
   } else if(n===2){ // 努力伸長脖子（脖子慢慢變長）
     acacia(W*0.6,gy,sH(48));
     giraffe(W*0.2,gy,sH(14),sH(4)+Math.min(sH(8),t*sH(6)),'happy',t);
     sparkle(W*0.62-sH(5),gy-sH(46),t,'#fff3b0');
     ctx.font=`bold ${sH(3.6)}px sans-serif`;
-    ctx.fillText('伸～伸～努力伸長脖子！',W*0.45,sH(34));
+    ctx.fillText('伸～伸～努力伸長脖子！',W*0.45,sH(9));
     ctx.font=`bold ${sH(3)}px sans-serif`;
     ctx.fillStyle='#e07b00';
-    ctx.fillText('用進廢退：常常用，就會變長！',W*0.45,sH(39));
+    ctx.fillText('用進廢退：常常用，就會變長！',W*0.45,sH(14.5));
   } else if(n===3){ // 脖子長了，終於吃到高處嫩葉
     acacia(W*0.72,gy,sH(46));
     giraffe(W*0.35,gy,sH(14),sH(14),'happy',t);
     ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.715,gy-sH(44),6,4,0,0,6.29);ctx.fill();
     sparkle(W*0.78,gy-sH(40),t+1,'#fff3b0');
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.4)}px sans-serif`;
-    ctx.fillText('高處的嫩葉子，終於吃得到了！',W*0.35,sH(26));
+    ctx.fillText('高處的嫩葉子，終於吃得到了！',W*0.35,sH(9));
   } else if(n===4){ // 小長頸鹿一出生就長脖子
     giraffe(W*0.3,gy,sH(10),sH(6),null,t*0.3);
     giraffe(W*0.68,gy,sH(13),sH(15),'happy',t*0.5);
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.4)}px sans-serif`;
-    ctx.fillText('小長頸鹿一出生，脖子就長長的！',W*0.5,sH(16));
+    ctx.fillText('小長頸鹿一出生，脖子就長長的！',W*0.5,sH(9));
     sparkle(W*0.55,sH(18),t,'#ffd98a');
   } else if(n===5){ // 總結
     acacia(W*0.75,gy,sH(40));
     giraffe(W*0.35,gy,sH(15),sH(19),'happy',t);
     ctx.fillStyle='#e07b00';ctx.font=`bold ${sH(4)}px sans-serif`;
-    ctx.fillText('一代傳一代，脖子越來越長！',W*0.4,sH(24));
+    ctx.fillText('一代傳一代，脖子越來越長！',W*0.4,sH(9));
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.2)}px sans-serif`;
-    ctx.fillText('這就是「用進廢退說」～你覺得有道理嗎？',W*0.4,sH(29));
+    ctx.fillText('這就是「用進廢退說」～你覺得有道理嗎？',W*0.4,sH(14.5));
   }
 }
 
@@ -710,27 +777,27 @@ function drawTheoScene(n,t){
     acacia(W*0.72,gy,sH(34));
     giraffe(W*0.3,gy,sH(15),sH(19),'talk',t);
     ctx.font=`bold ${sH(3.4)}px sans-serif`;
-    ctx.fillText('達爾文：「生物會慢慢演化喔！」',W*0.3,sH(30));
+    ctx.fillText('達爾文：「生物會慢慢演化喔！」',W*0.5,sH(9));
   } else if(n===1){ // 祖先不是長這樣
     acacia(W*0.78,gy,sH(28));
     giraffe(W*0.4,gy,sH(14),sH(4),'talk',t);
     ctx.font=`bold ${sH(3.4)}px sans-serif`;
-    ctx.fillText('祖先：我脖子短短的啦！',W*0.4,sH(28));
+    ctx.fillText('祖先：我脖子短短的啦！',W*0.5,sH(9));
   } else if(n===2){ // 環境改變（樹長高）
     acacia(W*0.66,gy,sH(48));
     giraffe(W*0.22,gy,sH(13),sH(5),'sad',t);
     sparkle(W*0.68-sH(5),gy-sH(46),t,'#fff3b0');
     ctx.font=`bold ${sH(3.6)}px sans-serif`;
-    ctx.fillText('環境一直變，樹越長越高……',W*0.42,sH(36));
+    ctx.fillText('環境一直變，樹越長越高……',W*0.42,sH(9));
     ctx.font=`bold ${sH(3)}px sans-serif`;
     ctx.fillStyle='#e07b00';
-    ctx.fillText('一百萬年後',W*0.42,sH(41));
+    ctx.fillText('一百萬年後',W*0.42,sH(14.5));
   } else if(n===3){ // 世代差異
     giraffe(W*0.22,gy,sH(12),sH(7),null,t*0.3);
     giraffe(W*0.48,gy,sH(13),sH(13),null,t*0.5);
     giraffe(W*0.74,gy,sH(13),sH(19),'happy',t);
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.4)}px sans-serif`;
-    ctx.fillText('每一代都有一點點不一樣……',W*0.48,sH(18));
+    ctx.fillText('每一代都有一點點不一樣……',W*0.5,sH(9));
   } else if(n===4){ // 適合的留下
     acacia(W*0.7,gy,sH(46));
     giraffe(W*0.3,gy,sH(14),sH(4),'sad',t);
@@ -738,14 +805,14 @@ function drawTheoScene(n,t){
     giraffe(W*0.68,gy,sH(14),sH(15),'happy',t);
     ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.695,gy-sH(44),6,4,0,0,6.29);ctx.fill();
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.4)}px sans-serif`;
-    ctx.fillText('適合環境的，留下來！',W*0.68,sH(26));
+    ctx.fillText('適合環境的，留下來！',W*0.68,sH(9));
   } else if(n===5){ // 現代長頸鹿
     acacia(W*0.75,gy,sH(42));
     giraffe(W*0.35,gy,sH(15),sH(19),'happy',t);
     ctx.fillStyle='#e07b00';ctx.font=`bold ${sH(4)}px sans-serif`;
-    ctx.fillText('演化成現在的我！',W*0.4,sH(24));
+    ctx.fillText('演化成現在的我！',W*0.5,sH(9));
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.2)}px sans-serif`;
-    ctx.fillText('演化還沒有結束，還在繼續喔～',W*0.4,sH(29));
+    ctx.fillText('演化還沒有結束，還在繼續喔～',W*0.5,sH(14.5));
   }
 }
 // 字幕與控制

@@ -169,6 +169,8 @@ const AUDIO_LM=[
 ];
 let theory='evo';
 let AUDIO=AUDIO_EVO;
+// 第一幕真實照片背景（AI 生成）
+const scene0Img=new Image(); scene0Img.src='photo_scene0.jpg';
 let scene=0, playing=false, audio=null, t0=0, raf=null;
 
 
@@ -230,7 +232,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   const by = ground - legH - hh;      // 身體中心Y
   const bodyS = 1.15;                                  // 身體長度係數（長一點）
   const reachSway = (mood==='reach') ? Math.sin(t*7) : 0;      // reach 動畫：一伸一縮（明顯）
-  const reachUp = (mood==='reach') ? bodyH*(0.55+0.20*reachSway) : 0;   // 抬頭（上下大幅夠取）
+  const reachUp = (mood==='reach') ? bodyH*(0.10+0.10*reachSway) : 0;   // 抬頭（差一點吃不到的距離）
   const hpX = x + hw*1.18*bodyS, hpY = by - hh - neckH - reachUp;   // 頭中心（脖子頂端右側，向前伸出）
   const bodyCol = '#f5d48a';          // 淺黃棕
   const cream = '#fdf6e3';            // 縫隙（近白）
@@ -240,7 +242,11 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   // ---- 遠側雙腿（淡色；reach 時遠前腳騰空）----
   leg(x - hw*0.82*bodyS, by+hh*0.72, legH+hh*0.28, -0.10, bodyCol, darkCol, t, legThick);
   if(mood==='reach'){
-    raisedLeg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, bodyH, '#dcc98f', '#3a2410', t);
+    if(reachSway < 0){
+      leg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, -0.05, '#dcc98f', '#3a2410', t, legThick);  // 踩地
+    } else {
+      raisedLeg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, bodyH, '#dcc98f', '#3a2410', t);       // 騰空
+    }
   } else {
     leg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, -0.05, bodyCol, darkCol, t, legThick);
   }
@@ -333,14 +339,18 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   // ---- 近側雙腿（reach 時近前腳騰空、後腳站立）----
   leg(x - hw*0.34*bodyS, by+hh*0.6, legH+hh*0.4, -0.13, bodyCol, darkCol, t, legThick);
   if(mood==='reach'){
-    raisedLeg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, bodyH, bodyCol, darkCol, t);
+    if(reachSway < 0){
+      leg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol, t, legThick);  // 踩地
+    } else {
+      raisedLeg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, bodyH, bodyCol, darkCol, t);      // 騰空
+    }
   } else {
     leg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol, t, legThick);
   }
   // ---- 頭部（reach 時整顆頭以頸頂為軸旋轉上仰）----
   ctx.save();
   ctx.translate(hpX, hpY);
-  if(mood==='reach') ctx.rotate(-0.42-0.16*reachSway);
+  if(mood==='reach') ctx.rotate(-0.22-0.08*reachSway);
   ctx.translate(-hpX, -hpY);
   // ---- 頭部（淚滴形：額圓、吻部突出圓鈍，參考真實長頸鹿側面）----
   const bob = mood==='talk'? Math.sin(t*10)*bodyH*0.02 : 0;
@@ -812,13 +822,22 @@ function drawScene(n,t){
   ctx.beginPath();ctx.moveTo(0,gy);ctx.quadraticCurveTo(W*0.3,gy-sH(10),W*0.55,gy-sH(4));ctx.quadraticCurveTo(W*0.8,gy-sH(9),W,gy-sH(3));ctx.lineTo(W,gy);ctx.lineTo(0,gy);ctx.fill();
   cloud2(W*0.15,sH(10),sH(2.6),t); cloud2(W*0.75,sH(18),sH(2),t+3);
   grass(t);
-  if(n===0){ // 開場
-    acacia(W*0.72,gy,sH(34));
-    giraffe(W*0.3,gy,sH(15),sH(19),'talk',t);
-    // 問號
-    const qy=Math.sin(t*2)*3;
-    ctx.fillStyle='#ffb347';ctx.font=`bold ${sH(9)}px sans-serif`;ctx.textAlign='center';
-    ctx.fillText('？',W*0.52,sH(30)+qy);
+  if(n===0){ // 開場：真實照片背景（AI 生成），未載入時用卡通版
+    if(scene0Img.complete && scene0Img.naturalWidth>0){
+      ctx.drawImage(scene0Img, 0, 0, W, H);
+      // 浮動問號（右上）
+      const qy=Math.sin(t*2)*3;
+      ctx.fillStyle='rgba(255,255,255,.92)';ctx.font=`bold ${sH(8)}px sans-serif`;ctx.textAlign='center';
+      ctx.shadowColor='rgba(0,0,0,.35)';ctx.shadowBlur=sH(1);
+      ctx.fillText('？',W*0.88,sH(22)+qy);
+      ctx.shadowBlur=0;
+    } else {
+      acacia(W*0.72,gy,sH(34));
+      giraffe(W*0.3,gy,sH(15),sH(19),'talk',t);
+      const qy=Math.sin(t*2)*3;
+      ctx.fillStyle='#ffb347';ctx.font=`bold ${sH(9)}px sans-serif`;ctx.textAlign='center';
+      ctx.fillText('？',W*0.52,sH(30)+qy);
+    }
   } else if(n===1){ // 祖先短脖子
     acacia(W*0.78,gy,sH(40));
     giraffe(W*0.4,gy,sH(14),sH(4),'talk',t,0.72);

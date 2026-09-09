@@ -837,9 +837,8 @@ function drawScene(n,t){
       ctx.fillText('？',W*0.52,sH(30)+qy);
     }
   } else if(n===1){ // 祖先：脖子有長有短（天生個體差異）
-    acacia(W*0.80,gy,sH(40));
-    giraffe(W*0.16,gy,sH(14),sH(13),'talk',t);        // 正常長度的祖先
-    giraffe(W*0.46,gy,sH(11),sH(4),'talk',t*0.7,0.72);  // 短脖子短腿的祖先（頭會動）
+    giraffe(W*0.33,gy,sH(14),sH(13),'talk',t);        // 正常長度的祖先（中間）
+    giraffe(W*0.64,gy,sH(11),sH(4),'talk',t*0.7,0.72);  // 短脖子短腿的祖先（中間，頭會動）
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3)}px sans-serif`;ctx.textAlign='center';
     ctx.fillText('很久很久以前，祖先的脖子有長有短！',W*0.5,sH(9));
   } else if(n===2){ // 草比較少（沒有斑馬羚羊）
@@ -892,9 +891,8 @@ function drawLamarckScene(n,t){
     ctx.font=`bold ${sH(3.4)}px sans-serif`;
     ctx.fillText('（其實還有一個古老的說法……）',W*0.5,sH(9));
   } else if(n===1){ // 祖先：脖子有長有短
-    acacia(W*0.80,gy,sH(40));
-    giraffe(W*0.16,gy,sH(14),sH(13),'talk',t);        // 正常長度的祖先
-    giraffe(W*0.46,gy,sH(11),sH(4),'talk',t*0.7,0.72);  // 短脖子短腿的祖先（頭會動）
+    giraffe(W*0.33,gy,sH(14),sH(13),'talk',t);        // 正常長度的祖先（中間）
+    giraffe(W*0.64,gy,sH(11),sH(4),'talk',t*0.7,0.72);  // 短脖子短腿的祖先（中間，頭會動）
     ctx.font=`bold ${sH(3)}px sans-serif`;
     ctx.fillText('很久很久以前，祖先的脖子有長有短！',W*0.5,sH(9));
   } else if(n===2){ // 努力伸長脖子（脖子慢慢變長）

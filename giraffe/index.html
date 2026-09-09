@@ -83,7 +83,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
           <button class="navbtn" onclick="nextScene()" title="下一幕">▶▶</button>
           <button onclick="restart()" style="background:#b8c4ce;box-shadow:0 3px 0 #8a98a3;font-size:15px">↺</button>
           <div class="seek"><div id="seekBar"></div></div>
-          <div class="plabel" id="sceneLabel">1 / 12</div>
+          <div class="plabel" id="sceneLabel">1 / 11</div>
         </div>
       </div>
       <div class="wow">💡 <b>你知道嗎？</b>成年長頸鹿的脖子可以長到 <b>2 公尺</b>，裡面跟人類一樣只有 <b>7 節</b>頸椎骨！只是每一節都超長～</div>
@@ -145,8 +145,7 @@ const AUDIO_EVO=[
  {f:null,t:'一代一代傳下去，脖子長的長頸鹿越來越多——這就是「天擇說」！'},
 ];
 const AUDIO_LM=[
- {f:null,t:'嗨！又是我～關於我的長脖子，還有一個很古老的說法喔！'},
- {f:null,t:'很久很久以前，長頸鹿的祖先，脖子都短短的，跟現在的長頸鹿完全不一樣！'},
+  {f:null,t:'還有一種說法，叫做「用進廢退說」！很久很久以前，長頸鹿的祖先，脖子都短短的……'},
  {f:null,t:'地上的青草常常不夠吃，牠們只好每天努力的伸長脖子，想吃高高的樹葉！'},
  {f:null,t:'常常伸脖子，脖子真的越伸越長了！高處的嫩葉子，終於吃得到了！'},
  {f:null,t:'長長的脖子會傳給小長頸鹿，小寶寶一出生，脖子就長長的！'},
@@ -825,7 +824,7 @@ function drawTheoryTag(n){
   ctx.textBaseline='alphabetic';
 }
 function drawScene(n,t){
-  if(n>=6){ drawLamarckScene(n-6,t); drawTheoryTag(n); return; }
+  if(n>=6){ drawLamarckScene(n-5,t); drawTheoryTag(n); return; }
   ctx.clearRect(0,0,W,H);
   const gy=groundY();
   // 背景漸層(已在CSS) + 遠山
@@ -913,11 +912,13 @@ function drawLamarckScene(n,t){
     giraffe(W*0.3,gy,sH(15),sH(19),'talk',t);
     ctx.font=`bold ${sH(3.4)}px sans-serif`;
     ctx.fillText('（其實還有一個古老的說法……）',W*0.5,sH(9));
-  } else if(n===1){ // 祖先：脖子都很短（用進廢退的起點）
+  } else if(n===1){ // 用進廢退說：還有一種說法 + 祖先脖子都短
     giraffe(W*0.22,gy,sH(11),sH(4),'talk',t,0.72);     // 短脖子祖先
     giraffe(W*0.62,gy,sH(11),sH(4),'talk',t*0.7,0.72); // 另一隻也短短
-    ctx.font=`bold ${sH(2.4)}px sans-serif`;
-    ctx.fillText('很久很久以前，長頸鹿的祖先，脖子都短短的！',W*0.5,sH(9));
+    ctx.font=`bold ${sH(2.5)}px sans-serif`;
+    ctx.fillText('還有一種說法：用進廢退說！',W*0.5,sH(9));
+    ctx.font=`bold ${sH(2.2)}px sans-serif`;
+    ctx.fillText('很久以前，祖先的脖子都短短的',W*0.5,sH(14.5));
   } else if(n===2){ // 努力伸長脖子（脖子慢慢變長）
     acacia(W*0.6,gy,sH(48));
     giraffe(W*0.2,gy,sH(14),sH(4)+Math.min(sH(8),t*sH(6)),'happy',t,0.72);

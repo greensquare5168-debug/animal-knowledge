@@ -139,7 +139,7 @@ window.addEventListener('resize',resize); resize();
 const AUDIO_EVO=[
  {f:null, sub:['嗨！','大家好！','我是長頸鹿！','你有沒有想過','我的脖子為什麼這麼長呀？','關於這個問題','有兩種說法喔！'], vf:['voice/s01_c1.mp3','voice/s01_c2.mp3','voice/s01_c3.mp3','voice/s01_c4.mp3','voice/s01_c5.mp3','voice/s01_c6.mp3','voice/s01_c7.mp3']},
  {f:null, sub:['第一種說法','叫做天擇說','長頸鹿一開始','脖子有長有短','天生就不一樣'], vf:['voice/s02_c1.mp3','voice/s02_c2.mp3','voice/s02_c3.mp3','voice/s02_c4.mp3','voice/s02_c5.mp3']},
- {f:null, sub:['草原上的草比較少的時候','高高的樹上','有又嫩又好吃的葉子','脖子長的長頸鹿','輕輕鬆鬆就吃到了','可是脖子短的','伸長了脖子','日子一天一天過去','草越來越少','脖子短的長頸鹿','吃不到東西','最後餓死了','脖子長的長頸鹿','活了下來','生下小寶寶','一代一代傳下去','脖子長的越來越多','這就是「天擇說」'], vf:['voice/s03_new1.mp3','voice/s03_c1.mp3','voice/s03_c2.mp3','voice/s03_c3.mp3','voice/s03_c4.mp3','voice/s03_c5.mp3','voice/s03_c6.mp3','voice/s04_c1.mp3','voice/s04_c2.mp3','voice/s04_c3.mp3','voice/s04_c4.mp3','voice/s04_c5.mp3','voice/s04_c6.mp3','voice/s04_c7.mp3','voice/s04_c8.mp3','voice/s04_c9.mp3','voice/s04_c10.mp3','voice/s04_c11.mp3']},
+ {f:null, sub:['草原上的草比較少的時候','長頸鹿就抬頭吃樹上的葉子','脖子長的可以吃到','脖子短的吃不到','日子一天一天過去','草越來越少','脖子短的長頸鹿','吃不到東西','最後餓死了','脖子長的長頸鹿','活了下來','生下小寶寶','一代一代傳下去','脖子長的越來越多','這就是「天擇說」'], vf:['voice/s03_new1.mp3','voice/s03_new2.mp3','voice/s03_new3.mp3','voice/s03_new4.mp3','voice/s04_c1.mp3','voice/s04_c2.mp3','voice/s04_c3.mp3','voice/s04_c4.mp3','voice/s04_c5.mp3','voice/s04_c6.mp3','voice/s04_c7.mp3','voice/s04_c8.mp3','voice/s04_c9.mp3','voice/s04_c10.mp3','voice/s04_c11.mp3']},
 ];
 const AUDIO_LM=[
  {f:null, sub:['其實還有一種說法','叫做「用進廢退說」','很久很久以前','長頸鹿的祖先','脖子都短短的','牠們每天用力伸長脖子','想吃高處的樹葉'], vf:['voice/s05_c1.mp3','voice/s05_c2.mp3','voice/s05_c3.mp3','voice/s05_c4.mp3','voice/s05_c5.mp3','voice/s05_c6.mp3','voice/s05_c7.mp3']},
@@ -870,14 +870,14 @@ function drawScene(n,t){
     acacia(W*0.52,gy,sH(44));
     giraffe(W*0.32,gy,sH(14),sH(13),'happy',t);   // 長脖子吃葉子
     ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.56,gy-sH(41),6,4,0,0,6.29);ctx.fill();
-    if(si>=11){
+    if(si>=8){
       // 短小的餓死趴地（鏡像）
       ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
       giraffeDead(0, gy, sH(11));
       ctx.restore();
       ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3)}px sans-serif`;ctx.textAlign='center';
       ctx.fillText('短的：餓死了……',W*0.72,sH(9));
-      if(si>=14){  // 生下小寶寶：小長頸鹿站在長脖子身邊
+      if(si>=10){  // 生下小寶寶：小長頸鹿站在長脖子身邊
         giraffe(W*0.47,gy,sH(8.5),sH(8),null,t*0.6,0.9);
         ctx.fillStyle='#2e7d32';ctx.font=`bold ${sH(3)}px sans-serif`;
         ctx.fillText('長的：活下來！',W*0.30,sH(9));

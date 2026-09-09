@@ -138,7 +138,7 @@ window.addEventListener('resize',resize); resize();
 
 const AUDIO_EVO=[
  {f:null, sub:['嗨！','大家好！','我是長頸鹿！','你有沒有想過','我的脖子為什麼這麼長呀？','關於這個問題','有兩種說法喔！'], vf:['voice/s01_c1.mp3','voice/s01_c2.mp3','voice/s01_c3.mp3','voice/s01_c4.mp3','voice/s01_c5.mp3','voice/s01_c6.mp3','voice/s01_c7.mp3']},
- {f:null, sub:['第一種說法','叫做天擇說','長頸鹿一開始','脖子有長有短','天生就不一樣','有的時候草原上的草會比較少','大家趕快低頭吃草','可是草怎麼吃都不夠','低處的草很快就沒有了','大家都吃不飽了'], vf:['voice/s02_c1.mp3','voice/s02_c2.mp3','voice/s02_c3.mp3','voice/s02_c4.mp3','voice/s02_c5.mp3','voice/s02_c6.mp3','voice/s02_c7.mp3','voice/s02_c8.mp3','voice/s02_c9.mp3','voice/s02_c10.mp3']},
+ {f:null, sd:8, sub:['第一種說法','叫做天擇說','長頸鹿一開始','脖子有長有短','天生就不一樣','草越來越少'], vf:['voice/s02_c1.mp3','voice/s02_c2.mp3','voice/s02_c3.mp3','voice/s02_c4.mp3','voice/s02_c5.mp3','voice/s02_c6.mp3']},
  {f:null, sub:['高高的樹上','有又嫩又好吃的葉子','脖子長的長頸鹿','輕輕鬆鬆就吃到了','可是脖子短的','伸長了脖子','還是差一點點','日子一天一天過去','草越來越少','脖子短的長頸鹿','吃不到東西','最後餓死了','脖子長的長頸鹿','活了下來','生下小寶寶','一代一代傳下去','脖子長的越來越多','這就是「天擇說」'], vf:['voice/s03_c1.mp3','voice/s03_c2.mp3','voice/s03_c3.mp3','voice/s03_c4.mp3','voice/s03_c5.mp3','voice/s03_c6.mp3','voice/s03_c7.mp3','voice/s04_c1.mp3','voice/s04_c2.mp3','voice/s04_c3.mp3','voice/s04_c4.mp3','voice/s04_c5.mp3','voice/s04_c6.mp3','voice/s04_c7.mp3','voice/s04_c8.mp3','voice/s04_c9.mp3','voice/s04_c10.mp3','voice/s04_c11.mp3']},
 ];
 const AUDIO_LM=[
@@ -858,20 +858,19 @@ function drawScene(n,t){
     }
   } else if(n===1){ // 天擇：有長有短 → 低頭吃草把草吃光（原第2+3幕合一）
     const si = (typeof sentIdx==='number') ? sentIdx : 0;
-    // 幕2 共 10 句：站 si0-4 滿草；si5-9 低頭吃草、草地從下到上消失（5 階每次 20%）
+    // 幕2 共 6 句：站 si0-4 滿草；si5「草越來越少」低頭吃草、草 8 秒內分 5 階從下到上消失
     if(si>=5){
-      // 禿地從畫面底部往上長：progress 0.2→1.0
-      const prog = [0.2,0.4,0.6,0.8,1.0][Math.min(si-5, 4)];
+      const pt = (performance.now()-sentT0)/1000;             // 這句已過時間
+      const prog = [0.2,0.4,0.6,0.8,1.0][Math.min(4, Math.floor(pt/1.6))];
       const bareTop = H - prog*(H - sH(55));
       ctx.fillStyle='#dcc98f';
       ctx.fillRect(0, bareTop, W, H-bareTop);
-      // 未禿的綠區畫殘留草叢（固定位置，被禿地蓋到就不畫 → 從下往上消失感）
       ctx.fillStyle='#5aa848';
       for(let i=0;i<30;i++){
         const gx=(i*41+11)%W, gy3=sH(58)+((i*17)%16), gh=4+((i*13)%6);
         if(gy3 < bareTop){ ctx.fillRect(gx, gy3+2, 2.5, gh); }
       }
-      if(prog>=1){  // 全禿後加幾叢枯草
+      if(prog>=1){
         ctx.strokeStyle='#c2a96a'; ctx.lineWidth=2; ctx.lineCap='round';
         for(let i=0;i<14;i++){ const gx=(i*61+9)%W, gh=3+((i*7)%5); ctx.beginPath(); ctx.moveTo(gx,sH(72)+((i*11)%6)); ctx.lineTo(gx-2,sH(72)+((i*11)%6)+gh); ctx.stroke(); }
       }
@@ -1026,10 +1025,11 @@ function playScene(i){
     if(vfs[myIdx]){
       audio = new Audio(vfs[myIdx]);
       audio.playbackRate = 1;
-      audio.onended = ()=>{ if(sentIdx===myIdx && playing) goNext(); };
+      audio.onended = ()=>{ if(sentIdx===myIdx && playing && !(scene===1 && myIdx===sents.length-1)) goNext(); };   // 幕2尾句等草消失完再換
+      const sdur = (AUDIO[scene]&&AUDIO[scene].sd)||6;
       const startTimer = ()=>{
         if(window._sentTimer){ clearTimeout(window._sentTimer); }
-        window._sentTimer = setTimeout(()=>{ if(sentIdx===myIdx && playing) goNext(); }, 6000);
+        window._sentTimer = setTimeout(()=>{ if(sentIdx===myIdx && playing) goNext(); }, sdur*1000);
       };
       audio.onplaying = startTimer;
       // 語音開始播了才計時；載入等待最多 4.5 秒（超過→跳句避免卡）

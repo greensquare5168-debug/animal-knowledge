@@ -659,7 +659,7 @@ function zebra(x, ground, t){
 // 趴地死掉版長頸鹿（短脖子餓死）：身體橫躺、脖子貼地前伸、眼睛✕、烏雲由場景畫
 function giraffeDead(x, ground, bodyH){
   // 趴地餓死版（精緻版）：身體貼地、網狀斑塊、錐形脖子、淚滴頭、折腿、✕眼
-  const rx = bodyH*0.80, ry = bodyH*0.22;           // 趴姿身體半長/半高（背脊山丘形）
+  const rx = bodyH*0.80, ry = bodyH*0.25;           // 趴姿身體半長/半高（加厚同站姿體感）
   const gy2 = ground - bodyH*0.02;                   // 身體底緣（貼地）
   const bodyCol='#f5d48a', patchCol='#a06a28', cream='#fdf6e3', darkCol='#5e3810', snoutC='#8a5522';
   // ---- 趴姿身體輪廓 path（背脊朝上、肩略高臀略低）----
@@ -685,13 +685,13 @@ function giraffeDead(x, ground, bodyH){
   // ---- 前後腿大字攤開（趴地：前腳向前伸、後腳向後伸，像「大」字）----
   ctx.lineCap='round';
   // 遠側兩腿（淡黃、微上揚、較短，畫在身體下層）
-  ctx.strokeStyle='#e6cd9c'; ctx.lineWidth=bodyH*0.075;
+  ctx.strokeStyle='#e6cd9c'; ctx.lineWidth=bodyH*0.10;
   ctx.beginPath(); ctx.moveTo(x-rx*0.62, gy2-ry*1.1);
   ctx.quadraticCurveTo(x-rx*1.0, gy2-ry*0.75, x-rx*1.32, gy2-ry*0.55); ctx.stroke();   // 遠後腿→向左後伸
   ctx.beginPath(); ctx.moveTo(x+rx*0.5, gy2-ry*1.5);
   ctx.quadraticCurveTo(x+rx*0.95, gy2-ry*1.35, x+rx*1.30, gy2-ry*1.15); ctx.stroke();  // 遠前腿→向右前伸
   // 近側兩腿（同身體色、長、貼地：大字主幹）
-  ctx.strokeStyle=bodyCol; ctx.lineWidth=bodyH*0.105;
+  ctx.strokeStyle=bodyCol; ctx.lineWidth=bodyH*0.13;
   ctx.beginPath(); ctx.moveTo(x-rx*0.72, gy2-bodyH*0.005);
   ctx.quadraticCurveTo(x-rx*1.1, gy2+bodyH*0.075, x-rx*1.45, gy2+bodyH*0.045); ctx.stroke(); // 近後腿
   ctx.beginPath(); ctx.moveTo(x+rx*0.62, gy2-bodyH*0.005);
@@ -733,7 +733,7 @@ function giraffeDead(x, ground, bodyH){
     ctx.fill();
   });
   // ---- 頭（淚滴形朝右，同站姿頭型縮放）----
-  const hs = bodyH*0.40;                            // 頭的縮放單位
+  const hs = bodyH*0.52;                            // 頭的縮放單位（同站姿比例）
   ctx.fillStyle=bodyCol;
   ctx.beginPath();
   ctx.moveTo(hx-hs*0.64, hy+hs*0.55);

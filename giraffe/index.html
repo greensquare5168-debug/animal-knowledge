@@ -804,7 +804,8 @@ function bareGround(){
 
 // 場景繪圖（每幕 t=幕內秒數）
 function drawTheoryTag(n){
-  // 左上角學說標示（幕1-6適者生存、幕7-12用進廢退）
+  if(n===0) return;   // 第1幕自我介紹，先不標學說
+  // 左上角學說標示
   const tag = (n>=5) ? '💪 用進廢退說' : '🌍 天擇說';
   ctx.font=`bold ${sH(2.6)}px sans-serif`;
   const tw = ctx.measureText(tag).width;

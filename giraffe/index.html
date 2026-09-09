@@ -680,44 +680,65 @@ function giraffeDead(x, ground, bodyH){
   ctx.quadraticCurveTo(x-bodyH*1.06, ground+bodyH*0.11, x-bodyH*0.94, ground+bodyH*0.15); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(x-bodyH*0.92, ground);
   ctx.quadraticCurveTo(x-bodyH*1.0, ground+bodyH*0.13, x-bodyH*0.87, ground+bodyH*0.16); ctx.stroke();
-  // ---- 脖子（沿地前伸，比照站姿錐形+鬃毛）----
-  const nkL = bodyH*0.62;
-  const nx1 = x + bodyH*0.62, ny1 = bodyTop + bodyH*0.12;
-  const hx = nx1 + nkL, hy = ny1 - bodyH*0.02;
+  // ---- 脖子（短、沿地前伸，同站姿短脖子長度）----
+  const nkL2 = bodyH*0.30;
+  const nx1 = x + bodyH*0.55, ny1 = bodyTop + bodyH*0.10;
+  const hx = nx1 + nkL2, hy = ny1 - bodyH*0.02;
   ctx.fillStyle = bodyCol;
   ctx.beginPath();
-  ctx.moveTo(nx1, ny1-bodyH*0.13);
-  ctx.quadraticCurveTo(nx1+nkL*0.6, ny1-bodyH*0.15, hx-bodyH*0.24, hy-bodyH*0.08);
-  ctx.lineTo(hx-bodyH*0.24, hy+bodyH*0.07);
-  ctx.quadraticCurveTo(nx1+nkL*0.6, ny1+bodyH*0.15, nx1, ny1+bodyH*0.12);
+  ctx.moveTo(nx1, ny1-bodyH*0.11);
+  ctx.quadraticCurveTo(nx1+nkL2*0.6, ny1-bodyH*0.13, hx-bodyH*0.1, hy-bodyH*0.06);
+  ctx.lineTo(hx-bodyH*0.1, hy+bodyH*0.08);
+  ctx.quadraticCurveTo(nx1+nkL2*0.6, ny1+bodyH*0.12, nx1, ny1+bodyH*0.11);
   ctx.closePath(); ctx.fill();
   ctx.strokeStyle = darkCol; ctx.lineWidth = bodyH*0.05;
-  ctx.beginPath(); ctx.moveTo(nx1+bodyH*0.02, ny1-bodyH*0.145);
-  ctx.quadraticCurveTo(nx1+nkL*0.6, ny1-bodyH*0.17, hx-bodyH*0.25, hy-bodyH*0.095);
+  ctx.beginPath(); ctx.moveTo(nx1+bodyH*0.02, ny1-bodyH*0.125);
+  ctx.quadraticCurveTo(nx1+nkL2*0.6, ny1-bodyH*0.15, hx-bodyH*0.11, hy-bodyH*0.075);
   ctx.stroke();
-  // ---- 頭（淚滴：額圓吻部突出 + 深棕吻部 + 鼻孔 + 角 + 耳 + ✕眼）----
-  const hs = bodyH*0.30;
+  // ---- 頭：直接複製站姿頭部（淚滴+吻部+角+耳），尺寸 hs=0.56b 同站姿；眼睛改✕ ----
+  const hs = bodyH*0.56;
+  const hxx = hx, hyy = hy;
   ctx.fillStyle = bodyCol;
   ctx.beginPath();
-  ctx.ellipse(hx, hy, hs*1.05, hs*0.6, -0.05, 0, 6.29); ctx.fill();
+  ctx.moveTo(hxx-hs*0.364, hyy+hs*0.30);
+  ctx.quadraticCurveTo(hxx-hs*0.571, hyy+hs*0.12, hxx-hs*0.480, hyy-hs*0.08);
+  ctx.quadraticCurveTo(hxx-hs*0.390, hyy-hs*0.30, hxx-hs*0.156, hyy-hs*0.35);
+  ctx.quadraticCurveTo(hxx+hs*0.130, hyy-hs*0.40, hxx+hs*0.390, hyy-hs*0.29);
+  ctx.quadraticCurveTo(hxx+hs*0.675, hyy-hs*0.16, hxx+hs*0.805, hyy-hs*0.02);
+  ctx.quadraticCurveTo(hxx+hs*0.949, hyy+hs*0.10, hxx+hs*0.858, hyy+hs*0.17);
+  ctx.quadraticCurveTo(hxx+hs*0.650, hyy+hs*0.23, hxx+hs*0.441, hyy+hs*0.25);
+  ctx.quadraticCurveTo(hxx+hs*0.156, hyy+hs*0.31, hxx-hs*0.156, hyy+hs*0.33);
+  ctx.quadraticCurveTo(hxx-hs*0.286, hyy+hs*0.32, hxx-hs*0.364, hyy+hs*0.30);
+  ctx.closePath(); ctx.fill();
+  ctx.save(); ctx.beginPath();
+  ctx.moveTo(hxx-hs*0.364, hyy+hs*0.30);
+  ctx.quadraticCurveTo(hxx-hs*0.571, hyy+hs*0.12, hxx-hs*0.480, hyy-hs*0.08);
+  ctx.quadraticCurveTo(hxx-hs*0.390, hyy-hs*0.30, hxx-hs*0.156, hyy-hs*0.35);
+  ctx.quadraticCurveTo(hxx+hs*0.130, hyy-hs*0.40, hxx+hs*0.390, hyy-hs*0.29);
+  ctx.quadraticCurveTo(hxx+hs*0.675, hyy-hs*0.16, hxx+hs*0.805, hyy-hs*0.02);
+  ctx.quadraticCurveTo(hxx+hs*0.949, hyy+hs*0.10, hxx+hs*0.858, hyy+hs*0.17);
+  ctx.quadraticCurveTo(hxx+hs*0.650, hyy+hs*0.23, hxx+hs*0.441, hyy+hs*0.25);
+  ctx.quadraticCurveTo(hxx+hs*0.156, hyy+hs*0.31, hxx-hs*0.156, hyy+hs*0.33);
+  ctx.quadraticCurveTo(hxx-hs*0.286, hyy+hs*0.32, hxx-hs*0.364, hyy+hs*0.30);
+  ctx.closePath(); ctx.clip();
   ctx.fillStyle = snoutC;
-  ctx.beginPath(); ctx.ellipse(hx+hs*1.2, hy+hs*0.04, hs*0.44, hs*0.3, -0.03, 0, 6.29); ctx.fill();
-  ctx.fillStyle = '#2b1a08';
-  ctx.beginPath(); ctx.ellipse(hx+hs*1.32, hy+hs*0.01, hs*0.07, hs*0.09, 0.02, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(hxx+hs*0.67, hyy+hs*0.05, hs*0.28, hs*0.18, -0.10, 0, 6.29); ctx.fill();
+  ctx.restore();
   ctx.fillStyle = darkCol;
-  ctx.beginPath(); ctx.ellipse(hx-hs*0.3, hy-hs*0.52, hs*0.09, hs*0.3, -0.15, 0, 6.29); ctx.fill();
-  ctx.beginPath(); ctx.arc(hx-hs*0.32, hy-hs*0.82, hs*0.085, 0, 6.29); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(hx, hy-hs*0.55, hs*0.095, hs*0.33, 0.05, 0, 6.29); ctx.fill();
-  ctx.beginPath(); ctx.arc(hx+hs*0.02, hy-hs*0.88, hs*0.09, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(hxx-hs*0.311, hyy-hs*0.42, hs*0.075, hs*0.19, -0.1, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.arc(hxx-hs*0.311, hyy-hs*0.61, hs*0.06, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(hxx-hs*0.065, hyy-hs*0.47, hs*0.09, hs*0.22, 0.06, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.arc(hxx-hs*0.065, hyy-hs*0.69, hs*0.075, 0, 6.29); ctx.fill();
   ctx.fillStyle = bodyCol;
-  ctx.beginPath(); ctx.ellipse(hx-hs*0.88, hy-hs*0.2, hs*0.42, hs*0.17, -0.55, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(hxx-hs*0.650, hyy-hs*0.04, hs*0.46, hs*0.23, -0.5, 0, 6.29); ctx.fill();
   ctx.fillStyle = '#c4914f';
-  ctx.beginPath(); ctx.ellipse(hx-hs*0.95, hy-hs*0.19, hs*0.21, hs*0.085, -0.55, 0, 6.29); ctx.fill();
-  ctx.strokeStyle = '#1c1c1f'; ctx.lineWidth = hs*0.16; ctx.lineCap='round';
-  const ex = hx+hs*0.44, ey = hy-hs*0.14;
-  ctx.beginPath(); ctx.moveTo(ex-hs*0.27, ey-hs*0.27); ctx.lineTo(ex+hs*0.27, ey+hs*0.27); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(ex+hs*0.27, ey-hs*0.27); ctx.lineTo(ex-hs*0.27, ey+hs*0.27); ctx.stroke();
-  // ---- 腿（上側兩條：大腿+小腿有膝蓋、蹄深棕，比照站姿腿）----
+  ctx.beginPath(); ctx.ellipse(hxx-hs*0.694, hyy-hs*0.03, hs*0.24, hs*0.12, -0.5, 0, 6.29); ctx.fill();
+  // ✕ 眼（在站姿眼睛位置）
+  ctx.strokeStyle = '#1c1c1f'; ctx.lineWidth = hs*0.055; ctx.lineCap='round';
+  const ex2 = hxx+hs*0.09, ey2 = hyy-hs*0.10;
+  ctx.beginPath(); ctx.moveTo(ex2-hs*0.085, ey2-hs*0.085); ctx.lineTo(ex2+hs*0.085, ey2+hs*0.085); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(ex2+hs*0.085, ey2-hs*0.085); ctx.lineTo(ex2-hs*0.085, ey2+hs*0.085); ctx.stroke();
+// ---- 腿（上側兩條：大腿+小腿有膝蓋、蹄深棕，比照站姿腿）----
   // 後腿（臀部）
   const hipX = x-bodyH*0.42, hipY = bodyTop+bodyH*0.05;
   ctx.strokeStyle = bodyCol; ctx.lineWidth = bodyH*0.085; ctx.lineCap='round';

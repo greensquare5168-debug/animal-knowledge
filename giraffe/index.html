@@ -137,18 +137,18 @@ function resize(){
 window.addEventListener('resize',resize); resize();
 
 const AUDIO_EVO=[
- {f:null, sub:['嗨！','大家好！','我是長頸鹿！','你有沒有想過','我的脖子為什麼這麼長呀？']},
- {f:null, sub:['很久很久以前，長頸鹿的祖先，脖子有長有短。','有的長，有的短，天生就不一樣。','這第一個說法，叫做「天擇說」。']},
- {f:null, sub:['後來，草原上的草越來越少。','矮矮的草和樹葉，一下子就被吃光了。','脖子短短的長頸鹿，只好抬頭看看高高的樹。']},
- {f:null, sub:['高高的樹上，有又嫩又好吃的葉子。','脖子長的長頸鹿，輕輕鬆鬆就吃到了。','可是脖子短的，伸長了脖子，還是差一點點。']},
- {f:null, sub:['日子一天一天過去，草越來越少。','脖子短的長頸鹿，吃不到東西，最後餓死了。','脖子長的長頸鹿活了下來，生下小寶寶。','一代一代傳下去，脖子長的越來越多，這就是「天擇說」。']},
+ {f:null, sub:['嗨！','大家好！','我是長頸鹿！','你有沒有想過','我的脖子為什麼這麼長呀？'], vf:['voice/s01_c1.mp3','voice/s01_c2.mp3','voice/s01_c3.mp3','voice/s01_c4.mp3','voice/s01_c5.mp3']},
+ {f:null, sub:['很久很久以前，長頸鹿的祖先，脖子有長有短。','有的長，有的短，天生就不一樣。','這第一個說法，叫做「天擇說」。'], vf:['voice/s02_c1.mp3','voice/s02_c2.mp3','voice/s02_c3.mp3']},
+ {f:null, sub:['後來，草原上的草越來越少。','矮矮的草和樹葉，一下子就被吃光了。','脖子短短的長頸鹿，只好抬頭看看高高的樹。'], vf:['voice/s03_c1.mp3','voice/s03_c2.mp3','voice/s03_c3.mp3']},
+ {f:null, sub:['高高的樹上，有又嫩又好吃的葉子。','脖子長的長頸鹿，輕輕鬆鬆就吃到了。','可是脖子短的，伸長了脖子，還是差一點點。'], vf:['voice/s04_c1.mp3','voice/s04_c2.mp3','voice/s04_c3.mp3']},
+ {f:null, sub:['日子一天一天過去，草越來越少。','脖子短的長頸鹿，吃不到東西，最後餓死了。','脖子長的長頸鹿活了下來，生下小寶寶。','一代一代傳下去，脖子長的越來越多，這就是「天擇說」。'], vf:['voice/s05_c1.mp3','voice/s05_c2.mp3','voice/s05_c3.mp3','voice/s05_c4.mp3']},
 ];
 const AUDIO_LM=[
- {f:null, sub:['其實，還有一種說法，叫做「用進廢退說」。','很久很久以前，長頸鹿的祖先，脖子都短短的。','牠們每天用力伸長脖子，想吃高處的樹葉。']},
- {f:null, sub:['伸～伸～再伸長一點！','牠們每天都努力伸長脖子。','奇怪的是，脖子好像真的越來越長了！']},
- {f:null, sub:['終於！脖子變長了。','高處的嫩葉子，輕輕鬆鬆就吃到了。','原來常常用的部位，會越用越發達！']},
- {f:null, sub:['更神奇的是，長長的脖子，還會遺傳給小寶寶。','小長頸鹿一出生，脖子就長長的！']},
- {f:null, sub:['一代傳一代，脖子越來越長，就變成現在的我啦！','你覺得，這個說法有道理嗎？','還是你比較相信「天擇說」呢？']},
+ {f:null, sub:['其實，還有一種說法，叫做「用進廢退說」。','很久很久以前，長頸鹿的祖先，脖子都短短的。','牠們每天用力伸長脖子，想吃高處的樹葉。'], vf:['voice/s06_c1.mp3','voice/s06_c2.mp3','voice/s06_c3.mp3']},
+ {f:null, sub:['伸～伸～再伸長一點！','牠們每天都努力伸長脖子。','奇怪的是，脖子好像真的越來越長了！'], vf:['voice/s07_c1.mp3','voice/s07_c2.mp3','voice/s07_c3.mp3']},
+ {f:null, sub:['終於！脖子變長了。','高處的嫩葉子，輕輕鬆鬆就吃到了。','原來常常用的部位，會越用越發達！'], vf:['voice/s08_c1.mp3','voice/s08_c2.mp3','voice/s08_c3.mp3']},
+ {f:null, sub:['更神奇的是，長長的脖子，還會遺傳給小寶寶。','小長頸鹿一出生，脖子就長長的！'], vf:['voice/s09_c1.mp3','voice/s09_c2.mp3']},
+ {f:null, sub:['一代傳一代，脖子越來越長，就變成現在的我啦！','你覺得，這個說法有道理嗎？','還是你比較相信「天擇說」呢？'], vf:['voice/s10_c1.mp3','voice/s10_c2.mp3','voice/s10_c3.mp3']},
 ];
 let AUDIO=AUDIO_EVO.concat(AUDIO_LM);   // 兩個學說合一：幕1-6適者生存、幕7-12用進廢退
 // 第一幕真實照片背景（AI 生成）
@@ -791,16 +791,20 @@ function grass(t){
   ctx.fillStyle='#5aa848';
   for(let i=0;i<60;i++){const gx=(i*29+t*10)%(W+40)-20;ctx.fillRect(gx,groundY()+2,2.5,5+((i*13)%7));}
 }
-// 脖子強調線（第一幕最後一句：脖子左右各 3 條閃爍短線）
+// 脖子強調線（第一幕最後一句：像時鐘刻度、放射狀一圈包住脖子中段）
 function neckLines(t){
-  const cx = W*0.45, gap = W*0.045, len = W*0.055;
-  const blink = 0.7 + 0.3*Math.sin(t*9);
-  ctx.strokeStyle = 'rgba(224,90,20,'+blink.toFixed(2)+')';
-  ctx.lineWidth = Math.max(3, sH(0.55)); ctx.lineCap='round';
-  for(let i=0;i<3;i++){
-    const yy = H*(0.24 + i*0.13);
-    ctx.beginPath(); ctx.moveTo(cx-gap-len, yy); ctx.lineTo(cx-gap, yy); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(cx+gap, yy); ctx.lineTo(cx+gap+len, yy); ctx.stroke();
+  const cx = W*0.45, cy = H*0.375;       // 脖子中段（照片脖子約 25-55% 高）
+  const r1 = W*0.048, r2 = W*0.072;      // 內外半徑（短放射線）
+  const blink = 0.85 + 0.15*Math.sin(t*9);
+  ctx.strokeStyle = 'rgba(58,58,58,'+blink.toFixed(2)+')';
+  ctx.lineWidth = Math.max(2.5, sH(0.42)); ctx.lineCap='round';
+  for(let i=0;i<12;i++){
+    const a = i/12*Math.PI*2;
+    const ca = Math.cos(a), sa = Math.sin(a);
+    ctx.beginPath();
+    ctx.moveTo(cx+ca*r1, cy+sa*r1);
+    ctx.lineTo(cx+ca*r2, cy+sa*r2);
+    ctx.stroke();
   }
 }
 // 光禿禿地面（整片土黃 + 稀疏枯草）
@@ -968,6 +972,7 @@ function setScene(i){
 }
 let autoTimer=null;
 let sentIdx=0;   // 目前顯示的句子編號（幕內）
+let sentT0=0;    // 目前句子開始時間
 function stopAudio(){ if(audio){audio.pause();audio=null;} if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} }
 // 進度軌拖曳跳轉（12 幕等分：拖曳中預覽該幕，放開才播放）
 const seekEl=document.querySelector('.seek');
@@ -990,31 +995,29 @@ function playScene(i){
   setScene(i);
   stopAudio();
   sentIdx = 0;
-  if(AUDIO[i].f){
-    audio=new Audio(AUDIO[i].f);
-    audio.playbackRate=1;
-    audio.onended=()=>{ if(scene<AUDIO.length-1){ playScene(scene+1);} else { playing=false; document.getElementById('playBtn').textContent='▶'; } };
-    audio.play().catch(()=>{});
-  } else {
-    // 無聲幕：一句一句顯示（句號斷句），每句停留後換下一句，全部播完才換幕
-    const sents = AUDIO[i].sub || [AUDIO[i].t||''];
-    const sdur = AUDIO[i].sd || 4.5;
-    let si = 0;
-    document.getElementById('sub').textContent = sents[0];
-    function nextSent(){
-      if(!playing) return;
-      si++;
-      sentIdx = si;
-      if(si < sents.length){
-        document.getElementById('sub').textContent = sents[si];
-        autoTimer = setTimeout(nextSent, sdur*1000);
-      } else {
-        if(scene < AUDIO.length-1){ playScene(scene+1); }
-        else { playing=false; document.getElementById('playBtn').textContent='▶'; }
-      }
+  sentT0 = performance.now();
+  const sents = AUDIO[i].sub || [AUDIO[i].t||''];
+  const vfs = AUDIO[i].vf || [];
+  function step(){
+    if(!playing) return;
+    sentT0 = performance.now();
+    document.getElementById('sub').textContent = sents[sentIdx] || '';
+    const goNext = ()=>{
+      sentIdx++;
+      if(sentIdx < sents.length){ step(); }
+      else if(scene < AUDIO.length-1){ playScene(scene+1); }
+      else { playing=false; document.getElementById('playBtn').textContent='▶'; }
+    };
+    if(vfs[sentIdx]){
+      audio = new Audio(vfs[sentIdx]);
+      audio.playbackRate = 1;
+      audio.onended = goNext;
+      audio.play().catch(()=>{ autoTimer = setTimeout(goNext, 4500); });  // 語音載入失敗→停4.5秒
+    } else {
+      autoTimer = setTimeout(goNext, 4500);
     }
-    autoTimer = setTimeout(nextSent, sdur*1000);
   }
+  step();
   playing=true; document.getElementById('playBtn').textContent='⏸';
 }
 function togglePlay(){
@@ -1029,18 +1032,20 @@ function nextScene(){ stopAudio(); if(scene<AUDIO.length-1) playScene(scene+1); 
 function loop(ts){
   requestAnimationFrame(loop);
   if(playing){
-    // 進度軌 = 整支影片（12 幕）等分：目前幕位置 + 幕內進度
+    // 進度軌 = 整支影片等分：目前幕位置 + 幕內（句數）進度
     const total = AUDIO.length;
     const seg = 1/total;
     let p = scene/total;
     const now = performance.now();
+    const sc = AUDIO[scene]||{};
+    const nS = (sc.sub?sc.sub.length:1);
+    let inner;
     if(audio && audio.duration){
-      p += seg*Math.min(1, audio.currentTime/(audio.duration||1));
+      inner = (sentIdx + Math.min(1, audio.currentTime/(audio.duration||1)))/nS;
     } else {
-      const sc = AUDIO[scene]||{};
-      const d = (sc.sub?sc.sub.length:1) * (sc.sd||4.5);
-      p += seg*Math.min(1, (now-t0)/1000/d);
+      inner = (sentIdx + Math.min(1, (now-sentT0)/1000/4.5))/nS;
     }
+    p += seg*Math.min(1, inner);
     document.getElementById('seekBar').style.width=(p*100)+'%';
   }
   const t=(performance.now()-t0)/1000;

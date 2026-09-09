@@ -146,7 +146,7 @@ const AUDIO_EVO=[
 ];
 const AUDIO_LM=[
  {f:null,t:'嗨！又是我～關於我的長脖子，還有一個很古老的說法喔！'},
- {f:null,t:'很久很久以前，長頸鹿的祖先，脖子有的長、有的短！'},
+ {f:null,t:'很久很久以前，長頸鹿的祖先，脖子都短短的，跟現在的長頸鹿完全不一樣！'},
  {f:null,t:'地上的青草常常不夠吃，牠們只好每天努力的伸長脖子，想吃高高的樹葉！'},
  {f:null,t:'常常伸脖子，脖子真的越伸越長了！高處的嫩葉子，終於吃得到了！'},
  {f:null,t:'長長的脖子會傳給小長頸鹿，小寶寶一出生，脖子就長長的！'},
@@ -913,11 +913,11 @@ function drawLamarckScene(n,t){
     giraffe(W*0.3,gy,sH(15),sH(19),'talk',t);
     ctx.font=`bold ${sH(3.4)}px sans-serif`;
     ctx.fillText('（其實還有一個古老的說法……）',W*0.5,sH(9));
-  } else if(n===1){ // 祖先：脖子有長有短
-    giraffe(W*0.33,gy,sH(14),sH(13),'talk',t);        // 正常長度的祖先（中間）
-    giraffe(W*0.64,gy,sH(11),sH(4),'talk',t*0.7,0.72);  // 短脖子短腿的祖先（中間，頭會動）
+  } else if(n===1){ // 祖先：脖子都很短（用進廢退的起點）
+    giraffe(W*0.22,gy,sH(11),sH(4),'talk',t,0.72);     // 短脖子祖先
+    giraffe(W*0.62,gy,sH(11),sH(4),'talk',t*0.7,0.72); // 另一隻也短短
     ctx.font=`bold ${sH(2.4)}px sans-serif`;
-    ctx.fillText('第一個是天擇說：祖先的脖子有長有短！',W*0.5,sH(9));
+    ctx.fillText('很久很久以前，長頸鹿的祖先，脖子都短短的！',W*0.5,sH(9));
   } else if(n===2){ // 努力伸長脖子（脖子慢慢變長）
     acacia(W*0.6,gy,sH(48));
     giraffe(W*0.2,gy,sH(14),sH(4)+Math.min(sH(8),t*sH(6)),'happy',t,0.72);

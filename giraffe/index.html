@@ -643,12 +643,7 @@ function giraffeDead(x, ground, bodyH){
   const bodyCol='#f5d48a', patchCol='#a06a28', darkCol='#5e3810', snoutC='#8a5522';
   const gy = ground;
   const hwB = bodyH*0.56, hhB = bodyH*0.5;
-  const byB = ground - bodyH*1.75;      // 站姿身體中心
-  // ---- 身體：traceBodyPath 壓扁（錨點計算使身體底貼地、高約 0.5b）----
-  ctx.save();
-  ctx.translate(x, ground + bodyH*1.435);
-  ctx.scale(1, 0.52);
-  ctx.translate(-x, -(ground + bodyH*1.435));
+  const byB = ground - bodyH*0.43;      // 身體中心（不壓扁，完整站姿高度躺地）
   ctx.fillStyle = bodyCol;
   traceBodyPath(x, byB, hwB, hhB, 1.15);
   ctx.fill();
@@ -667,9 +662,8 @@ function giraffeDead(x, ground, bodyH){
     }
   }
   ctx.restore();
-  ctx.restore();
-  // 身體視覺高度：頂約 ground-0.5b、底 ground
-  const bodyTop = ground - bodyH*0.5;
+  // 身體視覺：完整站姿高度躺地
+  const bodyTop = ground - bodyH*0.88;
   // ---- 尾巴（站姿款：白柄垂在臀後 + 黑毛叢）----
   ctx.strokeStyle = bodyCol; ctx.lineWidth = bodyH*0.045; ctx.lineCap='round';
   ctx.beginPath(); ctx.moveTo(x-bodyH*0.72, bodyTop+bodyH*0.18);

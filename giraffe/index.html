@@ -324,7 +324,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   leg(x - hw*0.34*bodyS, by+hh*0.6, legH+hh*0.4+reachBob, -0.13, bodyCol, darkCol, t, legAbsW/((legH+hh*0.4+reachBob)*0.088));
   if(mood==='reach'){
     raisedLeg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4+reachBob, bodyH, bodyCol, darkCol, t, legAbsW/((legH+hh*0.4+reachBob)*0.088));  // 近前腿（連續抬放）
-    raisedLeg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28+reachBob, bodyH, '#dcc98f', '#3a2410', t, legAbsW/((legH+hh*0.28+reachBob)*0.088)); // 遠前腿補畫
+    raisedLeg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28+reachBob, bodyH, bodyCol, darkCol, t, legAbsW/((legH+hh*0.28+reachBob)*0.088)); // 遠前腿補畫（同色避免禿地上透明）
   } else {
     leg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol, t, legAbsW/((legH+hh*0.4)*0.088));
   }

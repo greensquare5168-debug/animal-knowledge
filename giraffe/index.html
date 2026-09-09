@@ -76,7 +76,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
         <div class="stage"><canvas id="cv"></canvas>
           <div class="dots" id="dots"></div>
         </div>
-        <div class="subtitle" id="sub">▶ 按播放，讓長頸鹿說給你聽！</div>
+        <div class="subtitle" id="sub">▶ 按播放讓長頸鹿說給你聽！</div>
         <div class="ctrl">
           <button class="navbtn" onclick="prevScene()" title="上一幕">◀◀</button>
           <button id="playBtn" onclick="togglePlay()">▶</button>
@@ -86,33 +86,33 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
           <div class="plabel" id="sceneLabel">1 / 9</div>
         </div>
       </div>
-      <div class="wow">💡 <b>你知道嗎？</b>成年長頸鹿的脖子可以長到 <b>2 公尺</b>，裡面跟人類一樣只有 <b>7 節</b>頸椎骨！只是每一節都超長～</div>
+      <div class="wow">💡 <b>你知道嗎？</b>成年長頸鹿的脖子可以長到 <b>2 公尺</b>裡面跟人類一樣只有 <b>7 節</b>頸椎骨！只是每一節都超長～</div>
     </section>
 
     <!-- Q2 暫以文字解說（動畫製作中） -->
     <section class="panel" id="q2">
       <h2>👅 長頸鹿的舌頭為什麼是紫色的？</h2>
       <div class="fact">
-        長頸鹿的舌頭是<b>藍紫色</b>的，而且超～級長，可以到 <b>45～50 公分</b>！
+        長頸鹿的舌頭是<b>藍紫色</b>的而且超～級長可以到 <b>45～50 公分</b>！
         <br><br>
-        為什麼是紫色的？科學家說，舌頭裡有很多<b>黑色素</b>，像擦了防曬油一樣，可以保護舌頭<b>不被非洲的太陽曬傷</b>！
+        為什麼是紫色的？科學家說舌頭裡有很多<b>黑色素</b>像擦了防曬油一樣可以保護舌頭<b>不被非洲的太陽曬傷</b>！
         <br><br>
-        而且舌頭前端尖尖的、很有力，可以靈活地<b>捲住金合歡樹上有刺的樹枝</b>，把葉子一片一片掃進嘴裡，刺都刺不到牠～超厲害！
+        而且舌頭前端尖尖的、很有力可以靈活地<b>捲住金合歡樹上有刺的樹枝</b>把葉子一片一片掃進嘴裡刺都刺不到牠～超厲害！
       </div>
-      <div style="text-align:center;padding:14px;color:#c98a2d;font-size:14px">🎬 動畫解說製作中，很快就來！</div>
+      <div style="text-align:center;padding:14px;color:#c98a2d;font-size:14px">🎬 動畫解說製作中很快就來！</div>
     </section>
 
     <!-- Q3 暫以文字解說 -->
     <section class="panel" id="q3">
-      <h2>💧 脖子那麼長，長頸鹿怎麼喝水？</h2>
+      <h2>💧 脖子那麼長長頸鹿怎麼喝水？</h2>
       <div class="fact">
-        脖子長雖然吃樹葉很方便，但<b>喝水反而很辛苦</b>！
+        脖子長雖然吃樹葉很方便但<b>喝水反而很辛苦</b>！
         <br><br>
-        長頸鹿要把<b>前腿大大地劈開</b>，彎成「ㄑ」字形，脖子才能低到水面。這個姿勢超彆扭，所以牠們喝水的時候都會<b>很緊張</b>，一邊喝一邊注意有沒有獅子靠近！
+        長頸鹿要把<b>前腿大大地劈開</b>彎成「ㄑ」字形脖子才能低到水面這個姿勢超彆扭所以牠們喝水的時候都會<b>很緊張</b>一邊喝一邊注意有沒有獅子靠近！
         <br><br>
-        不過牠們不需要常常喝水——因為吃的金合歡樹葉裡已經有很多水分，可以好幾天不喝水也沒問題！
+        不過牠們不需要常常喝水——因為吃的金合歡樹葉裡已經有很多水分可以好幾天不喝水也沒問題！
       </div>
-      <div style="text-align:center;padding:14px;color:#c98a2d;font-size:14px">🎬 動畫解說製作中，很快就來！</div>
+      <div style="text-align:center;padding:14px;color:#c98a2d;font-size:14px">🎬 動畫解說製作中很快就來！</div>
     </section>
   </main>
 </div>
@@ -137,17 +137,17 @@ function resize(){
 window.addEventListener('resize',resize); resize();
 
 const AUDIO_EVO=[
- {f:null, sub:['嗨！','大家好！','我是長頸鹿！','你有沒有想過','我的脖子為什麼這麼長呀？','關於這個問題，有兩種說法喔！'], vf:['voice/s01_c1.mp3','voice/s01_c2.mp3','voice/s01_c3.mp3','voice/s01_c4.mp3','voice/s01_c5.mp3','voice/s01_c6.mp3']},
- {f:null, sub:['第一種說法，叫做天擇說。','長頸鹿一開始，脖子有長有短。','有的長，有的短，天生就不一樣。','可是草原上的草越來越少。','矮矮的草和樹葉，一下子就被吃光了。','脖子短短的長頸鹿，只好抬頭看看高高的樹。'], vf:['voice/s02_c1.mp3','voice/s02_c2.mp3','voice/s02_c3.mp3','voice/s03_c1.mp3','voice/s03_c2.mp3','voice/s03_c3.mp3']},
- {f:null, sub:['高高的樹上，有又嫩又好吃的葉子。','脖子長的長頸鹿，輕輕鬆鬆就吃到了。','可是脖子短的，伸長了脖子，還是差一點點。'], vf:['voice/s04_c1.mp3','voice/s04_c2.mp3','voice/s04_c3.mp3']},
- {f:null, sub:['日子一天一天過去，草越來越少。','脖子短的長頸鹿，吃不到東西，最後餓死了。','脖子長的長頸鹿活了下來，生下小寶寶。','一代一代傳下去，脖子長的越來越多，這就是「天擇說」。'], vf:['voice/s05_c1.mp3','voice/s05_c2.mp3','voice/s05_c3.mp3','voice/s05_c4.mp3']},
+ {f:null, sub:['嗨！','大家好！','我是長頸鹿！','你有沒有想過','我的脖子為什麼這麼長呀？','關於這個問題','有兩種說法喔！'], vf:['voice/s01_c1.mp3','voice/s01_c2.mp3','voice/s01_c3.mp3','voice/s01_c4.mp3','voice/s01_c5.mp3','voice/s01_c6.mp3','voice/s01_c7.mp3']},
+ {f:null, sub:['第一種說法叫做天擇說','長頸鹿一開始脖子有長有短','有的長有的短天生就不一樣','可是草原上的草越來越少','矮矮的草和樹葉一下子就被吃光了','脖子短短的長頸鹿只好抬頭看看高高的樹'], vf:['voice/s02_c1.mp3','voice/s02_c2.mp3','voice/s02_c3.mp3','voice/s03_c1.mp3','voice/s03_c2.mp3','voice/s03_c3.mp3']},
+ {f:null, sub:['高高的樹上有又嫩又好吃的葉子','脖子長的長頸鹿輕輕鬆鬆就吃到了','可是脖子短的伸長了脖子還是差一點點'], vf:['voice/s04_c1.mp3','voice/s04_c2.mp3','voice/s04_c3.mp3']},
+ {f:null, sub:['日子一天一天過去草越來越少','脖子短的長頸鹿吃不到東西最後餓死了','脖子長的長頸鹿活了下來生下小寶寶','一代一代傳下去脖子長的越來越多這就是「天擇說」'], vf:['voice/s05_c1.mp3','voice/s05_c2.mp3','voice/s05_c3.mp3','voice/s05_c4.mp3']},
 ];
 const AUDIO_LM=[
- {f:null, sub:['其實，還有一種說法，叫做「用進廢退說」。','很久很久以前，長頸鹿的祖先，脖子都短短的。','牠們每天用力伸長脖子，想吃高處的樹葉。'], vf:['voice/s06_c1.mp3','voice/s06_c2.mp3','voice/s06_c3.mp3']},
- {f:null, sub:['伸～伸～再伸長一點！','牠們每天都努力伸長脖子。','奇怪的是，脖子好像真的越來越長了！'], vf:['voice/s07_c1.mp3','voice/s07_c2.mp3','voice/s07_c3.mp3']},
- {f:null, sub:['終於！脖子變長了。','高處的嫩葉子，輕輕鬆鬆就吃到了。','原來常常用的部位，會越用越發達！'], vf:['voice/s08_c1.mp3','voice/s08_c2.mp3','voice/s08_c3.mp3']},
- {f:null, sub:['更神奇的是，長長的脖子，還會遺傳給小寶寶。','小長頸鹿一出生，脖子就長長的！'], vf:['voice/s09_c1.mp3','voice/s09_c2.mp3']},
- {f:null, sub:['一代傳一代，脖子越來越長，就變成現在的我啦！','你覺得，這個說法有道理嗎？','還是你比較相信「天擇說」呢？'], vf:['voice/s10_c1.mp3','voice/s10_c2.mp3','voice/s10_c3.mp3']},
+ {f:null, sub:['其實還有一種說法叫做「用進廢退說」','很久很久以前長頸鹿的祖先脖子都短短的','牠們每天用力伸長脖子想吃高處的樹葉'], vf:['voice/s06_c1.mp3','voice/s06_c2.mp3','voice/s06_c3.mp3']},
+ {f:null, sub:['伸～伸～再伸長一點！','牠們每天都努力伸長脖子','奇怪的是脖子好像真的越來越長了！'], vf:['voice/s07_c1.mp3','voice/s07_c2.mp3','voice/s07_c3.mp3']},
+ {f:null, sub:['終於！脖子變長了','高處的嫩葉子輕輕鬆鬆就吃到了','原來常常用的部位會越用越發達！'], vf:['voice/s08_c1.mp3','voice/s08_c2.mp3','voice/s08_c3.mp3']},
+ {f:null, sub:['更神奇的是長長的脖子還會遺傳給小寶寶','小長頸鹿一出生脖子就長長的！'], vf:['voice/s09_c1.mp3','voice/s09_c2.mp3']},
+ {f:null, sub:['一代傳一代脖子越來越長就變成現在的我啦！','你覺得這個說法有道理嗎？','還是你比較相信「天擇說」呢？'], vf:['voice/s10_c1.mp3','voice/s10_c2.mp3','voice/s10_c3.mp3']},
 ];
 let AUDIO=AUDIO_EVO.concat(AUDIO_LM);   // 兩個學說合一：幕1-6適者生存、幕7-12用進廢退
 // 第一幕真實照片背景（AI 生成）
@@ -190,7 +190,7 @@ function traceBodyPath(x, by, hw, hh, sx){
 }
 // 前腳騰空（reach 姿勢）L 型：大腿水平前伸、小腿垂直下垂、蹄懸空
 function raisedLeg(lx, topY, len, bodyH, col, hoofCol, t, thick){
-  // 前腳連續動畫：lift 0（自然踩地）→ 1（L型抬最高）平滑過渡，不會瞬間跳變
+  // 前腳連續動畫：lift 0（自然踩地）→ 1（L型抬最高）平滑過渡不會瞬間跳變
   thick = thick||1;
   const b = bodyH;
   const gy3 = topY + len;                                // 蹄落地位置（地面）
@@ -233,8 +233,8 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   if(mood!=='reach'){
     leg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, -0.05, bodyCol, darkCol, t, legAbsW/((legH+hh*0.28)*0.088));
   }
-  // （reach 的遠前腿改到近腿之後畫，避免大腿被身體擋住只剩蹄）
-  // ---- 尾巴（身體左側、自然朝下垂，末端黑毛）----
+  // （reach 的遠前腿改到近腿之後畫避免大腿被身體擋住只剩蹄）
+  // ---- 尾巴（身體左側、自然朝下垂末端黑毛）----
   const twx = Math.sin(t*3)*1.5;
   ctx.strokeStyle = bodyCol; ctx.lineWidth = hw*0.08; ctx.lineCap='round';
   ctx.beginPath(); ctx.moveTo(x-hw*1.092, by-hh*0.35);
@@ -276,8 +276,8 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   });
   ctx.restore();
   // ---- 脖子（上窄下寬錐形：身體端粗、頭端細；短脖子接近直線、長脖子微前弓）----
-  const nP0x=x+hw*0.72, nP0y=shY-hh*0.05;          // 頸根（肩，寬端）
-  const nP1x=hpX-hw*0.20, nP1y=hpY+hw*0.26;        // 頸頂（深入頭後下，被頭蓋住不露縫）
+  const nP0x=x+hw*0.72, nP0y=shY-hh*0.05;          // 頸根（肩寬端）
+  const nP1x=hpX-hw*0.20, nP1y=hpY+hw*0.26;        // 頸頂（深入頭後下被頭蓋住不露縫）
   const nBow=Math.min(1, neckH/(sH(13)||1));        // 脖子越短弓越小（越直）
   const nCx=(nP0x+nP1x)/2 + (x+hw*1.02-(nP0x+nP1x)/2)*nBow;
   const nCy=(nP0y+hpY)/2;
@@ -299,7 +299,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   for(let ni=1;ni<=16;ni++) ctx.lineTo(nSide[ni].x+nSide[ni].nx*nSide[ni].hw2, nSide[ni].y+nSide[ni].ny*nSide[ni].hw2);
   for(let ni=16;ni>=0;ni--) ctx.lineTo(nSide[ni].x-nSide[ni].nx*nSide[ni].hw2, nSide[ni].y-nSide[ni].ny*nSide[ni].hw2);
   ctx.closePath(); ctx.fill();
-  // 寬端圓頭（讓脖子底部圓弧融入身體，不與身體分離）
+  // 寬端圓頭（讓脖子底部圓弧融入身體不與身體分離）
   ctx.fillStyle = bodyCol;
   ctx.beginPath(); ctx.arc(nP0x, nP0y, nWB/2, 0, 6.29); ctx.fill();
   // 脖子斑（左右交錯不併排：有的偏背側、有的偏腹側）
@@ -311,7 +311,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
     ctx.fillStyle=patchCol;
     blob(pk.x+pk.nx*off, pk.y+pk.ny*off, pk.hw2*0.62, pk.hw2*0.42, ((nk%3)-1)*0.22, nk*11+5);
   }
-  // 鬃毛（脖子背緣一整條：沿背側緣外側的連續深棕脊線，上窄下寬同脖子）
+  // 鬃毛（脖子背緣一整條：沿背側緣外側的連續深棕脊線上窄下寬同脖子）
   ctx.strokeStyle=darkCol; ctx.lineWidth=hw*0.18; ctx.lineCap='round'; ctx.lineJoin='round';
   ctx.beginPath();
   for(let mi=0;mi<=16;mi++){
@@ -334,7 +334,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   if(mood==='reach') ctx.rotate(-0.22-0.08*reachSway);
   if(mood==='eat') ctx.rotate(0.55);   // 低頭（吻朝下吃草）
   ctx.translate(-hpX, -hpY);
-  // ---- 頭部（淚滴形：額圓、吻部突出圓鈍，參考真實長頸鹿側面）----
+  // ---- 頭部（淚滴形：額圓、吻部突出圓鈍參考真實長頸鹿側面）----
   const bob = (mood==='talk'||mood==='happy')? Math.sin(t*10)*bodyH*0.035 : (mood==='eat'? Math.sin(t*9)*bodyH*0.03 : 0);   // eat 低頭咀嚼
   const hx = hpX, hy = hpY + bob;
   // 頭部輪廓（面向右：後腦→額→鼻樑→吻部圓鈍→下巴→喉）
@@ -350,7 +350,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   ctx.quadraticCurveTo(hx+hw*0.156, hy+hw*0.31, hx-hw*0.156, hy+hw*0.33);  // 下顎
   ctx.quadraticCurveTo(hx-hw*0.286, hy+hw*0.32, hx-hw*0.364, hy+hw*0.30);  // 收合
   ctx.closePath(); ctx.fill();
-  // 深色吻部（吻部前端 + 鼻樑，clip 貼頭緣）
+  // 深色吻部（吻部前端 + 鼻樑clip 貼頭緣）
   ctx.save(); ctx.beginPath();
   ctx.moveTo(hx-hw*0.364, hy+hw*0.30);
   ctx.quadraticCurveTo(hx-hw*0.571, hy+hw*0.12, hx-hw*0.480, hy-hw*0.08);
@@ -365,22 +365,22 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   ctx.fillStyle = '#8a5522';
   ctx.beginPath(); ctx.ellipse(hx+hw*0.67, hy+hw*0.05, hw*0.28, hw*0.18, -0.10, 0, 6.29); ctx.fill();
   ctx.restore();
-  // 兩隻角（頭頂：短粗圓鈍，基部沒入頭部）
+  // 兩隻角（頭頂：短粗圓鈍基部沒入頭部）
   ctx.fillStyle = darkCol;
   ctx.beginPath(); ctx.ellipse(hx-hw*0.311, hy-hw*0.42, hw*0.075, hw*0.19, -0.1, 0, 6.29); ctx.fill();  // 遠角（後）
   ctx.beginPath(); ctx.arc(hx-hw*0.311, hy-hw*0.61, hw*0.06, 0, 6.29); ctx.fill();
   ctx.beginPath(); ctx.ellipse(hx-hw*0.065, hy-hw*0.47, hw*0.09, hw*0.22, 0.06, 0, 6.29); ctx.fill();   // 近角（前）
   ctx.beginPath(); ctx.arc(hx-hw*0.065, hy-hw*0.69, hw*0.075, 0, 6.29); ctx.fill();
-  // 耳朵（頭後側，寬大略向後下斜）
+  // 耳朵（頭後側寬大略向後下斜）
   ctx.fillStyle = bodyCol;
   ctx.beginPath(); ctx.ellipse(hx-hw*0.650, hy-hw*0.04, hw*0.46, hw*0.23, -0.5, 0, 6.29); ctx.fill();
   ctx.fillStyle = '#c4914f';
   ctx.beginPath(); ctx.ellipse(hx-hw*0.694, hy-hw*0.03, hw*0.24, hw*0.12, -0.5, 0, 6.29); ctx.fill();
-  // 眼睛（大而友善，額頭下方、吻部後上方）
+  // 眼睛（大而友善額頭下方、吻部後上方）
   ctx.fillStyle = '#2b2b2b';
   ctx.beginPath(); ctx.ellipse(hx+hw*0.091, hy-hw*0.12, hw*0.075, hw*0.105, -0.08, 0, 6.29); ctx.fill();
   ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(hx+hw*0.130, hy-hw*0.16, hw*0.028, 0, 6.29); ctx.fill();
-  // 鼻孔（側面視角只看到一個，畫在吻部前端）+ 嘴巴（吻部最前端下方，表情依 mood）
+  // 鼻孔（側面視角只看到一個畫在吻部前端）+ 嘴巴（吻部最前端下方表情依 mood）
   ctx.fillStyle = '#2b1a08';
   ctx.beginPath(); ctx.ellipse(hx+hw*0.74, hy+hw*0.04, hw*0.052, hw*0.07, 0.05, 0, 6.29); ctx.fill();
   ctx.lineCap='round';
@@ -390,23 +390,23 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
     ctx.fillStyle='#8ec9f0';
     ctx.beginPath(); ctx.ellipse(hx-hw*0.104, hy+hw*0.02, hw*0.05, hw*0.085, 0.3, 0, 6.29); ctx.fill();
   } else {
-    // 統一微笑（2-6 幕同款：吻部內微彎線，不跑出臉）
+    // 統一微笑（2-6 幕同款：吻部內微彎線不跑出臉）
     ctx.strokeStyle='#1f1f1f'; ctx.lineWidth=hw*0.055;
     ctx.beginPath(); ctx.moveTo(hx+hw*0.594, hy+hw*0.125);
     ctx.quadraticCurveTo(hx+hw*0.739, hy+hw*0.175, hx+hw*0.885, hy+hw*0.115); ctx.stroke();
   }
   ctx.restore();
 }
-// 多邊形斑塊 helper：pts 為相對座標陣列（單位 hw），x,y 中心
+// 多邊形斑塊 helper：pts 為相對座標陣列（單位 hw）x,y 中心
 function poly(cx, cy, pts, hw){
   ctx.beginPath();
   pts.forEach((p,i)=>{ const px = cx + p[0]*hw, py = cy + p[1]*hw; if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py); });
   ctx.closePath(); ctx.fill();
 }
 
-// 長腿（兩段：大腿+小腿，膝蓋微彎）
+// 長腿（兩段：大腿+小腿膝蓋微彎）
 
-// 自然斑塊 helper：不規則有機形（不圓不方，seed 固定避免閃爍）
+// 自然斑塊 helper：不規則有機形（不圓不方seed 固定避免閃爍）
 function blob(cx, cy, rx, ry, rot, seed){
   ctx.save(); ctx.translate(cx, cy); ctx.rotate(rot||0);
   const n = 9, P = [];
@@ -426,7 +426,7 @@ function blob(cx, cy, rx, ry, rot, seed){
   ctx.restore();
 }
 
-// 腿上斑塊（大腿一塊 + 小腿一塊，大小不同）
+// 腿上斑塊（大腿一塊 + 小腿一塊大小不同）
 function legSpots(lx, topY, len, bend, col){
   // 大腿大斑 → 膝蓋下迅速變細密 → 近蹄完全乾淨
   const spots = [[0.58,0.1,0.062],[0.45,0.24,0.042],[0.5,0.38,0.028],[0.46,0.52,0.016],[0.5,0.64,0.01]];
@@ -446,15 +446,15 @@ function crack(cx, cy, rx, ry, rot){
 function leg(lx, topY, len, bend, col, hoofCol, t, thick){
   // 有曲度的腿：大腿→明顯膝蓋→小腿（膝蓋向後凸）
   thick = thick||1;                  // 粗細補償（腿縮短時維持原粗）
-  const kx = lx + bend*len*1.0;    // 膝蓋 x（向後，明顯曲度）
+  const kx = lx + bend*len*1.0;    // 膝蓋 x（向後明顯曲度）
   const ky = topY + len*0.52;      // 膝蓋高度
   const ankleX = lx + bend*len*0.3;
   const footX = lx + bend*len*0.18; // 蹄微回收（站立自然）
-  // 大腿（加粗，微弧向膝）
+  // 大腿（加粗微弧向膝）
   ctx.strokeStyle = col; ctx.lineWidth = len*0.088*thick; ctx.lineCap='round';
   ctx.beginPath(); ctx.moveTo(lx, topY);
   ctx.quadraticCurveTo(lx + bend*len*0.1, topY+len*0.26, kx, ky); ctx.stroke();
-  // 小腿（比大腿略細，round cap 與大腿在膝蓋自然相接，不畫圓球）
+  // 小腿（比大腿略細round cap 與大腿在膝蓋自然相接不畫圓球）
   ctx.strokeStyle = col; ctx.lineWidth = len*0.07*thick;
   ctx.beginPath(); ctx.moveTo(kx, ky);
   ctx.quadraticCurveTo(kx - bend*len*0.12, topY+len*0.76, ankleX, topY+len*0.97); ctx.stroke();
@@ -489,7 +489,7 @@ function zebra(x, ground, t){
     ctx.beginPath(); ctx.moveTo(kx-bend*bodyH*0.12, ground-bodyH*0.115);
     ctx.lineTo(kx-bend*bodyH*0.14, ground-bodyH*0.012); ctx.stroke();
   });
-  // 2) 尾巴（白柄垂到腿中段 + 末端黑毛叢，尾柄與黑毛叢分離）
+  // 2) 尾巴（白柄垂到腿中段 + 末端黑毛叢尾柄與黑毛叢分離）
   ctx.strokeStyle=Wc; ctx.lineWidth=bodyH*0.052; ctx.lineCap='round';
   ctx.beginPath(); ctx.moveTo(x-hw*0.96*bodyS,by-hh*0.26);
   ctx.quadraticCurveTo(x-hw*1.30*bodyS,by-hh*0.0,x-hw*1.33*bodyS,by+legH*0.38); ctx.stroke();
@@ -500,7 +500,7 @@ function zebra(x, ground, t){
     ctx.quadraticCurveTo(x-hw*1.52*bodyS+k*bodyH*0.03, by+legH*0.72, x-hw*1.38*bodyS+k*bodyH*0.10, by+legH*0.95);
     ctx.stroke();
   }
-  // 3) 身體（白底，前高後低馬形，同長頸鹿輪廓）
+  // 3) 身體（白底前高後低馬形同長頸鹿輪廓）
   ctx.fillStyle=Wc;
   traceBodyPath(x,by,hw,hh,bodyS); ctx.fill();
   ctx.strokeStyle='rgba(60,50,40,.15)'; ctx.lineWidth=1.2; ctx.stroke();
@@ -524,7 +524,7 @@ function zebra(x, ground, t){
     ctx.quadraticCurveTo(botX, botY+hh*0.10, botX+wBot/2, botY);    // 底部圓收
     ctx.quadraticCurveTo(midX+bendR, midY, topX+wTop/2, topY);      // 右緣（不同彎）
     ctx.closePath(); ctx.fill();
-    if(i%3===1){ // 末端小分岔（Y 形，像真斑馬紋）
+    if(i%3===1){ // 末端小分岔（Y 形像真斑馬紋）
       ctx.strokeStyle=dark; ctx.lineWidth=bodyH*0.020; ctx.lineCap='round';
       ctx.beginPath(); ctx.moveTo(botX-wBot*0.3, botY); ctx.lineTo(botX-wBot*0.62, botY+hh*0.16); ctx.stroke();
       ctx.beginPath(); ctx.moveTo(botX+wBot*0.3, botY); ctx.lineTo(botX+wBot*0.58, botY+hh*0.13); ctx.stroke();
@@ -532,7 +532,7 @@ function zebra(x, ground, t){
     }
   }
   ctx.restore();
-  // 5) 脖子（短錐形填色：身體端寬、頭端窄，寬端圓弧融入身體，同長頸鹿）
+  // 5) 脖子（短錐形填色：身體端寬、頭端窄寬端圓弧融入身體同長頸鹿）
   const nP0x=x+hw*0.66*bodyS, nP0y=shY-hh*0.05;         // 頸根（肩）
   const nP1x=hpX-hw*0.14, nP1y=hpY+hw*0.30;             // 頸頂（深入頭下）
   const nCx=(nP0x+nP1x)/2+hw*0.25, nCy=(nP0y+nP1y)/2-hh*0.1;
@@ -563,7 +563,7 @@ function zebra(x, ground, t){
     ctx.moveTo(pk.x+pk.nx*pk.hw2*0.5, pk.y+pk.ny*pk.hw2*0.5);
     ctx.lineTo(pk.x-pk.nx*pk.hw2*0.5, pk.y-pk.ny*pk.hw2*0.5); ctx.stroke();
   }
-  // 7) 鬃毛（脖子背緣一整條黑脊，同長頸鹿鬃毛畫法）
+  // 7) 鬃毛（脖子背緣一整條黑脊同長頸鹿鬃毛畫法）
   ctx.strokeStyle=dark; ctx.lineWidth=bodyH*0.11; ctx.lineCap='round'; ctx.lineJoin='round';
   ctx.beginPath();
   for(let mi=0;mi<=12;mi++){
@@ -572,7 +572,7 @@ function zebra(x, ground, t){
     if(mi===0) ctx.moveTo(ox,oy); else ctx.lineTo(ox,oy);
   }
   ctx.stroke();
-  // 8) 近側雙腿（白底、膝蓋平滑、環紋、黑蹄，間距拉開）
+  // 8) 近側雙腿（白底、膝蓋平滑、環紋、黑蹄間距拉開）
   [[x-hw*0.30*bodyS,-0.13],[x+hw*0.62*bodyS,-0.10]].forEach(p=>{
     const lx=p[0], bend=p[1];
     const ty2=by+hh*0.62, kx=lx+bend*bodyH*1.0, ky=ty2+legH*0.52;
@@ -592,7 +592,7 @@ function zebra(x, ground, t){
     ctx.beginPath(); ctx.moveTo(lx+bend*bodyH*0.015, ground-bodyH*0.125);
     ctx.lineTo(lx+bend*bodyH*0.0, ground-bodyH*0.012); ctx.stroke();
   });
-  // 9) 頭部（淚滴形：額圓、吻部突出圓鈍，參考長頸鹿頭型）
+  // 9) 頭部（淚滴形：額圓、吻部突出圓鈍參考長頸鹿頭型）
   const hx=hpX, hy=hpY;
   ctx.fillStyle=Wc;
   ctx.beginPath();
@@ -606,7 +606,7 @@ function zebra(x, ground, t){
   ctx.quadraticCurveTo(hx+hw*0.156, hy+hw*0.31, hx-hw*0.156, hy+hw*0.33);
   ctx.quadraticCurveTo(hx-hw*0.286, hy+hw*0.32, hx-hw*0.364, hy+hw*0.30);
   ctx.closePath(); ctx.fill();
-  // 10) 黑吻部（clip 貼頭緣：只蓋鼻吻部，同長頸鹿棕區邏輯）
+  // 10) 黑吻部（clip 貼頭緣：只蓋鼻吻部同長頸鹿棕區邏輯）
   ctx.save(); ctx.beginPath();
   ctx.moveTo(hx-hw*0.364, hy+hw*0.30);
   ctx.quadraticCurveTo(hx-hw*0.571, hy+hw*0.12, hx-hw*0.480, hy-hw*0.08);
@@ -621,7 +621,7 @@ function zebra(x, ground, t){
   ctx.fillStyle=snout;
   ctx.beginPath(); ctx.ellipse(hx+hw*0.67, hy+hw*0.05, hw*0.28, hw*0.18, -0.10, 0, 6.29); ctx.fill();
   ctx.restore();
-  // 11) 耳朵（貼頭頂後緣兩側、前後錯開橫向，看起來是耳朵不是角）
+  // 11) 耳朵（貼頭頂後緣兩側、前後錯開橫向看起來是耳朵不是角）
   ctx.fillStyle=far;
   ctx.beginPath(); ctx.ellipse(hx-hw*0.46, hy-hw*0.16, hw*0.17, hw*0.07, -0.55, 0, 6.29); ctx.fill();
   ctx.fillStyle=Wc;
@@ -633,7 +633,7 @@ function zebra(x, ground, t){
   ctx.beginPath(); ctx.ellipse(hx+hw*0.09, hy-hw*0.10, hw*0.075, hw*0.105, -0.08, 0, 6.29); ctx.fill();
   ctx.fillStyle='#fff';
   ctx.beginPath(); ctx.arc(hx+hw*0.13, hy-hw*0.145, hw*0.03, 0, 6.29); ctx.fill();
-  // 13) 鼻孔（側面一個，黑吻部上，淺色才看得見）+ 微笑嘴
+  // 13) 鼻孔（側面一個黑吻部上淺色才看得見）+ 微笑嘴
   ctx.fillStyle='#e8e5de';
   ctx.beginPath(); ctx.ellipse(hx+hw*0.74, hy+hw*0.03, hw*0.05, hw*0.065, 0.05, 0, 6.29); ctx.fill();
   ctx.strokeStyle='rgba(255,255,255,.9)'; ctx.lineWidth=Math.max(1.2,bodyH*0.02); ctx.lineCap='round';
@@ -666,9 +666,9 @@ function giraffeDead(x, ground, bodyH){
   ctx.quadraticCurveTo(x-rx-bodyH*0.52, gy2+bodyH*0.16, x-rx-bodyH*0.40, gy2+bodyH*0.19); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(x-rx-bodyH*0.36, gy2+bodyH*0.07);
   ctx.quadraticCurveTo(x-rx-bodyH*0.45, gy2+bodyH*0.18, x-rx-bodyH*0.30, gy2+bodyH*0.21); ctx.stroke();
-  // ---- 前後腿大字攤開（趴地：前腳向前伸、後腳向後伸，像「大」字）----
+  // ---- 前後腿大字攤開（趴地：前腳向前伸、後腳向後伸像「大」字）----
   ctx.lineCap='round';
-  // 遠側兩腿（淡黃、微上揚、較短，畫在身體下層）
+  // 遠側兩腿（淡黃、微上揚、較短畫在身體下層）
   ctx.strokeStyle='#e6cd9c'; ctx.lineWidth=sH(1.5);
   ctx.beginPath(); ctx.moveTo(x-rx*0.62, gy2-ry*1.1);
   ctx.quadraticCurveTo(x-rx*1.0, gy2-ry*0.75, x-rx*1.32, gy2-ry*0.55); ctx.stroke();   // 遠後腿→向左後伸
@@ -686,10 +686,10 @@ function giraffeDead(x, ground, bodyH){
   ctx.beginPath(); ctx.moveTo(x+rx*1.31, gy2-ry*1.16); ctx.lineTo(x+rx*1.38, gy2-ry*1.06); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(x-rx*1.46, gy2+bodyH*0.04); ctx.lineTo(x-rx*1.54, gy2+bodyH*0.07); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(x+rx*1.37, gy2+bodyH*0.035); ctx.lineTo(x+rx*1.45, gy2+bodyH*0.065); ctx.stroke();
-  // ---- 身體 fill + clip 斑塊（深棕大斑，同站姿風格）----
+  // ---- 身體 fill + clip 斑塊（深棕大斑同站姿風格）----
   bodyPath(); ctx.fillStyle=bodyCol; ctx.fill();
   ctx.save(); bodyPath(); ctx.clip();
-  // 深棕斑（6 塊分散、大小錯落，自然留出黃色縫隙）
+  // 深棕斑（6 塊分散、大小錯落自然留出黃色縫隙）
   const spots=[[-0.68,0.62,0.17],[-0.36,0.38,0.21],[0.00,0.66,0.16],[0.30,0.42,0.20],[0.58,0.70,0.15],[-0.16,0.95,0.13]];
   spots.forEach((sp,i)=>{
     ctx.fillStyle = i%2 ? patchCol : '#b57a34';
@@ -704,7 +704,7 @@ function giraffeDead(x, ground, bodyH){
   ctx.beginPath(); ctx.moveTo(n0x, n0y);
   ctx.quadraticCurveTo(x+rx*1.12, gy2-bodyH*0.24, hx-bodyH*0.16, hy+bodyH*0.02);
   ctx.stroke();
-  // 鬃毛（沿脖子背緣一整條深棕，趴著時在上緣）
+  // 鬃毛（沿脖子背緣一整條深棕趴著時在上緣）
   ctx.strokeStyle=darkCol; ctx.lineWidth=bodyH*0.07; ctx.lineCap='round';
   ctx.beginPath(); ctx.moveTo(n0x+bodyH*0.02, n0y-bodyH*0.12);
   ctx.quadraticCurveTo(x+rx*1.14, gy2-bodyH*0.32, hx-bodyH*0.18, hy-bodyH*0.10);
@@ -716,7 +716,7 @@ function giraffeDead(x, ground, bodyH){
     ctx.ellipse(x+rx*p[0], gy2-bodyH*p[1], bodyH*0.095, bodyH*0.045, -0.35, 0, 6.29);
     ctx.fill();
   });
-  // ---- 頭（淚滴形朝右，同站姿頭型縮放）----
+  // ---- 頭（淚滴形朝右同站姿頭型縮放）----
   const hs = bodyH*0.52;                            // 頭的縮放單位（同站姿比例）
   ctx.fillStyle=bodyCol;
   ctx.beginPath();
@@ -730,7 +730,7 @@ function giraffeDead(x, ground, bodyH){
   ctx.quadraticCurveTo(hx+hs*0.27, hy+hs*0.55, hx-hs*0.27, hy+hs*0.58);
   ctx.quadraticCurveTo(hx-hs*0.5, hy+hs*0.56, hx-hs*0.64, hy+hs*0.55);
   ctx.closePath(); ctx.fill();
-  // 深色吻部（clip 貼頭緣，只蓋鼻吻部）
+  // 深色吻部（clip 貼頭緣只蓋鼻吻部）
   ctx.save(); ctx.beginPath();
   ctx.moveTo(hx-hs*0.64, hy+hs*0.55);
   ctx.quadraticCurveTo(hx-hs*1.0, hy+hs*0.22, hx-hs*0.84, hy-hs*0.15);
@@ -750,16 +750,16 @@ function giraffeDead(x, ground, bodyH){
   ctx.beginPath(); ctx.ellipse(hx+hs*1.30, hy+hs*0.06, hs*0.09, hs*0.12, 0.05, 0, 6.29); ctx.fill();
   // 角（同站姿：兩根短粗圓鈍棒、基部沒入頭頂、頂端圓球）+ 耳朵
   ctx.fillStyle=darkCol;
-  ctx.beginPath(); ctx.ellipse(hx-hs*0.32, hy-hs*0.52, hs*0.085, hs*0.30, -0.12, 0, 6.29); ctx.fill();  // 遠角（後，往上）
+  ctx.beginPath(); ctx.ellipse(hx-hs*0.32, hy-hs*0.52, hs*0.085, hs*0.30, -0.12, 0, 6.29); ctx.fill();  // 遠角（後往上）
   ctx.beginPath(); ctx.arc(hx-hs*0.335, hy-hs*0.82, hs*0.075, 0, 6.29); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(hx-hs*0.06, hy-hs*0.58, hs*0.10, hs*0.34, 0.05, 0, 6.29); ctx.fill();   // 近角（前，往上）
+  ctx.beginPath(); ctx.ellipse(hx-hs*0.06, hy-hs*0.58, hs*0.10, hs*0.34, 0.05, 0, 6.29); ctx.fill();   // 近角（前往上）
   ctx.beginPath(); ctx.arc(hx-hs*0.05, hy-hs*0.92, hs*0.09, 0, 6.29); ctx.fill();
-  // 耳朵（明顯：貼頭頂後側、略向後下，含內耳）
+  // 耳朵（明顯：貼頭頂後側、略向後下含內耳）
   ctx.fillStyle=bodyCol;
   ctx.beginPath(); ctx.ellipse(hx-hs*0.78, hy-hs*0.18, hs*0.42, hs*0.20, -0.55, 0, 6.29); ctx.fill();
   ctx.fillStyle='#d9b078';
   ctx.beginPath(); ctx.ellipse(hx-hs*0.85, hy-hs*0.16, hs*0.22, hs*0.10, -0.55, 0, 6.29); ctx.fill();
-  // ---- ✕ 眼（直接黑叉，無眼白）----
+  // ---- ✕ 眼（直接黑叉無眼白）----
   const ex = hx+hs*0.36, ey = hy-hs*0.10;
   ctx.strokeStyle='#1c1c1f'; ctx.lineWidth=hs*0.10; ctx.lineCap='round';
   ctx.beginPath(); ctx.moveTo(ex-hs*0.17, ey-hs*0.17); ctx.lineTo(ex+hs*0.17, ey+hs*0.17); ctx.stroke();
@@ -792,7 +792,7 @@ function grass(t){
   ctx.fillStyle='#5aa848';
   for(let i=0;i<60;i++){const gx=(i*29+t*10)%(W+40)-20;ctx.fillRect(gx,groundY()+2,2.5,5+((i*13)%7));}
 }
-// 脖子強調（第一幕最後一句：三個紅色三角扇形朝上，像傳來的參考圖）
+// 脖子強調（第一幕最後一句：三個紅色三角扇形朝上像傳來的參考圖）
 function neckLines(t){
   const cx = W*0.45, yb = H*0.43;        // 脖子中段底部（照片脖子 25-55% 高）
   const tw = W*0.042, th = W*0.06;       // 三角寬/高
@@ -820,7 +820,7 @@ function bareGround(){
 
 // 場景繪圖（每幕 t=幕內秒數）
 function drawTheoryTag(n){
-  if(n===0) return;   // 第1幕自我介紹，先不標學說
+  if(n===0) return;   // 第1幕自我介紹先不標學說
   // 左上角學說標示
   const tag = (n>=4) ? '💪 用進廢退說' : '🌍 天擇說';
   ctx.font=`bold ${sH(2.6)}px sans-serif`;
@@ -848,7 +848,7 @@ function drawScene(n,t){
   ctx.beginPath();ctx.moveTo(0,gy);ctx.quadraticCurveTo(W*0.3,gy-sH(10),W*0.55,gy-sH(4));ctx.quadraticCurveTo(W*0.8,gy-sH(9),W,gy-sH(3));ctx.lineTo(W,gy);ctx.lineTo(0,gy);ctx.fill();
   cloud2(W*0.15,sH(10),sH(2.6),t); cloud2(W*0.75,sH(18),sH(2),t+3);
   grass(t);
-  if(n===0){ // 開場：真實照片背景（AI 生成），未載入時用卡通版
+  if(n===0){ // 開場：真實照片背景（AI 生成）未載入時用卡通版
     if(scene0Img.complete && scene0Img.naturalWidth>0){
       ctx.drawImage(scene0Img, 0, 0, W, H);
     } else {
@@ -931,7 +931,7 @@ function drawLamarckScene(n,t){
     ctx.font=`bold ${sH(2.5)}px sans-serif`;
     ctx.fillText('還有一種說法：用進廢退說！',W*0.5,sH(9));
     ctx.font=`bold ${sH(2.2)}px sans-serif`;
-    ctx.fillText('很久以前，祖先的脖子都短短的',W*0.5,sH(14.5));
+    ctx.fillText('很久以前祖先的脖子都短短的',W*0.5,sH(14.5));
   } else if(n===2){ // 努力伸長脖子（脖子慢慢變長）
     acacia(W*0.6,gy,sH(48));
     giraffe(W*0.2,gy,sH(14),sH(4)+Math.min(sH(8),t*sH(6)),'happy',t,0.72);
@@ -940,25 +940,25 @@ function drawLamarckScene(n,t){
     ctx.fillText('伸～伸～努力伸長脖子！',W*0.45,sH(9));
     ctx.font=`bold ${sH(3)}px sans-serif`;
     ctx.fillStyle='#e07b00';
-    ctx.fillText('用進廢退：常常用，就會變長！',W*0.45,sH(14.5));
-  } else if(n===3){ // 脖子長了，終於吃到高處嫩葉
+    ctx.fillText('用進廢退：常常用就會變長！',W*0.45,sH(14.5));
+  } else if(n===3){ // 脖子長了終於吃到高處嫩葉
     acacia(W*0.72,gy,sH(46));
     giraffe(W*0.35,gy,sH(14),sH(14),'happy',t);
     ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.715,gy-sH(44),6,4,0,0,6.29);ctx.fill();
     sparkle(W*0.78,gy-sH(40),t+1,'#fff3b0');
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.4)}px sans-serif`;
-    ctx.fillText('高處的嫩葉子，終於吃得到了！',W*0.35,sH(9));
+    ctx.fillText('高處的嫩葉子終於吃得到了！',W*0.35,sH(9));
   } else if(n===4){ // 小長頸鹿一出生就長脖子
     giraffe(W*0.3,gy,sH(10),sH(6),null,t*0.3);
     giraffe(W*0.68,gy,sH(13),sH(15),'happy',t*0.5);
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.4)}px sans-serif`;
-    ctx.fillText('小長頸鹿一出生，脖子就長長的！',W*0.5,sH(9));
+    ctx.fillText('小長頸鹿一出生脖子就長長的！',W*0.5,sH(9));
     sparkle(W*0.55,sH(18),t,'#ffd98a');
   } else if(n===5){ // 總結
     acacia(W*0.75,gy,sH(40));
     giraffe(W*0.35,gy,sH(15),sH(19),'happy',t);
     ctx.fillStyle='#e07b00';ctx.font=`bold ${sH(4)}px sans-serif`;
-    ctx.fillText('一代傳一代，脖子越來越長！',W*0.4,sH(9));
+    ctx.fillText('一代傳一代脖子越來越長！',W*0.4,sH(9));
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.2)}px sans-serif`;
     ctx.fillText('這就是「用進廢退說」～你覺得有道理嗎？',W*0.4,sH(14.5));
   }
@@ -980,7 +980,7 @@ let autoTimer=null;
 let sentIdx=0;   // 目前顯示的句子編號（幕內）
 let sentT0=0;    // 目前句子開始時間
 function stopAudio(){ if(audio){audio.pause();audio=null;} if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} }
-// 進度軌拖曳跳轉（12 幕等分：拖曳中預覽該幕，放開才播放）
+// 進度軌拖曳跳轉（12 幕等分：拖曳中預覽該幕放開才播放）
 const seekEl=document.querySelector('.seek');
 let seekDrag=false, seekTarget=0;
 function seekScene(clientX){
@@ -1024,7 +1024,7 @@ function playScene(i){
       audio.onended = ()=>{ if(sentIdx===myIdx && playing) goNext(); };
       audio.play().catch(()=>{});
     }
-    // 計時器主導：這句最多停留 4.5 秒，語音先播完會提早換句 → 永不卡帶
+    // 計時器主導：這句最多停留 4.5 秒語音先播完會提早換句 → 永不卡帶
     window._sentTimer = setTimeout(()=>{ if(sentIdx===myIdx && playing) goNext(); }, 4500);
   }
   step();
@@ -1065,6 +1065,8 @@ function loop(ts){
     if(scene===undefined||scene===null){scene=0;t0=performance.now();}
     drawScene(scene,t); }
 }
+// 背景預載全部語音（播放時聲音即時、與字幕同步）
+AUDIO.forEach(sc => (sc.vf||[]).forEach(f => { const p = new Audio(f); p.preload='auto'; }));
 t0=performance.now();
 requestAnimationFrame(loop);
 </script>

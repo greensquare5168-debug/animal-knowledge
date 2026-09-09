@@ -335,6 +335,11 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   } else {
     leg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol, t, legThick);
   }
+  // ---- 頭部（reach 時整顆頭以頸頂為軸旋轉上仰）----
+  ctx.save();
+  ctx.translate(hpX, hpY);
+  if(mood==='reach') ctx.rotate(-0.42);
+  ctx.translate(-hpX, -hpY);
   // ---- 頭部（淚滴形：額圓、吻部突出圓鈍，參考真實長頸鹿側面）----
   const bob = mood==='talk'? Math.sin(t*10)*bodyH*0.02 : 0;
   const hx = hpX, hy = hpY + bob;
@@ -397,7 +402,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
     ctx.strokeStyle='#1f1f1f'; ctx.lineWidth=hw*0.055;
     ctx.beginPath(); ctx.moveTo(hx+hw*0.594, hy+hw*0.125); ctx.quadraticCurveTo(hx+hw*0.739, hy+hw*0.17, hx+hw*0.885, hy+hw*0.115); ctx.stroke();
   }
-
+  ctx.restore();
 }
 // 多邊形斑塊 helper：pts 為相對座標陣列（單位 hw），x,y 中心
 function poly(cx, cy, pts, hw){

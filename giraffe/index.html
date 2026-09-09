@@ -850,7 +850,6 @@ function drawScene(n,t){
   if(n===0){ // 開場：真實照片背景（AI 生成），未載入時用卡通版
     if(scene0Img.complete && scene0Img.naturalWidth>0){
       ctx.drawImage(scene0Img, 0, 0, W, H);
-      if(sentIdx === 4){ neckLines(t); }   // 講到「我的脖子為什麼這麼長呀？」
       // 浮動問號（右上）
       const qy=Math.sin(t*2)*3;
       ctx.fillStyle='rgba(255,255,255,.92)';ctx.font=`bold ${sH(8)}px sans-serif`;ctx.textAlign='center';

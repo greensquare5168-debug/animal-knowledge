@@ -989,9 +989,19 @@ function nextScene(){ stopAudio(); if(scene<AUDIO.length-1) playScene(scene+1); 
 
 function loop(ts){
   requestAnimationFrame(loop);
-  if(playing&&audio){
-    const dur=audio.duration||1, cur=audio.currentTime;
-    document.getElementById('seekBar').style.width=(cur/dur*100)+'%';
+  if(playing){
+    // 進度軌 = 整支影片（12 幕）等分：目前幕位置 + 幕內進度
+    const total = AUDIO.length;
+    const seg = 1/total;
+    let p = scene/total;
+    const now = performance.now();
+    if(audio && audio.duration){
+      p += seg*Math.min(1, audio.currentTime/(audio.duration||1));
+    } else {
+      const d = (AUDIO[scene]&&AUDIO[scene].d)||6;
+      p += seg*Math.min(1, (now-t0)/1000/d);
+    }
+    document.getElementById('seekBar').style.width=(p*100)+'%';
   }
   const t=(performance.now()-t0)/1000;
   if(playing){ drawScene(scene,t); }

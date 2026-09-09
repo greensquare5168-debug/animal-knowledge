@@ -74,7 +74,6 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
       <h2>🦒 為什麼長頸鹿的脖子這麼長？</h2>
       <div class="theoryBar">
         <button class="theoryBtn active" id="thEvo" onclick="showTheory('evo')">🌍 適者生存<small>達爾文・天擇說</small></button>
-        <button class="theoryBtn" id="thTheo" onclick="showTheory('theo')">🧬 進化論<small>達爾文・演化論</small></button>
         <button class="theoryBtn" id="thLm" onclick="showTheory('lm')">💪 用進廢退說<small>拉馬克學說</small></button>
       </div>
       <div class="player">
@@ -131,9 +130,8 @@ function showQ(n){
 function showTheory(th){
   theory=th;
   document.getElementById('thEvo').classList.toggle('active', th==='evo');
-  document.getElementById('thTheo').classList.toggle('active', th==='theo');
   document.getElementById('thLm').classList.toggle('active', th==='lm');
-  AUDIO = (th==='evo') ? AUDIO_EVO : (th==='lm') ? AUDIO_LM : AUDIO_THEO;
+  AUDIO = (th==='evo') ? AUDIO_EVO : AUDIO_LM;
   stopAudio(); playing=false;
   scene=0; document.getElementById('playBtn').textContent='▶';
   document.getElementById('seekBar').style.width='0%';
@@ -168,14 +166,6 @@ const AUDIO_LM=[
  {f:null,t:'常常伸脖子，脖子真的越伸越長了！高處的嫩葉子，終於吃得到了！'},
  {f:null,t:'長長的脖子會傳給小長頸鹿，小寶寶一出生，脖子就長長的！'},
  {f:null,t:'一代傳一代，脖子越來越長——這就是「用進廢退說」！你覺得有道理嗎？'},
-];
-const AUDIO_THEO=[
- {f:null,t:'嗨！我是長頸鹿～科學家達爾文說：地球上所有的生物，都會一點一點的「演化」！'},
- {f:null,t:'很久很久以前，我的祖先，其實不是長這個樣子的！'},
- {f:null,t:'地球的環境一直在改變：草原出現了、樹木也越長越高。'},
- {f:null,t:'每一代的長頸鹿，都會有一些小小的不同——有的脖子長一點，有的短一點。'},
- {f:null,t:'適合環境的長頸鹿留下來了，不適合的慢慢消失，一代一代慢慢改變……'},
- {f:null,t:'經過超級～久的時間，就演化成現在的我啦！演化，還在繼續喔！'},
 ];
 let theory='evo';
 let AUDIO=AUDIO_EVO;
@@ -726,7 +716,6 @@ function grass(t){
 // 場景繪圖（每幕 t=幕內秒數）
 function drawScene(n,t){
   if(theory==='lm'){ drawLamarckScene(n,t); return; }
-  if(theory==='theo'){ drawTheoScene(n,t); return; }
   ctx.clearRect(0,0,W,H);
   const gy=groundY();
   // 背景漸層(已在CSS) + 遠山
@@ -832,58 +821,6 @@ function drawLamarckScene(n,t){
     ctx.fillText('一代傳一代，脖子越來越長！',W*0.4,sH(9));
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.2)}px sans-serif`;
     ctx.fillText('這就是「用進廢退說」～你覺得有道理嗎？',W*0.4,sH(14.5));
-  }
-}
-
-// ===== 進化論（達爾文・演化總述）場景 =====
-function drawTheoScene(n,t){
-  ctx.clearRect(0,0,W,H);
-  const gy=groundY();
-  ctx.fillStyle='rgba(140,180,120,.35)';
-  ctx.beginPath();ctx.moveTo(0,gy);ctx.quadraticCurveTo(W*0.3,gy-sH(10),W*0.55,gy-sH(4));ctx.quadraticCurveTo(W*0.8,gy-sH(9),W,gy-sH(3));ctx.lineTo(W,gy);ctx.lineTo(0,gy);ctx.fill();
-  cloud2(W*0.15,sH(10),sH(2.6),t); cloud2(W*0.75,sH(18),sH(2),t+3);
-  grass(t);
-  ctx.fillStyle='#8a6a4a';ctx.textAlign='center';
-  if(n===0){ // 開場：達爾文說演化
-    acacia(W*0.72,gy,sH(34));
-    giraffe(W*0.3,gy,sH(15),sH(19),'talk',t);
-    ctx.font=`bold ${sH(3.4)}px sans-serif`;
-    ctx.fillText('達爾文：「生物會慢慢演化喔！」',W*0.5,sH(9));
-  } else if(n===1){ // 祖先不是長這樣
-    acacia(W*0.78,gy,sH(28));
-    giraffe(W*0.4,gy,sH(14),sH(4),'talk',t);
-    ctx.font=`bold ${sH(3.4)}px sans-serif`;
-    ctx.fillText('祖先：我脖子短短的啦！',W*0.5,sH(9));
-  } else if(n===2){ // 環境改變（樹長高）
-    acacia(W*0.66,gy,sH(48));
-    giraffe(W*0.22,gy,sH(13),sH(5),'sad',t);
-    sparkle(W*0.68-sH(5),gy-sH(46),t,'#fff3b0');
-    ctx.font=`bold ${sH(3.6)}px sans-serif`;
-    ctx.fillText('環境一直變，樹越長越高……',W*0.42,sH(9));
-    ctx.font=`bold ${sH(3)}px sans-serif`;
-    ctx.fillStyle='#e07b00';
-    ctx.fillText('一百萬年後',W*0.42,sH(14.5));
-  } else if(n===3){ // 世代差異
-    giraffe(W*0.22,gy,sH(12),sH(7),null,t*0.3);
-    giraffe(W*0.48,gy,sH(13),sH(13),null,t*0.5);
-    giraffe(W*0.74,gy,sH(13),sH(19),'happy',t);
-    ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.4)}px sans-serif`;
-    ctx.fillText('每一代都有一點點不一樣……',W*0.5,sH(9));
-  } else if(n===4){ // 適合的留下
-    acacia(W*0.7,gy,sH(46));
-    giraffe(W*0.3,gy,sH(14),sH(4),'sad',t);
-    ctx.fillStyle='#ffb347';ctx.font=`bold ${sH(4.6)}px sans-serif`;ctx.fillText('……',W*0.3,sH(26));
-    giraffe(W*0.68,gy,sH(14),sH(15),'happy',t);
-    ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.695,gy-sH(44),6,4,0,0,6.29);ctx.fill();
-    ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.4)}px sans-serif`;
-    ctx.fillText('適合環境的，留下來！',W*0.68,sH(9));
-  } else if(n===5){ // 現代長頸鹿
-    acacia(W*0.75,gy,sH(42));
-    giraffe(W*0.35,gy,sH(15),sH(19),'happy',t);
-    ctx.fillStyle='#e07b00';ctx.font=`bold ${sH(4)}px sans-serif`;
-    ctx.fillText('演化成現在的我！',W*0.5,sH(9));
-    ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.2)}px sans-serif`;
-    ctx.fillText('演化還沒有結束，還在繼續喔～',W*0.5,sH(14.5));
   }
 }
 // 字幕與控制

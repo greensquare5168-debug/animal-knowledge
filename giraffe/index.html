@@ -853,7 +853,13 @@ function drawScene(n,t){
     acacia(W*0.50,gy,sH(44));
     giraffe(W*0.30,gy,sH(14),sH(13),'happy',t);   // 長脖子吃葉子（會點頭）
     ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.545,gy-sH(41),6,4,0,0,6.29);ctx.fill();
-    if(si>=4){   // 說「時間長了」時切換成趴地死
+    if(si>=6){   // 脖子長的長頸鹿活了下來：兩隻長脖子在一起（族群）
+      giraffe(W*0.30,gy,sH(14),sH(13),'happy',t);
+      giraffe(W*0.60,gy,sH(12),sH(10),'happy',t*0.6);
+      ctx.fillStyle='#2e7d32';ctx.font=`bold ${sH(3)}px sans-serif`;
+      ctx.fillText('長的：活了下來！',W*0.45,sH(9));
+      sparkle(W*0.5,sH(12),t,'#ffd98a');
+    } else if(si>=4){   // 說「時間長了」時切換成趴地死
       // 短小的餓死趴地（鏡像）
       ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
       giraffeDead(0, gy, sH(11));

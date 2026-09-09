@@ -860,16 +860,16 @@ function drawScene(n,t){
     }
   } else if(n===1){ // 天擇：有長有短 → 低頭吃草把草吃光（原第2+3幕合一）
     const si = (typeof sentIdx==='number') ? sentIdx : 0;
-    // 幕2 共 8 個字幕單位：前 5 站綠草介紹，6-8 低頭吃草把草吃光
-    if(si>=5){
-      const pct = si>=7 ? 52 : (si===6 ? 58 : 68);
+    // 幕2 共 8 個字幕單位：前 5 站綠草，6 低頭吃草(草仍滿)，7-8 草漸少到吃光
+    if(si>=6){
+      const pct = si>=7 ? 52 : 68;
       ctx.fillStyle='#dcc98f';
       ctx.fillRect(0, sH(pct), W, H-sH(pct));
       ctx.strokeStyle='#c2a96a'; ctx.lineWidth=2; ctx.lineCap='round';
       for(let i=0;i<14;i++){ const gx=(i*47+13)%W, gy3=sH(pct)+5+((i*11)%12), gh=3+((i*7)%5); ctx.beginPath(); ctx.moveTo(gx,gy3); ctx.lineTo(gx-2,gy3+gh); ctx.stroke(); }
     }
     if(si>=5){
-      // 低頭吃草（把草吃光）
+      // 低頭吃草：先滿草吃，草地再慢慢減少
       giraffe(W*0.30,gy,sH(14),sH(13),'eat',t);
       giraffe(W*0.66,gy,sH(11),sH(4),'eat',t*0.7,0.72);
     } else {

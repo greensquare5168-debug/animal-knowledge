@@ -405,13 +405,11 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
     ctx.beginPath(); ctx.arc(hx+hw*0.610, hy+hw*0.115, hw*0.075, Math.PI*1.2, Math.PI*1.8); ctx.stroke();
     ctx.fillStyle='#8ec9f0';
     ctx.beginPath(); ctx.ellipse(hx-hw*0.104, hy+hw*0.02, hw*0.05, hw*0.085, 0.3, 0, 6.29); ctx.fill();
-  } else if(mood==='happy'||mood==='reach'){
-    // 微笑畫在吻部下緣外的黃色底上（黑線才看得清楚）
-    ctx.strokeStyle='#1f1f1f'; ctx.lineWidth=hw*0.06;
-    ctx.beginPath(); ctx.arc(hx+hw*0.660, hy+hw*0.235, hw*0.10, 0.15, Math.PI*0.85); ctx.stroke();
   } else {
-    ctx.strokeStyle='#1f1f1f'; ctx.lineWidth=hw*0.055;
-    ctx.beginPath(); ctx.moveTo(hx+hw*0.594, hy+hw*0.125); ctx.quadraticCurveTo(hx+hw*0.739, hy+hw*0.17, hx+hw*0.885, hy+hw*0.115); ctx.stroke();
+    // 統一微笑（2-6 幕同款微彎線，畫在吻部下緣外黃底上）
+    ctx.strokeStyle='#1f1f1f'; ctx.lineWidth=hw*0.06;
+    ctx.beginPath(); ctx.moveTo(hx+hw*0.560, hy+hw*0.235);
+    ctx.quadraticCurveTo(hx+hw*0.690, hy+hw*0.285, hx+hw*0.820, hy+hw*0.235); ctx.stroke();
   }
   ctx.restore();
 }

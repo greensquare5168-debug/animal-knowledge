@@ -1004,6 +1004,8 @@ function playScene(i){
   sentT0 = performance.now();
   const sents = AUDIO[i].sub || [AUDIO[i].t||''];
   const vfs = AUDIO[i].vf || [];
+  // 預載下一幕全部語音（換幕時聲音立即跟上）
+  if(AUDIO[i+1]){ (AUDIO[i+1].vf||[]).forEach(f => { const p2 = new Audio(f); p2.preload='auto'; }); }
   function step(){
     if(!playing) return;
     sentT0 = performance.now();

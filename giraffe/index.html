@@ -83,7 +83,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
           <button class="navbtn" onclick="nextScene()" title="下一幕">▶▶</button>
           <button onclick="restart()" style="background:#b8c4ce;box-shadow:0 3px 0 #8a98a3;font-size:15px">↺</button>
           <div class="seek"><div id="seekBar"></div></div>
-          <div class="plabel" id="sceneLabel">1 / 9</div>
+          <div class="plabel" id="sceneLabel">1 / 8</div>
         </div>
       </div>
       <div class="wow">💡 <b>你知道嗎？</b>成年長頸鹿的脖子可以長到 <b>2 公尺</b>裡面跟人類一樣只有 <b>7 節</b>頸椎骨！只是每一節都超長～</div>
@@ -139,8 +139,7 @@ window.addEventListener('resize',resize); resize();
 const AUDIO_EVO=[
  {f:null, sub:['嗨！','大家好！','我是長頸鹿！','你有沒有想過','我的脖子為什麼這麼長呀？','關於這個問題','有兩種說法喔！'], vf:['voice/s01_c1.mp3','voice/s01_c2.mp3','voice/s01_c3.mp3','voice/s01_c4.mp3','voice/s01_c5.mp3','voice/s01_c6.mp3','voice/s01_c7.mp3']},
  {f:null, sub:['第一種說法','叫做天擇說','長頸鹿一開始','脖子有長有短','天生就不一樣','可是草原上的草越來越少','草又少了一點','矮矮的草和樹葉也快沒了','只剩下幾根小草','草一下子就被吃光了'], vf:['voice/s02_c1.mp3','voice/s02_c2.mp3','voice/s02_c3.mp3','voice/s02_c4.mp3','voice/s02_c5.mp3','voice/s02_c6.mp3','voice/s02_c7.mp3','voice/s02_c8.mp3','voice/s02_c9.mp3','voice/s02_c10.mp3']},
- {f:null, sub:['高高的樹上','有又嫩又好吃的葉子','脖子長的長頸鹿','輕輕鬆鬆就吃到了','可是脖子短的','伸長了脖子','還是差一點點'], vf:['voice/s03_c1.mp3','voice/s03_c2.mp3','voice/s03_c3.mp3','voice/s03_c4.mp3','voice/s03_c5.mp3','voice/s03_c6.mp3','voice/s03_c7.mp3']},
- {f:null, sub:['日子一天一天過去','草越來越少','脖子短的長頸鹿','吃不到東西','最後餓死了','脖子長的長頸鹿','活了下來','生下小寶寶','一代一代傳下去','脖子長的越來越多','這就是「天擇說」'], vf:['voice/s04_c1.mp3','voice/s04_c2.mp3','voice/s04_c3.mp3','voice/s04_c4.mp3','voice/s04_c5.mp3','voice/s04_c6.mp3','voice/s04_c7.mp3','voice/s04_c8.mp3','voice/s04_c9.mp3','voice/s04_c10.mp3','voice/s04_c11.mp3']},
+ {f:null, sub:['高高的樹上','有又嫩又好吃的葉子','脖子長的長頸鹿','輕輕鬆鬆就吃到了','可是脖子短的','伸長了脖子','還是差一點點'], vf:['voice/s03_c1.mp3','voice/s03_c2.mp3','voice/s03_c3.mp3','voice/s03_c4.mp3','voice/s03_c5.mp3','voice/s03_c6.mp3','voice/s03_c7.mp3','voice/s04_c1.mp3','voice/s04_c2.mp3','voice/s04_c3.mp3','voice/s04_c4.mp3','voice/s04_c5.mp3','voice/s04_c6.mp3','voice/s04_c7.mp3','voice/s04_c8.mp3','voice/s04_c9.mp3','voice/s04_c10.mp3','voice/s04_c11.mp3']},
 ];
 const AUDIO_LM=[
  {f:null, sub:['其實還有一種說法','叫做「用進廢退說」','很久很久以前','長頸鹿的祖先','脖子都短短的','牠們每天用力伸長脖子','想吃高處的樹葉'], vf:['voice/s05_c1.mp3','voice/s05_c2.mp3','voice/s05_c3.mp3','voice/s05_c4.mp3','voice/s05_c5.mp3','voice/s05_c6.mp3','voice/s05_c7.mp3']},
@@ -822,7 +821,7 @@ function bareGround(){
 function drawTheoryTag(n){
   if(n===0) return;   // 第1幕自我介紹先不標學說
   // 左上角學說標示
-  const tag = (n>=4) ? '💪 用進廢退說' : '🌍 天擇說';
+  const tag = (n>=3) ? '💪 用進廢退說' : '🌍 天擇說';
   ctx.font=`bold ${sH(2.6)}px sans-serif`;
   const tw = ctx.measureText(tag).width;
   const px = sH(1.4), py = sH(1.4), ph = sH(4.4), pw = tw + sH(3.2);
@@ -840,7 +839,7 @@ function drawTheoryTag(n){
   ctx.textBaseline='alphabetic';
 }
 function drawScene(n,t){
-  if(n>=4){ drawLamarckScene(n-3,t); drawTheoryTag(n); return; }
+  if(n>=3){ drawLamarckScene(n-2,t); drawTheoryTag(n); return; }
   ctx.clearRect(0,0,W,H);
   const gy=groundY();
   // 背景漸層(已在CSS) + 遠山
@@ -884,31 +883,31 @@ function drawScene(n,t){
       giraffe(W*0.33,gy,sH(14),sH(13),'talk',t);
       giraffe(W*0.64,gy,sH(11),sH(4),'talk',t*0.7,0.72);
     }
-  } else if(n===2){ // 脖子長才吃得到：樹中間、長脖子靠樹左、短脖子樹右面向樹（禿地）
+  } else if(n===2){ // 第3+4幕合一：長吃到葉、短吃不到→餓死趴地（si 驅動）
+    const si = (typeof sentIdx==='number') ? sentIdx : 0;
     bareGround();
     acacia(W*0.52,gy,sH(44));
-    giraffe(W*0.32,gy,sH(14),sH(13),'happy',t);
-    // 長脖子吃到高葉：嘴邊葉子
+    giraffe(W*0.32,gy,sH(14),sH(13),'happy',t);   // 長脖子吃葉子
     ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.56,gy-sH(41),6,4,0,0,6.29);ctx.fill();
-    // 短脖子站右邊、面向左邊的樹（鏡像畫法：想吃吃不到）
-    ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
-    giraffe(0,gy,sH(13),sH(4),'reach',t*0.5,0.72);
-    ctx.restore();
-    ctx.fillStyle='#ffb347';ctx.font=`bold ${sH(5)}px sans-serif`;ctx.textAlign='center';ctx.fillText('好餓……吃不到……',W*0.70,sH(9));
-  } else if(n===3){ // 適者生存結局：右邊短小的餓死趴地
-    bareGround();
-    acacia(W*0.52,gy,sH(44));
-    giraffe(W*0.32,gy,sH(14),sH(13),'happy',t);      // 長脖子活著吃葉子
-    ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.56,gy-sH(41),6,4,0,0,6.29);ctx.fill();
-    // 右：短小的趴地死了（鏡像面向樹）
-    ctx.save(); ctx.translate(W*0.72,0); ctx.scale(-1,1);
-    giraffeDead(0, gy, sH(11));
-    ctx.restore();
-    ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3)}px sans-serif`;ctx.textAlign='center';
-    ctx.fillText('短的：餓死了……',W*0.72,sH(9));
-    ctx.fillStyle='#2e7d32';ctx.font=`bold ${sH(3)}px sans-serif`;
-    ctx.fillText('長的：活下來！',W*0.30,sH(9));
-    sparkle(W*0.6,sH(12),t,'#ffd98a');
+    if(si>=11){
+      // 短小的餓死趴地（鏡像）
+      ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
+      giraffeDead(0, gy, sH(11));
+      ctx.restore();
+      ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3)}px sans-serif`;ctx.textAlign='center';
+      ctx.fillText('短的：餓死了……',W*0.72,sH(9));
+      if(si>=14){  // 生下小寶寶：小長頸鹿站在長脖子身邊
+        giraffe(W*0.47,gy,sH(8.5),sH(8),null,t*0.6,0.9);
+        ctx.fillStyle='#2e7d32';ctx.font=`bold ${sH(3)}px sans-serif`;
+        ctx.fillText('長的：活下來！',W*0.30,sH(9));
+        sparkle(W*0.6,sH(12),t,'#ffd98a');
+      }
+    } else {
+      // 短小想吃吃不到（reach 動畫）
+      ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
+      giraffe(0,gy,sH(13),sH(4),'reach',t*0.5,0.72);
+      ctx.restore();
+    }
   }
   drawTheoryTag(n);
 }

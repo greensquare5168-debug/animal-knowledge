@@ -205,6 +205,20 @@ function traceBodyPath(x, by, hw, hh, sx){
   ctx.quadraticCurveTo(x+hw*0.5*sx, by+hh*0.7, x+hw*0.55*sx, by+hh*0.6);
   ctx.closePath();
 }
+// 前腳騰空（reach 姿勢）：膝向前上、蹄懸在身前空中
+function raisedLeg(lx, topY, len, bodyH, col, hoofCol){
+  const b = bodyH;
+  const kx = lx + b*0.42, ky = topY - b*0.35;    // 膝（前上）
+  const hx2 = lx + b*0.20, hy2 = topY - b*0.10;  // 蹄（懸空，離地約半個身體高）
+  ctx.strokeStyle=col; ctx.lineWidth=len*0.088; ctx.lineCap='round';
+  ctx.beginPath(); ctx.moveTo(lx, topY);
+  ctx.quadraticCurveTo(lx+b*0.22, topY-b*0.18, kx, ky); ctx.stroke();
+  ctx.strokeStyle=col; ctx.lineWidth=len*0.07;
+  ctx.beginPath(); ctx.moveTo(kx, ky);
+  ctx.quadraticCurveTo(kx-b*0.06, topY-b*0.22, hx2, hy2); ctx.stroke();
+  ctx.strokeStyle=hoofCol; ctx.lineWidth=len*0.095;
+  ctx.beginPath(); ctx.moveTo(hx2, hy2-bodyH*0.03); ctx.lineTo(hx2, hy2+bodyH*0.03); ctx.stroke();
+}
 function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   // 對照教學圖重畫：長脖子 + 兩隻角 + 細長腿 + 棕白網狀花紋
   legK = legK||1;                     // 腿長縮放（短腿用）
@@ -214,15 +228,20 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   const legH = bodyH*1.25*legK;       // 細長腿（可縮短）
   const by = ground - legH - hh;      // 身體中心Y
   const bodyS = 1.15;                                  // 身體長度係數（長一點）
-  const hpX = x + hw*1.18*bodyS, hpY = by - hh - neckH;   // 頭中心（脖子頂端右側，向前伸出）
+  const reachUp = (mood==='reach') ? bodyH*0.30 : 0;        // reach：抬頭看高處
+  const hpX = x + hw*1.18*bodyS, hpY = by - hh - neckH - reachUp;   // 頭中心（脖子頂端右側，向前伸出）
   const bodyCol = '#f5d48a';          // 淺黃棕
   const cream = '#fdf6e3';            // 縫隙（近白）
   const patchCol = '#a06a28';         // 深棕斑（頸主體/軀幹大斑）
   const patchLight = '#c4914f';      // 淺棕斑（頭部/頸上段細碎斑）
   const darkCol = '#5e3810';
-  // ---- 遠側雙腿（淡色）----
+  // ---- 遠側雙腿（淡色；reach 時遠前腳騰空）----
   leg(x - hw*0.82*bodyS, by+hh*0.72, legH+hh*0.28, -0.10, bodyCol, darkCol, t, legThick);
-  leg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, -0.05, bodyCol, darkCol, t, legThick);
+  if(mood==='reach'){
+    raisedLeg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, bodyH, '#dcc98f', '#3a2410');
+  } else {
+    leg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, -0.05, bodyCol, darkCol, t, legThick);
+  }
   // ---- 尾巴（身體左側、自然朝下垂，末端黑毛）----
   const twx = Math.sin(t*3)*1.5;
   ctx.strokeStyle = bodyCol; ctx.lineWidth = hw*0.08; ctx.lineCap='round';
@@ -309,9 +328,13 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
     if(mi===0) ctx.moveTo(ox,oy); else ctx.lineTo(ox,oy);
   }
   ctx.stroke();
-  // ---- 近側雙腿（細長、四腳著地）----
+  // ---- 近側雙腿（reach 時近前腳騰空、後腳站立）----
   leg(x - hw*0.34*bodyS, by+hh*0.6, legH+hh*0.4, -0.13, bodyCol, darkCol, t, legThick);
-  leg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol, t, legThick);
+  if(mood==='reach'){
+    raisedLeg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, bodyH, bodyCol, darkCol);
+  } else {
+    leg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol, t, legThick);
+  }
   // ---- 頭部（淚滴形：額圓、吻部突出圓鈍，參考真實長頸鹿側面）----
   const bob = mood==='talk'? Math.sin(t*10)*bodyH*0.02 : 0;
   const hx = hpX, hy = hpY + bob;
@@ -367,7 +390,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
     ctx.beginPath(); ctx.arc(hx+hw*0.610, hy+hw*0.115, hw*0.075, Math.PI*1.2, Math.PI*1.8); ctx.stroke();
     ctx.fillStyle='#8ec9f0';
     ctx.beginPath(); ctx.ellipse(hx-hw*0.104, hy+hw*0.02, hw*0.05, hw*0.085, 0.3, 0, 6.29); ctx.fill();
-  } else if(mood==='happy'){
+  } else if(mood==='happy'||mood==='reach'){
     ctx.strokeStyle='#1f1f1f'; ctx.lineWidth=hw*0.055;
     ctx.beginPath(); ctx.arc(hx+hw*0.650, hy+hw*0.13, hw*0.09, 0.2, Math.PI*0.8); ctx.stroke();
   } else {
@@ -812,7 +835,7 @@ function drawScene(n,t){
     ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.56,gy-sH(41),6,4,0,0,6.29);ctx.fill();
     // 短脖子站右邊、面向左邊的樹（鏡像畫法：想吃吃不到）
     ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
-    giraffe(0,gy,sH(13),sH(4),'sad',t*0.5,0.72);
+    giraffe(0,gy,sH(13),sH(4),'reach',t*0.5,0.72);
     ctx.restore();
     ctx.fillStyle='#ffb347';ctx.font=`bold ${sH(5)}px sans-serif`;ctx.textAlign='center';ctx.fillText('好餓……吃不到……',W*0.70,sH(9));
   } else if(n===5){ // 適者生存：短的餓死、長的活下來

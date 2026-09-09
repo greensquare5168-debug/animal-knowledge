@@ -208,19 +208,24 @@ function traceBodyPath(x, by, hw, hh, sx){
   ctx.closePath();
 }
 // 前腳騰空（reach 姿勢）L 型：大腿水平前伸、小腿垂直下垂、蹄懸空
-function raisedLeg(lx, topY, len, bodyH, col, hoofCol, t){
+function raisedLeg(lx, topY, len, bodyH, col, hoofCol, t, thick){
+  // 前腳連續動畫：lift 0（自然踩地）→ 1（L型抬最高）平滑過渡，不會瞬間跳變
+  thick = thick||1;
   const b = bodyH;
-  const lift = Math.sin(t*7)*b*0.18;                    // 前腳一抬一放（明顯）
-  const kneeX = lx + b*0.60, kneeY = topY - b*0.32 - lift;    // 膝：身體前方、中線高（會動）
-  const hoofX = lx + b*0.46, hoofY = kneeY + b*0.60;   // 蹄：膝下方（懸空，跟著動）
-  ctx.strokeStyle=col; ctx.lineWidth=len*0.088; ctx.lineCap='round';
+  const gy3 = topY + len;                                // 蹄落地位置（地面）
+  const lift = (Math.sin(t*7)+1)/2;                      // 0=踩地 → 1=抬最高
+  const hoofX = lx - b*0.03 + lift*b*0.55;               // 蹄 x：踩地微收 → 抬起前伸
+  const hoofY = gy3 - lift*b*0.55;                       // 蹄 y：踩地 → 抬到半身高
+  const kneeX = lx - b*0.10 + lift*b*0.75;               // 膝 x：踩地微後 → 抬起前高
+  const kneeY = gy3 - b*0.62 - lift*b*0.33;              // 膝 y：踩地微彎 → 高舉
+  ctx.strokeStyle=col; ctx.lineWidth=len*0.088*thick; ctx.lineCap='round';
   ctx.beginPath(); ctx.moveTo(lx, topY);
-  ctx.quadraticCurveTo(lx+b*0.34, topY-b*0.24, kneeX, kneeY); ctx.stroke();    // 大腿（前伸）
-  ctx.strokeStyle=col; ctx.lineWidth=len*0.07;
+  ctx.quadraticCurveTo(lx+b*0.20, topY+(kneeY-topY)*0.35, kneeX, kneeY); ctx.stroke();  // 大腿
+  ctx.strokeStyle=col; ctx.lineWidth=len*0.07*thick;
   ctx.beginPath(); ctx.moveTo(kneeX, kneeY);
-  ctx.quadraticCurveTo(kneeX-b*0.01, kneeY+b*0.32, hoofX, hoofY); ctx.stroke(); // 小腿（垂直下）
-  ctx.strokeStyle=hoofCol; ctx.lineWidth=len*0.095;
-  ctx.beginPath(); ctx.moveTo(hoofX-b*0.045, hoofY); ctx.lineTo(hoofX+b*0.045, hoofY); ctx.stroke(); // 蹄
+  ctx.quadraticCurveTo(kneeX-b*0.02, hoofY+(kneeY-hoofY)*0.3, hoofX, hoofY); ctx.stroke(); // 小腿
+  ctx.strokeStyle=hoofCol; ctx.lineWidth=len*0.095*thick;
+  ctx.beginPath(); ctx.moveTo(hoofX-b*0.05, hoofY+b*0.015); ctx.lineTo(hoofX+b*0.05, hoofY+b*0.015); ctx.stroke(); // 蹄
 }
 function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   // 對照教學圖重畫：長脖子 + 兩隻角 + 細長腿 + 棕白網狀花紋
@@ -242,11 +247,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   // ---- 遠側雙腿（淡色；reach 時遠前腳騰空）----
   leg(x - hw*0.82*bodyS, by+hh*0.72, legH+hh*0.28, -0.10, bodyCol, darkCol, t, legThick);
   if(mood==='reach'){
-    if(reachSway < 0){
-      leg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, -0.05, '#dcc98f', '#3a2410', t, legThick);  // 踩地
-    } else {
-      raisedLeg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, bodyH, '#dcc98f', '#3a2410', t);       // 騰空
-    }
+    raisedLeg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, bodyH, '#dcc98f', '#3a2410', t, legThick);  // 連續抬放
   } else {
     leg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, -0.05, bodyCol, darkCol, t, legThick);
   }
@@ -339,11 +340,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   // ---- 近側雙腿（reach 時近前腳騰空、後腳站立）----
   leg(x - hw*0.34*bodyS, by+hh*0.6, legH+hh*0.4, -0.13, bodyCol, darkCol, t, legThick);
   if(mood==='reach'){
-    if(reachSway < 0){
-      leg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol, t, legThick);  // 踩地
-    } else {
-      raisedLeg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, bodyH, bodyCol, darkCol, t);      // 騰空
-    }
+    raisedLeg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, bodyH, bodyCol, darkCol, t, legThick);  // 連續抬放
   } else {
     leg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol, t, legThick);
   }

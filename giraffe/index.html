@@ -206,10 +206,11 @@ function traceBodyPath(x, by, hw, hh, sx){
   ctx.closePath();
 }
 // 前腳騰空（reach 姿勢）L 型：大腿水平前伸、小腿垂直下垂、蹄懸空
-function raisedLeg(lx, topY, len, bodyH, col, hoofCol){
+function raisedLeg(lx, topY, len, bodyH, col, hoofCol, t){
   const b = bodyH;
-  const kneeX = lx + b*0.60, kneeY = topY - b*0.32;    // 膝：身體前方、中線高
-  const hoofX = lx + b*0.46, hoofY = kneeY + b*0.60;   // 蹄：膝下方（懸空）
+  const lift = Math.sin(t*7)*b*0.18;                    // 前腳一抬一放（明顯）
+  const kneeX = lx + b*0.60, kneeY = topY - b*0.32 - lift;    // 膝：身體前方、中線高（會動）
+  const hoofX = lx + b*0.46, hoofY = kneeY + b*0.60;   // 蹄：膝下方（懸空，跟著動）
   ctx.strokeStyle=col; ctx.lineWidth=len*0.088; ctx.lineCap='round';
   ctx.beginPath(); ctx.moveTo(lx, topY);
   ctx.quadraticCurveTo(lx+b*0.34, topY-b*0.24, kneeX, kneeY); ctx.stroke();    // 大腿（前伸）
@@ -228,7 +229,8 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   const legH = bodyH*1.25*legK;       // 細長腿（可縮短）
   const by = ground - legH - hh;      // 身體中心Y
   const bodyS = 1.15;                                  // 身體長度係數（長一點）
-  const reachUp = (mood==='reach') ? bodyH*0.55 : 0;        // reach：抬頭看高處（明顯上仰）
+  const reachSway = (mood==='reach') ? Math.sin(t*7) : 0;      // reach 動畫：一伸一縮（明顯）
+  const reachUp = (mood==='reach') ? bodyH*(0.55+0.20*reachSway) : 0;   // 抬頭（上下大幅夠取）
   const hpX = x + hw*1.18*bodyS, hpY = by - hh - neckH - reachUp;   // 頭中心（脖子頂端右側，向前伸出）
   const bodyCol = '#f5d48a';          // 淺黃棕
   const cream = '#fdf6e3';            // 縫隙（近白）
@@ -238,7 +240,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   // ---- 遠側雙腿（淡色；reach 時遠前腳騰空）----
   leg(x - hw*0.82*bodyS, by+hh*0.72, legH+hh*0.28, -0.10, bodyCol, darkCol, t, legThick);
   if(mood==='reach'){
-    raisedLeg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, bodyH, '#dcc98f', '#3a2410');
+    raisedLeg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, bodyH, '#dcc98f', '#3a2410', t);
   } else {
     leg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, -0.05, bodyCol, darkCol, t, legThick);
   }
@@ -331,14 +333,14 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   // ---- 近側雙腿（reach 時近前腳騰空、後腳站立）----
   leg(x - hw*0.34*bodyS, by+hh*0.6, legH+hh*0.4, -0.13, bodyCol, darkCol, t, legThick);
   if(mood==='reach'){
-    raisedLeg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, bodyH, bodyCol, darkCol);
+    raisedLeg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, bodyH, bodyCol, darkCol, t);
   } else {
     leg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol, t, legThick);
   }
   // ---- 頭部（reach 時整顆頭以頸頂為軸旋轉上仰）----
   ctx.save();
   ctx.translate(hpX, hpY);
-  if(mood==='reach') ctx.rotate(-0.42);
+  if(mood==='reach') ctx.rotate(-0.42-0.16*reachSway);
   ctx.translate(-hpX, -hpY);
   // ---- 頭部（淚滴形：額圓、吻部突出圓鈍，參考真實長頸鹿側面）----
   const bob = mood==='talk'? Math.sin(t*10)*bodyH*0.02 : 0;

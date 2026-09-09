@@ -802,13 +802,16 @@ function drawScene(n,t){
     sparkle(W*0.75-sH(6),gy-sH(44),t,'#fff3b0');
     sparkle(W*0.8,gy-sH(40),t+1,'#fff3b0');
     sparkle(W*0.7,gy-sH(38),t+2,'#fff3b0');
-  } else if(n===4){ // 脖子長才吃得到：樹中間、長脖子左、短脖子右
+  } else if(n===4){ // 脖子長才吃得到：樹中間、長脖子靠樹左、短脖子樹右面向樹
     acacia(W*0.52,gy,sH(44));
-    giraffe(W*0.20,gy,sH(14),sH(13),'happy',t);
+    giraffe(W*0.32,gy,sH(14),sH(13),'happy',t);
     // 長脖子吃到高葉：嘴邊葉子
-    ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.50,gy-sH(41),6,4,0,0,6.29);ctx.fill();
-    giraffe(W*0.68,gy,sH(13),sH(4),'sad',t);
-    ctx.fillStyle='#ffb347';ctx.font=`bold ${sH(5)}px sans-serif`;ctx.textAlign='center';ctx.fillText('好餓……吃不到……',W*0.68,sH(9));
+    ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.56,gy-sH(41),6,4,0,0,6.29);ctx.fill();
+    // 短脖子站右邊、面向左邊的樹（鏡像畫法：想吃吃不到）
+    ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
+    giraffe(0,gy,sH(13),sH(4),'sad',t*0.5);
+    ctx.restore();
+    ctx.fillStyle='#ffb347';ctx.font=`bold ${sH(5)}px sans-serif`;ctx.textAlign='center';ctx.fillText('好餓……吃不到……',W*0.70,sH(9));
   } else if(n===5){ // 適者生存：短的餓死、長的活下來
     // 左：短脖子餓死（趴在地上 + 眼睛✕ + 頭上烏雲）
     giraffeDead(W*0.16, gy, sH(11));

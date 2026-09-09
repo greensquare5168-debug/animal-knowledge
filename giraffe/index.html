@@ -205,19 +205,19 @@ function traceBodyPath(x, by, hw, hh, sx){
   ctx.quadraticCurveTo(x+hw*0.5*sx, by+hh*0.7, x+hw*0.55*sx, by+hh*0.6);
   ctx.closePath();
 }
-// 前腳騰空（reach 姿勢）：膝向前上、蹄懸在身前空中
+// 前腳騰空（reach 姿勢）L 型：大腿水平前伸、小腿垂直下垂、蹄懸空
 function raisedLeg(lx, topY, len, bodyH, col, hoofCol){
   const b = bodyH;
-  const kx = lx + b*0.42, ky = topY - b*0.35;    // 膝（前上）
-  const hx2 = lx + b*0.20, hy2 = topY - b*0.10;  // 蹄（懸空，離地約半個身體高）
+  const kneeX = lx + b*0.60, kneeY = topY - b*0.32;    // 膝：身體前方、中線高
+  const hoofX = lx + b*0.46, hoofY = kneeY + b*0.60;   // 蹄：膝下方（懸空）
   ctx.strokeStyle=col; ctx.lineWidth=len*0.088; ctx.lineCap='round';
   ctx.beginPath(); ctx.moveTo(lx, topY);
-  ctx.quadraticCurveTo(lx+b*0.22, topY-b*0.18, kx, ky); ctx.stroke();
+  ctx.quadraticCurveTo(lx+b*0.34, topY-b*0.24, kneeX, kneeY); ctx.stroke();    // 大腿（前伸）
   ctx.strokeStyle=col; ctx.lineWidth=len*0.07;
-  ctx.beginPath(); ctx.moveTo(kx, ky);
-  ctx.quadraticCurveTo(kx-b*0.06, topY-b*0.22, hx2, hy2); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(kneeX, kneeY);
+  ctx.quadraticCurveTo(kneeX-b*0.01, kneeY+b*0.32, hoofX, hoofY); ctx.stroke(); // 小腿（垂直下）
   ctx.strokeStyle=hoofCol; ctx.lineWidth=len*0.095;
-  ctx.beginPath(); ctx.moveTo(hx2, hy2-bodyH*0.03); ctx.lineTo(hx2, hy2+bodyH*0.03); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(hoofX-b*0.045, hoofY); ctx.lineTo(hoofX+b*0.045, hoofY); ctx.stroke(); // 蹄
 }
 function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   // 對照教學圖重畫：長脖子 + 兩隻角 + 細長腿 + 棕白網狀花紋
@@ -228,7 +228,7 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   const legH = bodyH*1.25*legK;       // 細長腿（可縮短）
   const by = ground - legH - hh;      // 身體中心Y
   const bodyS = 1.15;                                  // 身體長度係數（長一點）
-  const reachUp = (mood==='reach') ? bodyH*0.30 : 0;        // reach：抬頭看高處
+  const reachUp = (mood==='reach') ? bodyH*0.55 : 0;        // reach：抬頭看高處（明顯上仰）
   const hpX = x + hw*1.18*bodyS, hpY = by - hh - neckH - reachUp;   // 頭中心（脖子頂端右側，向前伸出）
   const bodyCol = '#f5d48a';          // 淺黃棕
   const cream = '#fdf6e3';            // 縫隙（近白）

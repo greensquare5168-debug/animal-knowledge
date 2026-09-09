@@ -724,14 +724,14 @@ function giraffeDead(x, ground, bodyH){
   // 鼻孔（吻部上一個）
   ctx.fillStyle='#3a2410';
   ctx.beginPath(); ctx.ellipse(hx+hs*1.30, hy+hs*0.06, hs*0.09, hs*0.12, 0.05, 0, 6.29); ctx.fill();
-  // 角（兩根，朝前上方微軟倒）+ 耳朵
-  ctx.strokeStyle=darkCol; ctx.lineWidth=bodyH*0.028; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(hx-hs*0.45, hy-hs*0.55); ctx.lineTo(hx-hs*0.72, hy-hs*1.05); ctx.stroke();
-  ctx.beginPath(); ctx.arc(hx-hs*0.72, hy-hs*1.05, hs*0.10, 0, 6.29); ctx.fill();
-  ctx.beginPath(); ctx.moveTo(hx-hs*0.16, hy-hs*0.60); ctx.lineTo(hx-hs*0.28, hy-hs*1.15); ctx.stroke();
-  ctx.beginPath(); ctx.arc(hx-hs*0.28, hy-hs*1.15, hs*0.12, 0, 6.29); ctx.fill();
+  // 角（同站姿：兩根短粗圓鈍棒、基部沒入頭頂、頂端圓球）+ 耳朵
+  ctx.fillStyle=darkCol;
+  ctx.beginPath(); ctx.ellipse(hx-hs*0.30, hy-hs*0.46, hs*0.085, hs*0.22, -0.12, 0, 6.29); ctx.fill();  // 遠角（後）
+  ctx.beginPath(); ctx.arc(hx-hs*0.315, hy-hs*0.68, hs*0.07, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(hx-hs*0.05, hy-hs*0.52, hs*0.10, hs*0.26, 0.05, 0, 6.29); ctx.fill();   // 近角（前）
+  ctx.beginPath(); ctx.arc(hx-hs*0.04, hy-hs*0.78, hs*0.085, 0, 6.29); ctx.fill();
   ctx.fillStyle=bodyCol;
-  ctx.beginPath(); ctx.ellipse(hx-hs*1.02, hy+hs*0.05, hs*0.30, hs*0.15, -0.55, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(hx-hs*0.88, hy-hs*0.04, hs*0.26, hs*0.13, -0.5, 0, 6.29); ctx.fill();  // 耳朵（貼頭後側）
   // ---- ✕ 眼（直接黑叉，無眼白）----
   const ex = hx+hs*0.36, ey = hy-hs*0.10;
   ctx.strokeStyle='#1c1c1f'; ctx.lineWidth=hs*0.16; ctx.lineCap='round';

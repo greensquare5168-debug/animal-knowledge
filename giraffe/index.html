@@ -858,10 +858,11 @@ function drawScene(n,t){
     }
   } else if(n===1){ // 天擇：有長有短 → 低頭吃草把草吃光（原第2+3幕合一）
     const si = (typeof sentIdx==='number') ? sentIdx : 0;
-    // 幕2 共 6 句：站 si0-4 滿草；si5「草越來越少」低頭吃草、草 8 秒內分 5 階從下到上消失
+    // 幕2 共 6 句：站 si0-4 滿草；si5「草越來越少」→ 草在說話期間分 5 階從下到上消失完
     if(si>=5){
-      const pt = (performance.now()-sentT0)/1000;             // 這句已過時間
-      const prog = [0.2,0.4,0.6,0.8,1.0][Math.min(4, Math.floor(pt/1.6))];
+      const ap = (audio && audio.duration) ? (audio.currentTime/(audio.duration||1))
+                 : Math.min(1,(performance.now()-sentT0)/1000/2);
+      const prog = [0.2,0.4,0.6,0.8,1.0][Math.min(4, Math.floor(ap*5))];
       const bareTop = H - prog*(H - sH(55));
       ctx.fillStyle='#dcc98f';
       ctx.fillRect(0, bareTop, W, H-bareTop);
@@ -1025,7 +1026,7 @@ function playScene(i){
     if(vfs[myIdx]){
       audio = new Audio(vfs[myIdx]);
       audio.playbackRate = 1;
-      audio.onended = ()=>{ if(sentIdx===myIdx && playing && !(scene===1 && myIdx===sents.length-1)) goNext(); };   // 幕2尾句等草消失完再換
+      audio.onended = ()=>{ if(sentIdx===myIdx && playing) goNext(); };
       const sdur = (AUDIO[scene]&&AUDIO[scene].sd)||6;
       const startTimer = ()=>{
         if(window._sentTimer){ clearTimeout(window._sentTimer); }

@@ -234,10 +234,11 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   const hh = bodyH*0.5;               // 身體半高
   const hw = bodyH*0.56;              // 身體半寬
   const legH = bodyH*1.25*legK;       // 細長腿（可縮短）
-  const by = ground - legH - hh;      // 身體中心Y
   const bodyS = 1.15;                                  // 身體長度係數（長一點）
   const reachSway = (mood==='reach') ? Math.sin(t*7) : 0;      // reach 動畫：一伸一縮（明顯）
   const reachUp = (mood==='reach') ? bodyH*(0.10+0.10*reachSway) : 0;   // 抬頭（差一點吃不到的距離）
+  const reachBob = (mood==='reach') ? bodyH*0.12*reachSway : 0; // 身體隨動作上下起伏
+  const by = ground - legH - hh - reachBob;   // 身體中心Y（reach 時身體起伏）
   const hpX = x + hw*1.18*bodyS, hpY = by - hh - neckH - reachUp;   // 頭中心（脖子頂端右側，向前伸出）
   const bodyCol = '#f5d48a';          // 淺黃棕
   const cream = '#fdf6e3';            // 縫隙（近白）
@@ -245,9 +246,9 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   const patchLight = '#c4914f';      // 淺棕斑（頭部/頸上段細碎斑）
   const darkCol = '#5e3810';
   // ---- 遠側雙腿（淡色；reach 時遠前腳騰空）----
-  leg(x - hw*0.82*bodyS, by+hh*0.72, legH+hh*0.28, -0.10, bodyCol, darkCol, t, legThick);
+  leg(x - hw*0.82*bodyS, by+hh*0.72, legH+hh*0.28+reachBob, -0.10, bodyCol, darkCol, t, legThick);
   if(mood==='reach'){
-    raisedLeg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, bodyH, '#dcc98f', '#3a2410', t, legThick);  // 連續抬放
+    raisedLeg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28+reachBob, bodyH, '#dcc98f', '#3a2410', t, legThick);  // 連續抬放
   } else {
     leg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, -0.05, bodyCol, darkCol, t, legThick);
   }
@@ -338,9 +339,9 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   }
   ctx.stroke();
   // ---- 近側雙腿（reach 時近前腳騰空、後腳站立）----
-  leg(x - hw*0.34*bodyS, by+hh*0.6, legH+hh*0.4, -0.13, bodyCol, darkCol, t, legThick);
+  leg(x - hw*0.34*bodyS, by+hh*0.6, legH+hh*0.4+reachBob, -0.13, bodyCol, darkCol, t, legThick);
   if(mood==='reach'){
-    raisedLeg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, bodyH, bodyCol, darkCol, t, legThick);  // 連續抬放
+    raisedLeg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4+reachBob, bodyH, bodyCol, darkCol, t, legThick);  // 連續抬放
   } else {
     leg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol, t, legThick);
   }

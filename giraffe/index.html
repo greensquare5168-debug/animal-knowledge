@@ -851,12 +851,6 @@ function drawScene(n,t){
   if(n===0){ // 開場：真實照片背景（AI 生成），未載入時用卡通版
     if(scene0Img.complete && scene0Img.naturalWidth>0){
       ctx.drawImage(scene0Img, 0, 0, W, H);
-      // 浮動問號（右上）
-      const qy=Math.sin(t*2)*3;
-      ctx.fillStyle='rgba(255,255,255,.92)';ctx.font=`bold ${sH(8)}px sans-serif`;ctx.textAlign='center';
-      ctx.shadowColor='rgba(0,0,0,.35)';ctx.shadowBlur=sH(1);
-      ctx.fillText('？',W*0.88,sH(22)+qy);
-      ctx.shadowBlur=0;
     } else {
       acacia(W*0.72,gy,sH(34));
       giraffe(W*0.3,gy,sH(15),sH(19),'talk',t);

@@ -153,7 +153,7 @@ window.addEventListener('resize',resize); resize();
 
 const AUDIO_EVO=[
  {f:'voice/q1_s1.mp3',t:'嗨！大家好！我是長頸鹿～你有沒有想過，我的脖子，為什麼這麼長呀？'},
- {f:'voice/q1_s2.mp3',t:'其實很久很久以前，我的祖先，脖子短短的，跟現在的長頸鹿，完全不一樣！'},
+ {f:null,t:'其實很久很久以前，長頸鹿的祖先，脖子有的長、有的短！'},
  {f:'voice/q1_s3.mp3',t:'那時候草原上，矮矮的草和樹葉，一下子就被羚羊和斑馬搶光了！'},
  {f:null,t:'高高的樹上，嫩葉子大家都吃不到！脖子短的長頸鹿，只能餓著肚子……'},
  {f:null,t:'脖子長的，吃得到葉子，活了下來；脖子短的，吃不到，餓死了！'},
@@ -161,7 +161,7 @@ const AUDIO_EVO=[
 ];
 const AUDIO_LM=[
  {f:null,t:'嗨！又是我～關於我的長脖子，還有一個很古老的說法喔！'},
- {f:null,t:'很久很久以前，長頸鹿的祖先，脖子短短的，跟現在的長頸鹿完全不一樣！'},
+ {f:null,t:'很久很久以前，長頸鹿的祖先，脖子有的長、有的短！'},
  {f:null,t:'地上的青草常常不夠吃，牠們只好每天努力的伸長脖子，想吃高高的樹葉！'},
  {f:null,t:'常常伸脖子，脖子真的越伸越長了！高處的嫩葉子，終於吃得到了！'},
  {f:null,t:'長長的脖子會傳給小長頸鹿，小寶寶一出生，脖子就長長的！'},
@@ -838,11 +838,12 @@ function drawScene(n,t){
       ctx.fillStyle='#ffb347';ctx.font=`bold ${sH(9)}px sans-serif`;ctx.textAlign='center';
       ctx.fillText('？',W*0.52,sH(30)+qy);
     }
-  } else if(n===1){ // 祖先短脖子
-    acacia(W*0.78,gy,sH(40));
-    giraffe(W*0.4,gy,sH(14),sH(4),'talk',t,0.72);
-    ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.4)}px sans-serif`;ctx.textAlign='center';
-    ctx.fillText('很久很久以前……',W*0.5,sH(9));
+  } else if(n===1){ // 祖先：脖子有長有短（天生個體差異）
+    acacia(W*0.80,gy,sH(40));
+    giraffe(W*0.16,gy,sH(13),sH(4),'talk',t,0.72);    // 短脖子祖先
+    giraffe(W*0.38,gy,sH(13),sH(8),null,t*0.7,0.72);  // 脖子稍長的祖先
+    ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3)}px sans-serif`;ctx.textAlign='center';
+    ctx.fillText('很久很久以前，祖先的脖子有長有短！',W*0.5,sH(9));
   } else if(n===2){ // 搶食（斑馬一隻代表）
     giraffe(W*0.2,gy,sH(13),sH(4),'sad',t,0.72);
     zebra(W*0.68,gy,t);
@@ -893,11 +894,12 @@ function drawLamarckScene(n,t){
     giraffe(W*0.3,gy,sH(15),sH(19),'talk',t);
     ctx.font=`bold ${sH(3.4)}px sans-serif`;
     ctx.fillText('（其實還有一個古老的說法……）',W*0.5,sH(9));
-  } else if(n===1){ // 祖先短脖子
-    acacia(W*0.78,gy,sH(40));
-    giraffe(W*0.4,gy,sH(14),sH(4),'talk',t,0.72);
-    ctx.font=`bold ${sH(3.4)}px sans-serif`;
-    ctx.fillText('很久很久以前，祖先的脖子短短的',W*0.5,sH(9));
+  } else if(n===1){ // 祖先：脖子有長有短
+    acacia(W*0.80,gy,sH(40));
+    giraffe(W*0.16,gy,sH(13),sH(4),'talk',t,0.72);    // 短脖子祖先
+    giraffe(W*0.38,gy,sH(13),sH(8),null,t*0.7,0.72);  // 脖子稍長的祖先
+    ctx.font=`bold ${sH(3)}px sans-serif`;
+    ctx.fillText('很久很久以前，祖先的脖子有長有短！',W*0.5,sH(9));
     zebra(W*0.78,gy,t*0.5);
   } else if(n===2){ // 努力伸長脖子（脖子慢慢變長）
     acacia(W*0.6,gy,sH(48));

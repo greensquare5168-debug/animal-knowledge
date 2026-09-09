@@ -1000,20 +1000,24 @@ function playScene(i){
     if(!playing) return;
     sentT0 = performance.now();
     document.getElementById('sub').textContent = sents[sentIdx] || '';
+    const myIdx = sentIdx;
     const goNext = ()=>{
+      if(sentIdx !== myIdx) return;
+      if(window._sentTimer){ clearTimeout(window._sentTimer); window._sentTimer=null; }
+      if(audio){ try{ audio.onended=null; audio.pause(); }catch(e){} }
       sentIdx++;
       if(sentIdx < sents.length){ step(); }
       else if(scene < AUDIO.length-1){ playScene(scene+1); }
       else { playing=false; document.getElementById('playBtn').textContent='▶'; }
     };
-    if(vfs[sentIdx]){
-      audio = new Audio(vfs[sentIdx]);
+    if(vfs[myIdx]){
+      audio = new Audio(vfs[myIdx]);
       audio.playbackRate = 1;
-      audio.onended = goNext;
-      audio.play().catch(()=>{ autoTimer = setTimeout(goNext, 4500); });  // 語音載入失敗→停4.5秒
-    } else {
-      autoTimer = setTimeout(goNext, 4500);
+      audio.onended = ()=>{ if(sentIdx===myIdx && playing) goNext(); };
+      audio.play().catch(()=>{});
     }
+    // 計時器主導：這句最多停留 4.5 秒，語音先播完會提早換句 → 永不卡帶
+    window._sentTimer = setTimeout(()=>{ if(sentIdx===myIdx && playing) goNext(); }, 4500);
   }
   step();
   playing=true; document.getElementById('playBtn').textContent='⏸';

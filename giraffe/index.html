@@ -812,10 +812,6 @@ function drawScene(n,t){
   } else if(n===5){ // 適者生存：短的餓死、長的活下來
     // 左：短脖子餓死（趴在地上 + 眼睛✕ + 頭上烏雲）
     giraffeDead(W*0.16, gy, sH(11));
-    ctx.fillStyle='#9aa5ad';
-    ctx.beginPath();ctx.ellipse(W*0.18,sH(56),sH(6),sH(2.2),0,0,6.29);ctx.fill();
-    ctx.beginPath();ctx.ellipse(W*0.18-sH(3),sH(58),sH(3.4),sH(2),0,0,6.29);ctx.fill();
-    ctx.beginPath();ctx.ellipse(W*0.18+sH(3),sH(58),sH(3.4),sH(2),0,0,6.29);ctx.fill();
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.2)}px sans-serif`;ctx.textAlign='center';
     ctx.fillText('短的：餓死了……',W*0.18,sH(9));
     // 右：長脖子活下來吃葉子

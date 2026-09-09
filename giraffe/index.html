@@ -83,7 +83,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
           <button class="navbtn" onclick="nextScene()" title="下一幕">▶▶</button>
           <button onclick="restart()" style="background:#b8c4ce;box-shadow:0 3px 0 #8a98a3;font-size:15px">↺</button>
           <div class="seek"><div id="seekBar"></div></div>
-          <div class="plabel" id="sceneLabel">1 / 11</div>
+          <div class="plabel" id="sceneLabel">1 / 10</div>
         </div>
       </div>
       <div class="wow">💡 <b>你知道嗎？</b>成年長頸鹿的脖子可以長到 <b>2 公尺</b>，裡面跟人類一樣只有 <b>7 節</b>頸椎骨！只是每一節都超長～</div>
@@ -140,8 +140,7 @@ const AUDIO_EVO=[
  {f:'voice/q1_s1.mp3',t:'嗨！大家好！我是長頸鹿～你有沒有想過，我的脖子，為什麼這麼長呀？'},
  {f:null,t:'第一個是天擇說！很久很久以前，長頸鹿的祖先，脖子有的長、有的短！'},
  {f:null,t:'那時候，草原上的草越來越少，矮矮的草和樹葉，一下子就被吃光了！'},
- {f:null,t:'高高的樹上，嫩葉子大家都吃不到！脖子短的長頸鹿，只能餓著肚子……'},
- {f:null,t:'脖子長的，吃得到葉子，活了下來；脖子短的，吃不到，餓死了！'},
+  {f:null,t:'脖子長的，吃得到葉子，活了下來；脖子短的，吃不到，餓死了！'},
  {f:null,t:'一代一代傳下去，脖子長的長頸鹿越來越多——這就是「天擇說」！'},
 ];
 const AUDIO_LM=[
@@ -806,7 +805,7 @@ function bareGround(){
 // 場景繪圖（每幕 t=幕內秒數）
 function drawTheoryTag(n){
   // 左上角學說標示（幕1-6適者生存、幕7-12用進廢退）
-  const tag = (n>=6) ? '💪 用進廢退說' : '🌍 天擇說';
+  const tag = (n>=5) ? '💪 用進廢退說' : '🌍 天擇說';
   ctx.font=`bold ${sH(2.6)}px sans-serif`;
   const tw = ctx.measureText(tag).width;
   const px = sH(1.4), py = sH(1.4), ph = sH(4.4), pw = tw + sH(3.2);
@@ -824,7 +823,7 @@ function drawTheoryTag(n){
   ctx.textBaseline='alphabetic';
 }
 function drawScene(n,t){
-  if(n>=6){ drawLamarckScene(n-5,t); drawTheoryTag(n); return; }
+  if(n>=5){ drawLamarckScene(n-4,t); drawTheoryTag(n); return; }
   ctx.clearRect(0,0,W,H);
   const gy=groundY();
   // 背景漸層(已在CSS) + 遠山
@@ -859,17 +858,7 @@ function drawScene(n,t){
     giraffe(W*0.64,gy,sH(11),sH(4),'talk',t*0.7,0.72); // 短小（同第二幕）
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(2.9)}px sans-serif`;ctx.textAlign='center';
     ctx.fillText('草比較少的時候，矮矮的草和樹葉都被吃光光',W*0.5,sH(9));
-  } else if(n===3){ // 高處樹葉：兩隻 + 光禿禿地
-    bareGround();
-    acacia(W*0.78,gy,sH(46));
-    giraffe(W*0.24,gy,sH(14),sH(13),'happy',t*0.6);   // 正常長（微笑+頭會動）
-    giraffe(W*0.60,gy,sH(11),sH(4),'happy',t*0.8,0.72); // 短小（微笑同前面）
-    sparkle(W*0.75-sH(6),gy-sH(44),t,'#fff3b0');
-    sparkle(W*0.8,gy-sH(40),t+1,'#fff3b0');
-    sparkle(W*0.7,gy-sH(38),t+2,'#fff3b0');
-    ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(2.9)}px sans-serif`;ctx.textAlign='center';
-    ctx.fillText('高高的樹上，嫩葉子大家都吃不到！',W*0.5,sH(9));
-  } else if(n===4){ // 脖子長才吃得到：樹中間、長脖子靠樹左、短脖子樹右面向樹（禿地）
+  } else if(n===3){ // 脖子長才吃得到：樹中間、長脖子靠樹左、短脖子樹右面向樹（禿地）
     bareGround();
     acacia(W*0.52,gy,sH(44));
     giraffe(W*0.32,gy,sH(14),sH(13),'happy',t);
@@ -880,7 +869,7 @@ function drawScene(n,t){
     giraffe(0,gy,sH(13),sH(4),'reach',t*0.5,0.72);
     ctx.restore();
     ctx.fillStyle='#ffb347';ctx.font=`bold ${sH(5)}px sans-serif`;ctx.textAlign='center';ctx.fillText('好餓……吃不到……',W*0.70,sH(9));
-  } else if(n===5){ // 適者生存結局：同第5幕構圖，右邊短小的餓死趴地
+  } else if(n===4){ // 適者生存結局：同第4幕構圖，右邊短小的餓死趴地
     bareGround();
     acacia(W*0.52,gy,sH(44));
     giraffe(W*0.32,gy,sH(14),sH(13),'happy',t);      // 長脖子活著吃葉子

@@ -855,12 +855,22 @@ function drawScene(n,t){
     giraffe(W*0.64,gy,sH(11),sH(4),'talk',t*0.7,0.72); // 短小（同第二幕）
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(2.9)}px sans-serif`;ctx.textAlign='center';
     ctx.fillText('草比較少的時候，矮矮的草和樹葉都被吃光光',W*0.5,sH(9));
-  } else if(n===3){ // 高處樹葉
-    acacia(W*0.75,gy,sH(46));
-    giraffe(W*0.25,gy,sH(14),sH(9),'talk',t);
+  } else if(n===3){ // 高處樹葉：兩隻 + 光禿禿地
+    ctx.fillStyle='#dcc98f';
+    ctx.fillRect(0, sH(52), W, H-sH(52));
+    ctx.strokeStyle='#c2a96a'; ctx.lineWidth=2; ctx.lineCap='round';
+    for(let i=0;i<20;i++){
+      const gx=(i*53+17)%W, gy3=sH(56)+((i*13)%18), gh=3+((i*7)%5);
+      ctx.beginPath(); ctx.moveTo(gx, gy3); ctx.lineTo(gx-2, gy3+gh); ctx.stroke();
+    }
+    acacia(W*0.78,gy,sH(46));
+    giraffe(W*0.24,gy,sH(14),sH(13),null,t*0.6);      // 正常長（想吃高處葉）
+    giraffe(W*0.60,gy,sH(11),sH(4),'sad',t*0.8,0.72); // 短小（吃不到難過）
     sparkle(W*0.75-sH(6),gy-sH(44),t,'#fff3b0');
     sparkle(W*0.8,gy-sH(40),t+1,'#fff3b0');
     sparkle(W*0.7,gy-sH(38),t+2,'#fff3b0');
+    ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(2.9)}px sans-serif`;ctx.textAlign='center';
+    ctx.fillText('高高的樹上，嫩葉子大家都吃不到！',W*0.5,sH(9));
   } else if(n===4){ // 脖子長才吃得到：樹中間、長脖子靠樹左、短脖子樹右面向樹
     acacia(W*0.52,gy,sH(44));
     giraffe(W*0.32,gy,sH(14),sH(13),'happy',t);

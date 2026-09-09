@@ -139,7 +139,7 @@ window.addEventListener('resize',resize); resize();
 const AUDIO_EVO=[
  {f:null, sub:['嗨！','大家好！','我是長頸鹿！','你有沒有想過','我的脖子為什麼這麼長呀？','關於這個問題','有兩種說法喔！'], vf:['voice/s01_c1.mp3','voice/s01_c2.mp3','voice/s01_c3.mp3','voice/s01_c4.mp3','voice/s01_c5.mp3','voice/s01_c6.mp3','voice/s01_c7.mp3']},
  {f:null, sub:['第一種說法','叫做天擇說','長頸鹿一開始','脖子有長有短','天生就不一樣'], vf:['voice/s02_c1.mp3','voice/s02_c2.mp3','voice/s02_c3.mp3','voice/s02_c4.mp3','voice/s02_c5.mp3']},
- {f:null, sub:['草原上的草比較少的時候','長頸鹿就抬頭吃樹上的葉子','脖子長的可以吃到','脖子短的吃不到','時間長了','最後餓死了','脖子長的長頸鹿','活了下來','生下小寶寶','一代一代傳下去','脖子長的越來越多','這就是「天擇說」'], vf:['voice/s03_new1.mp3','voice/s03_new2.mp3','voice/s03_new3.mp3','voice/s03_new4.mp3','voice/s04_c1.mp3','voice/s04_c5.mp3','voice/s04_c6.mp3','voice/s04_c7.mp3','voice/s04_c8.mp3','voice/s04_c9.mp3','voice/s04_c10.mp3','voice/s04_c11.mp3']},
+ {f:null, sub:['草原上的草比較少的時候','長頸鹿就抬頭吃樹上的葉子','脖子長的可以吃到','脖子短的吃不到','時間長了','最後脖子短的餓死了','脖子長的長頸鹿','活了下來','一代一代傳下去','脖子長的越來越多','這就是「天擇說」'], vf:['voice/s03_new1.mp3','voice/s03_new2.mp3','voice/s03_new3.mp3','voice/s03_new4.mp3','voice/s04_c1.mp3','voice/s04_c5.mp3','voice/s04_c6.mp3','voice/s04_c7.mp3','voice/s04_c9.mp3','voice/s04_c10.mp3','voice/s04_c11.mp3']},
 ];
 const AUDIO_LM=[
  {f:null, sub:['其實還有一種說法','叫做「用進廢退說」','很久很久以前','長頸鹿的祖先','脖子都短短的','牠們每天用力伸長脖子','想吃高處的樹葉'], vf:['voice/s05_c1.mp3','voice/s05_c2.mp3','voice/s05_c3.mp3','voice/s05_c4.mp3','voice/s05_c5.mp3','voice/s05_c6.mp3','voice/s05_c7.mp3']},
@@ -641,7 +641,7 @@ function zebra(x, ground, t){
 // 趴地死掉版長頸鹿（短脖子餓死）：身體橫躺、脖子貼地前伸、眼睛✕、烏雲由場景畫
 function giraffeDead(x, ground, bodyH){
   // 趴地餓死版（精緻版）：身體貼地、網狀斑塊、錐形脖子、淚滴頭、折腿、✕眼
-  const rx = bodyH*0.80, ry = bodyH*0.25;           // 趴姿身體半長/半高（加厚同站姿體感）
+  const rx = bodyH*0.88, ry = bodyH*0.33;           // 趴姿身體半長/半高（更飽滿貼近站姿）
   const gy2 = ground - bodyH*0.02;                   // 身體底緣（貼地）
   const bodyCol='#f5d48a', patchCol='#a06a28', cream='#fdf6e3', darkCol='#5e3810', snoutC='#8a5522';
   // ---- 趴姿身體輪廓 path（背脊朝上、肩略高臀略低）----
@@ -688,11 +688,20 @@ function giraffeDead(x, ground, bodyH){
   bodyPath(); ctx.fillStyle=bodyCol; ctx.fill();
   ctx.save(); bodyPath(); ctx.clip();
   // 深棕斑（6 塊分散、大小錯落自然留出黃色縫隙）
-  const spots=[[-0.68,0.62,0.17],[-0.36,0.38,0.21],[0.00,0.66,0.16],[0.30,0.42,0.20],[0.58,0.70,0.15],[-0.16,0.95,0.13]];
-  spots.forEach((sp,i)=>{
-    ctx.fillStyle = i%2 ? patchCol : '#b57a34';
-    blob(x+rx*sp[0], gy2-ry*sp[1]*2.05, bodyH*sp[2], bodyH*sp[2]*0.72, ((i*3)%5-2)*0.15, i*7+2);
-  });
+  // 站姿同款網格斑（6x5，大斑貼輪廓、大小錯落）
+  for(let r=0;r<6;r++){
+    for(let c=0;c<5;c++){
+      const jx=(((r*31+c*17)%5)-2)*0.04;
+      const jy=(((r*13+c*29)%5)-2)*0.04;
+      const cx3=-1.05+c*0.52+jx;
+      const cy3=0.5-r*0.21+jy;
+      const sz=[0.30,0.27,0.24,0.22,0.20,0.19][r]+((r*7+c*11)%3)*0.02;
+      ctx.fillStyle = (r+c)%2 ? patchCol : '#b57a34';
+      ctx.beginPath();
+      ctx.ellipse(x+rx*cx3, gy2-ry*cy3*3.1, rx*sz, ry*sz*1.15, (((r*3+c*5)%7)-3)*0.07, 0, 6.29);
+      ctx.fill();
+    }
+  }
   ctx.restore();
 
   // ---- 脖子（趴著沿地前伸：錐形 + 背緣鬃毛）----
@@ -877,12 +886,6 @@ function drawScene(n,t){
       ctx.restore();
       ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3)}px sans-serif`;ctx.textAlign='center';
       ctx.fillText('短的：餓死了……',W*0.72,sH(9));
-      if(si>=8){  // 生下小寶寶：小長頸鹿站在長脖子身邊
-        giraffe(W*0.47,gy,sH(8.5),sH(8),null,t*0.6,0.9);
-        ctx.fillStyle='#2e7d32';ctx.font=`bold ${sH(3)}px sans-serif`;
-        ctx.fillText('長的：活下來！',W*0.30,sH(9));
-        sparkle(W*0.6,sH(12),t,'#ffd98a');
-      }
     } else {
       // 短小想吃吃不到（reach 動畫）
       ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);

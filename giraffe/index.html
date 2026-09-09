@@ -740,21 +740,20 @@ function giraffeDead(x, ground, bodyH){
   ctx.beginPath(); ctx.moveTo(ex2+hs*0.085, ey2-hs*0.085); ctx.lineTo(ex2-hs*0.085, ey2+hs*0.085); ctx.stroke();
 // ---- 腿（跟站姿一樣粗一樣長，在身體下面沿地向前後伸，共四條）----
   const legW = sH(1.85);
-  const legL = bodyH*0.85;
   ctx.strokeStyle = bodyCol; ctx.lineWidth = legW; ctx.lineCap='round';
-  const legY = ground - bodyH*0.06;
-  // 側面視圖：後腳一隻（向後伸）
-  ctx.beginPath(); ctx.moveTo(x-bodyH*0.55, legY);
-  ctx.quadraticCurveTo(x-bodyH*0.85, legY+bodyH*0.05, x-bodyH*1.05, legY+bodyH*0.02);
+  const legTop = ground - bodyH*0.14;   // 腿起點：身體下緣（腹部）
+  // 側面視圖：後腳一隻（從身體下面向後伸到地面）
+  ctx.beginPath(); ctx.moveTo(x-bodyH*0.52, legTop);
+  ctx.quadraticCurveTo(x-bodyH*0.85, legTop+bodyH*0.08, x-bodyH*1.05, ground-bodyH*0.03);
   ctx.stroke();
-  // 前腳一隻（向後伸，較短靠身體）
-  ctx.beginPath(); ctx.moveTo(x+bodyH*0.42, legY);
-  ctx.quadraticCurveTo(x+bodyH*0.1, legY+bodyH*0.07, x-bodyH*0.12, legY+bodyH*0.05);
+  // 前腳一隻（從身體下面向後伸，較短）
+  ctx.beginPath(); ctx.moveTo(x+bodyH*0.40, legTop);
+  ctx.quadraticCurveTo(x+bodyH*0.1, legTop+bodyH*0.09, x-bodyH*0.14, ground-bodyH*0.04);
   ctx.stroke();
-  // 蹄（前後各一深棕）
+  // 蹄（前後各一深棕、貼地）
   ctx.strokeStyle = darkCol; ctx.lineWidth = legW*0.85;
-  ctx.beginPath(); ctx.moveTo(x-bodyH*1.05, legY+bodyH*0.02); ctx.lineTo(x-bodyH*1.13, legY+bodyH*0.04); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(x-bodyH*0.12, legY+bodyH*0.05); ctx.lineTo(x-bodyH*0.20, legY+bodyH*0.07); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x-bodyH*1.05, ground-bodyH*0.03); ctx.lineTo(x-bodyH*1.14, ground-bodyH*0.01); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x-bodyH*0.14, ground-bodyH*0.04); ctx.lineTo(x-bodyH*0.23, ground-bodyH*0.02); ctx.stroke();
 }
 function acacia(x, ground, th){
   // 金合歡（傘狀樹）

@@ -888,9 +888,9 @@ function drawLamarckScene(n,t){
     giraffe(W*0.3,gy,sH(15),sH(19),'talk',t);
     ctx.font=`bold ${sH(3.4)}px sans-serif`;
     ctx.fillText('（其實還有一個古老的說法……）',W*0.5,sH(9));
-  } else if(n===1){ // 用進廢退說：還有一種說法 + 祖先脖子都短
-    giraffe(W*0.22,gy,sH(11),sH(4),'talk',t,0.72);     // 短脖子祖先
-    giraffe(W*0.62,gy,sH(11),sH(4),'talk',t*0.7,0.72); // 另一隻也短短
+  } else if(n===1){ // 用進廢退說：還有一種說法 + 祖先脖子都短（對稱站位）
+    giraffe(W*0.33,gy,sH(11),sH(4),'talk',t,0.72);     // 短脖子祖先
+    giraffe(W*0.67,gy,sH(11),sH(4),'talk',t*0.7,0.72); // 另一隻也短短
     ctx.font=`bold ${sH(2.5)}px sans-serif`;
     ctx.fillText('還有一種說法：用進廢退說！',W*0.5,sH(9));
     ctx.font=`bold ${sH(2.2)}px sans-serif`;

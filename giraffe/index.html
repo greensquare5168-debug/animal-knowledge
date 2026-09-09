@@ -208,6 +208,7 @@ function traceBodyPath(x, by, hw, hh, sx){
 function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   // 對照教學圖重畫：長脖子 + 兩隻角 + 細長腿 + 棕白網狀花紋
   legK = legK||1;                     // 腿長縮放（短腿用）
+  const legThick = 1/Math.max(legK,0.4);   // 腿變短但粗細不變
   const hh = bodyH*0.5;               // 身體半高
   const hw = bodyH*0.56;              // 身體半寬
   const legH = bodyH*1.25*legK;       // 細長腿（可縮短）
@@ -220,8 +221,8 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   const patchLight = '#c4914f';      // 淺棕斑（頭部/頸上段細碎斑）
   const darkCol = '#5e3810';
   // ---- 遠側雙腿（淡色）----
-  leg(x - hw*0.82*bodyS, by+hh*0.72, legH+hh*0.28, -0.10, bodyCol, darkCol);
-  leg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, -0.05, bodyCol, darkCol);
+  leg(x - hw*0.82*bodyS, by+hh*0.72, legH+hh*0.28, -0.10, bodyCol, darkCol, t, legThick);
+  leg(x + hw*0.20*bodyS, by+hh*0.72, legH+hh*0.28, -0.05, bodyCol, darkCol, t, legThick);
   // ---- 尾巴（身體左側、自然朝下垂，末端黑毛）----
   const twx = Math.sin(t*3)*1.5;
   ctx.strokeStyle = bodyCol; ctx.lineWidth = hw*0.08; ctx.lineCap='round';
@@ -309,8 +310,8 @@ function giraffe(x, ground, bodyH, neckH, mood, t, legK){
   }
   ctx.stroke();
   // ---- 近側雙腿（細長、四腳著地）----
-  leg(x - hw*0.34*bodyS, by+hh*0.6, legH+hh*0.4, -0.13, bodyCol, darkCol);
-  leg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol);
+  leg(x - hw*0.34*bodyS, by+hh*0.6, legH+hh*0.4, -0.13, bodyCol, darkCol, t, legThick);
+  leg(x + hw*0.72*bodyS, by+hh*0.6, legH+hh*0.4, -0.10, bodyCol, darkCol, t, legThick);
   // ---- 頭部（淚滴形：額圓、吻部突出圓鈍，參考真實長頸鹿側面）----
   const bob = mood==='talk'? Math.sin(t*10)*bodyH*0.02 : 0;
   const hx = hpX, hy = hpY + bob;
@@ -421,22 +422,23 @@ function crack(cx, cy, rx, ry, rot){
   ctx.beginPath(); ctx.moveTo(rx*0.12, ry*0.12); ctx.quadraticCurveTo(rx*0.22, -ry*0.06, rx*0.06, -ry*0.2); ctx.stroke();
   ctx.restore();
 }
-function leg(lx, topY, len, bend, col, hoofCol, t){
+function leg(lx, topY, len, bend, col, hoofCol, t, thick){
   // 有曲度的腿：大腿→明顯膝蓋→小腿（膝蓋向後凸）
+  thick = thick||1;                  // 粗細補償（腿縮短時維持原粗）
   const kx = lx + bend*len*1.0;    // 膝蓋 x（向後，明顯曲度）
   const ky = topY + len*0.52;      // 膝蓋高度
   const ankleX = lx + bend*len*0.3;
   const footX = lx + bend*len*0.18; // 蹄微回收（站立自然）
   // 大腿（加粗，微弧向膝）
-  ctx.strokeStyle = col; ctx.lineWidth = len*0.088; ctx.lineCap='round';
+  ctx.strokeStyle = col; ctx.lineWidth = len*0.088*thick; ctx.lineCap='round';
   ctx.beginPath(); ctx.moveTo(lx, topY);
   ctx.quadraticCurveTo(lx + bend*len*0.1, topY+len*0.26, kx, ky); ctx.stroke();
   // 小腿（比大腿略細，round cap 與大腿在膝蓋自然相接，不畫圓球）
-  ctx.strokeStyle = col; ctx.lineWidth = len*0.07;
+  ctx.strokeStyle = col; ctx.lineWidth = len*0.07*thick;
   ctx.beginPath(); ctx.moveTo(kx, ky);
   ctx.quadraticCurveTo(kx - bend*len*0.12, topY+len*0.76, ankleX, topY+len*0.97); ctx.stroke();
   // 蹄
-  ctx.strokeStyle = hoofCol; ctx.lineWidth = len*0.095; ctx.lineCap='round';
+  ctx.strokeStyle = hoofCol; ctx.lineWidth = len*0.095*thick; ctx.lineCap='round';
   ctx.beginPath(); ctx.moveTo(ankleX, topY+len-3); ctx.lineTo(footX, topY+len+3); ctx.stroke();
 }
 
@@ -789,7 +791,7 @@ function drawScene(n,t){
     ctx.fillText('？',W*0.52,sH(30)+qy);
   } else if(n===1){ // 祖先短脖子
     acacia(W*0.78,gy,sH(40));
-    giraffe(W*0.4,gy,sH(14),sH(4),'talk',t);
+    giraffe(W*0.4,gy,sH(14),sH(4),'talk',t,0.72);
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.4)}px sans-serif`;ctx.textAlign='center';
     ctx.fillText('很久很久以前……',W*0.5,sH(9));
   } else if(n===2){ // 搶食（斑馬一隻代表）
@@ -844,13 +846,13 @@ function drawLamarckScene(n,t){
     ctx.fillText('（其實還有一個古老的說法……）',W*0.5,sH(9));
   } else if(n===1){ // 祖先短脖子
     acacia(W*0.78,gy,sH(40));
-    giraffe(W*0.4,gy,sH(14),sH(4),'talk',t);
+    giraffe(W*0.4,gy,sH(14),sH(4),'talk',t,0.72);
     ctx.font=`bold ${sH(3.4)}px sans-serif`;
     ctx.fillText('很久很久以前，祖先的脖子短短的',W*0.5,sH(9));
     zebra(W*0.78,gy,t*0.5);
   } else if(n===2){ // 努力伸長脖子（脖子慢慢變長）
     acacia(W*0.6,gy,sH(48));
-    giraffe(W*0.2,gy,sH(14),sH(4)+Math.min(sH(8),t*sH(6)),'happy',t);
+    giraffe(W*0.2,gy,sH(14),sH(4)+Math.min(sH(8),t*sH(6)),'happy',t,0.72);
     sparkle(W*0.62-sH(5),gy-sH(46),t,'#fff3b0');
     ctx.font=`bold ${sH(3.6)}px sans-serif`;
     ctx.fillText('伸～伸～努力伸長脖子！',W*0.45,sH(9));

@@ -618,73 +618,134 @@ function zebra(x, ground, t){
 }
 // 趴地死掉版長頸鹿（短脖子餓死）：身體橫躺、脖子貼地前伸、眼睛✕、烏雲由場景畫
 function giraffeDead(x, ground, bodyH){
-  const rx = bodyH*0.66, ry = bodyH*0.27;          // 橫躺身體半徑
-  const by = ground - bodyH*0.28;                   // 身體中心（貼地微浮）
-  const bodyCol='#f5d48a', patchCol='#a06a28', darkCol='#5e3810', snoutC='#8a5522';
-  // 尾巴（癱在身體左後方地面）
-  ctx.strokeStyle=bodyCol; ctx.lineWidth=bodyH*0.045; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(x-rx*0.85, by-ry*0.2);
-  ctx.quadraticCurveTo(x-rx*1.15, by+ry*0.3, x-rx*1.05, ground+bodyH*0.01); ctx.stroke();
-  ctx.strokeStyle='#22160a'; ctx.lineWidth=bodyH*0.035;
-  ctx.beginPath(); ctx.moveTo(x-rx*1.04, ground-bodyH*0.04);
-  ctx.quadraticCurveTo(x-rx*1.12, ground+bodyH*0.05, x-rx*1.0, ground+bodyH*0.06); ctx.stroke();
-  // 折疊的腿（近側兩條軟癱，從身體下緣垂到地）
-  [[-0.62,0.1],[0.55,0.28]].forEach(p=>{
-    const lx = x + rx*p[0], fx = x + rx*(p[0]+p[1]);
-    ctx.strokeStyle=bodyCol; ctx.lineWidth=bodyH*0.07;
-    ctx.beginPath(); ctx.moveTo(lx, by+ry*0.6);
-    ctx.quadraticCurveTo(lx+rx*0.08, ground-bodyH*0.16, fx, ground-bodyH*0.05);
-    ctx.stroke();
-    ctx.strokeStyle=darkCol; ctx.lineWidth=bodyH*0.06;
-    ctx.beginPath(); ctx.moveTo(fx-rx*0.02, ground-bodyH*0.07);
-    ctx.lineTo(fx+rx*0.01, ground-bodyH*0.01); ctx.stroke();
-  });
-  // 身體（橫躺橢圓 + 背部斑塊）
-  ctx.fillStyle=bodyCol;
-  ctx.beginPath(); ctx.ellipse(x, by, rx, ry, -0.04, 0, 6.29); ctx.fill();
-  ctx.fillStyle=patchCol;
-  for(let i=0;i<4;i++){
+  // 趴地餓死版（精緻版）：身體貼地、網狀斑塊、錐形脖子、淚滴頭、折腿、✕眼
+  const rx = bodyH*0.80, ry = bodyH*0.22;           // 趴姿身體半長/半高（背脊山丘形）
+  const gy2 = ground - bodyH*0.02;                   // 身體底緣（貼地）
+  const bodyCol='#f5d48a', patchCol='#a06a28', cream='#fdf6e3', darkCol='#5e3810', snoutC='#8a5522';
+  // ---- 趴姿身體輪廓 path（背脊朝上、肩略高臀略低）----
+  function bodyPath(){
     ctx.beginPath();
-    ctx.ellipse(x-rx*0.6+i*rx*0.42, by-ry*0.25+((i%2)*ry*0.5), rx*0.14, ry*0.3, ((i%3)-1)*0.25, 0, 6.29);
-    ctx.fill();
+    ctx.moveTo(x-rx, gy2-ry*1.05);                                        // 臀頂
+    ctx.quadraticCurveTo(x-rx-bodyH*0.05, gy2+bodyH*0.02, x-rx+bodyH*0.18, gy2+bodyH*0.045); // 臀圓→貼地
+    ctx.lineTo(x+rx-bodyH*0.16, gy2+bodyH*0.045);                         // 底緣（貼地）
+    ctx.quadraticCurveTo(x+rx+bodyH*0.05, gy2+bodyH*0.02, x+rx*0.94, gy2-ry*1.75);          // 肩隆（前高）
+    ctx.quadraticCurveTo(x+rx*0.42, gy2-ry*2.05, x-rx*0.15, gy2-ry*1.55); // 背脊（微凹）
+    ctx.quadraticCurveTo(x-rx*0.55, gy2-ry*1.3, x-rx, gy2-ry*1.05);       // 回臀
+    ctx.closePath();
   }
-  // 脖子（短、貼地前伸）+ 頭（側躺貼地、微仰）
-  const nx0 = x+rx*0.62, ny0 = by-ry*0.1;
-  const hx = x + rx*1.02, hy = ground - bodyH*0.16;      // 頭中心
-  ctx.strokeStyle=bodyCol; ctx.lineWidth=bodyH*0.20; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(nx0, ny0);
-  ctx.quadraticCurveTo(x+rx*0.85, (ny0+hy)/2+bodyH*0.04, hx-bodyH*0.16, hy+bodyH*0.06);
+  // ---- 尾巴（癱在臀後地面：白柄 + 黑毛叢）----
+  ctx.strokeStyle=bodyCol; ctx.lineWidth=bodyH*0.045; ctx.lineCap='round';
+  ctx.beginPath(); ctx.moveTo(x-rx-bodyH*0.02, gy2-ry*0.8);
+  ctx.quadraticCurveTo(x-rx-bodyH*0.45, gy2+bodyH*0.03, x-rx-bodyH*0.38, gy2+bodyH*0.10); ctx.stroke();
+  ctx.strokeStyle='#22160a'; ctx.lineWidth=bodyH*0.04;
+  ctx.beginPath(); ctx.moveTo(x-rx-bodyH*0.37, gy2+bodyH*0.08);
+  ctx.quadraticCurveTo(x-rx-bodyH*0.52, gy2+bodyH*0.16, x-rx-bodyH*0.40, gy2+bodyH*0.19); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x-rx-bodyH*0.36, gy2+bodyH*0.07);
+  ctx.quadraticCurveTo(x-rx-bodyH*0.45, gy2+bodyH*0.18, x-rx-bodyH*0.30, gy2+bodyH*0.21); ctx.stroke();
+  // ---- 身體 fill + clip 斑塊（深棕大斑 + 奶油縫隙，同站姿風格）----
+  bodyPath(); ctx.fillStyle=bodyCol; ctx.fill();
+  ctx.save(); bodyPath(); ctx.clip();
+  // 奶油縫隙網（先鋪淺色網格線，再疊深棕斑）
+  ctx.strokeStyle=cream; ctx.lineWidth=bodyH*0.05;
+  for(let gy3=0;gy3<6;gy3++){
+    ctx.beginPath(); ctx.moveTo(x-rx+bodyH*0.2, gy2-ry*(0.6+gy3*0.16));
+    ctx.quadraticCurveTo(x, gy2-ry*(0.2+gy3*0.28), x+rx-bodyH*0.2, gy2-ry*(0.6+gy3*0.16));
+    ctx.stroke();
+  }
+  for(let gx2=0;gx2<8;gx2++){
+    const gxx=x-rx+bodyH*0.3+gx2*bodyH*0.22;
+    ctx.beginPath(); ctx.moveTo(gxx, gy2+bodyH*0.05);
+    ctx.quadraticCurveTo(gxx+bodyH*0.1, gy2-ry*0.9, gxx-bodyH*0.04, gy2-ry*1.9);
+    ctx.stroke();
+  }
+  // 深棕斑（blob 有機形，沿背脊到腹緣都鋪）
+  const spots=[[-0.62,0.34,0.20],[-0.38,0.55,0.16],[-0.12,0.32,0.22],[0.12,0.58,0.15],[0.34,0.36,0.20],[0.56,0.60,0.14],[-0.5,0.75,0.13],[0.05,0.78,0.12],[0.42,0.82,0.11],[-0.2,0.5,0.15]];
+  spots.forEach((sp,i)=>{
+    ctx.fillStyle = i%2 ? patchCol : '#b57a34';
+    blob(x+rx*sp[0], gy2-ry*sp[1]*2.1, bodyH*sp[2], bodyH*sp[2]*0.72, ((i*3)%5-2)*0.15, i*7+2);
+  });
+  ctx.restore();
+  // ---- 折疊的腿（近側兩條：大腿斜下、小腿折回貼地、蹄朝後）----
+  [[-0.42,1],[0.30,-1]].forEach(p=>{
+    const lx = x+rx*p[0];
+    const kneeX = lx + bodyH*0.16*p[1], hoofX = lx + bodyH*0.34*p[1];
+    const kneeY = gy2+bodyH*0.10, hoofY = gy2+bodyH*0.015;
+    ctx.strokeStyle=bodyCol; ctx.lineWidth=bodyH*0.085; ctx.lineCap='round';
+    ctx.beginPath(); ctx.moveTo(lx+bodyH*0.06, gy2+bodyH*0.03);
+    ctx.quadraticCurveTo(lx+bodyH*0.1, kneeY, kneeX, kneeY); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(kneeX, kneeY);
+    ctx.quadraticCurveTo(kneeX+bodyH*0.12*p[1], gy2+bodyH*0.08, hoofX, hoofY); ctx.stroke();
+    ctx.strokeStyle=darkCol; ctx.lineWidth=bodyH*0.07;
+    ctx.beginPath(); ctx.moveTo(hoofX-bodyH*0.02, hoofY-bodyH*0.035);
+    ctx.lineTo(hoofX+bodyH*0.03*p[1]*0.5, hoofY); ctx.stroke();
+  });
+  // ---- 脖子（趴著沿地前伸：錐形 + 背緣鬃毛）----
+  const n0x = x+rx*0.70, n0y = gy2-ry*1.5;          // 頸根（肩隆）
+  const hx = x+rx*1.55, hy = gy2-bodyH*0.22;        // 頭中心（沿地伸出、略抬）
+  ctx.strokeStyle=bodyCol; ctx.lineWidth=bodyH*0.22; ctx.lineCap='round';
+  ctx.beginPath(); ctx.moveTo(n0x, n0y);
+  ctx.quadraticCurveTo(x+rx*1.12, gy2-bodyH*0.24, hx-bodyH*0.16, hy+bodyH*0.02);
   ctx.stroke();
-  // 脖子深棕鬃（趴著沿上緣）
-  ctx.strokeStyle=darkCol; ctx.lineWidth=bodyH*0.05;
-  ctx.beginPath(); ctx.moveTo(nx0+bodyH*0.02, ny0-bodyH*0.09);
-  ctx.quadraticCurveTo(x+rx*0.8, (ny0+hy)/2-bodyH*0.05, hx-bodyH*0.14, hy-bodyH*0.02);
+  // 鬃毛（沿脖子背緣一整條深棕，趴著時在上緣）
+  ctx.strokeStyle=darkCol; ctx.lineWidth=bodyH*0.07; ctx.lineCap='round';
+  ctx.beginPath(); ctx.moveTo(n0x+bodyH*0.02, n0y-bodyH*0.12);
+  ctx.quadraticCurveTo(x+rx*1.14, gy2-bodyH*0.32, hx-bodyH*0.18, hy-bodyH*0.10);
   ctx.stroke();
-  // 頭（側面，朝右）
+  // 脖子淺斑（沿背緣 3 塊）
+  ctx.fillStyle=patchCol;
+  [[0.78,0.34],[0.95,0.24],[1.12,0.16]].forEach(p=>{
+    ctx.beginPath();
+    ctx.ellipse(x+rx*p[0], gy2-bodyH*p[1], bodyH*0.095, bodyH*0.045, -0.35, 0, 6.29);
+    ctx.fill();
+  });
+  // ---- 頭（淚滴形朝右，同站姿頭型縮放）----
+  const hs = bodyH*0.40;                            // 頭的縮放單位
   ctx.fillStyle=bodyCol;
-  ctx.beginPath(); ctx.ellipse(hx, hy, bodyH*0.26, bodyH*0.165, -0.10, 0, 6.29); ctx.fill();
-  // 深色吻部
+  ctx.beginPath();
+  ctx.moveTo(hx-hs*0.64, hy+hs*0.55);
+  ctx.quadraticCurveTo(hx-hs*1.0, hy+hs*0.22, hx-hs*0.84, hy-hs*0.15);
+  ctx.quadraticCurveTo(hx-hs*0.68, hy-hs*0.53, hx-hs*0.27, hy-hs*0.62);
+  ctx.quadraticCurveTo(hx+hs*0.23, hy-hs*0.70, hx+hs*0.68, hy-hs*0.51);
+  ctx.quadraticCurveTo(hx+hs*1.18, hy-hs*0.28, hx+hs*1.41, hy-hs*0.04);
+  ctx.quadraticCurveTo(hx+hs*1.66, hy+hs*0.18, hx+hs*1.50, hy+hs*0.30);
+  ctx.quadraticCurveTo(hx+hs*1.14, hy+hs*0.40, hx+hs*0.77, hy+hs*0.44);
+  ctx.quadraticCurveTo(hx+hs*0.27, hy+hs*0.55, hx-hs*0.27, hy+hs*0.58);
+  ctx.quadraticCurveTo(hx-hs*0.5, hy+hs*0.56, hx-hs*0.64, hy+hs*0.55);
+  ctx.closePath(); ctx.fill();
+  // 深色吻部（clip 貼頭緣，只蓋鼻吻部）
+  ctx.save(); ctx.beginPath();
+  ctx.moveTo(hx-hs*0.64, hy+hs*0.55);
+  ctx.quadraticCurveTo(hx-hs*1.0, hy+hs*0.22, hx-hs*0.84, hy-hs*0.15);
+  ctx.quadraticCurveTo(hx-hs*0.68, hy-hs*0.53, hx-hs*0.27, hy-hs*0.62);
+  ctx.quadraticCurveTo(hx+hs*0.23, hy-hs*0.70, hx+hs*0.68, hy-hs*0.51);
+  ctx.quadraticCurveTo(hx+hs*1.18, hy-hs*0.28, hx+hs*1.41, hy-hs*0.04);
+  ctx.quadraticCurveTo(hx+hs*1.66, hy+hs*0.18, hx+hs*1.50, hy+hs*0.30);
+  ctx.quadraticCurveTo(hx+hs*1.14, hy+hs*0.40, hx+hs*0.77, hy+hs*0.44);
+  ctx.quadraticCurveTo(hx+hs*0.27, hy+hs*0.55, hx-hs*0.27, hy+hs*0.58);
+  ctx.quadraticCurveTo(hx-hs*0.5, hy+hs*0.56, hx-hs*0.64, hy+hs*0.55);
+  ctx.closePath(); ctx.clip();
   ctx.fillStyle=snoutC;
-  ctx.beginPath(); ctx.ellipse(hx+bodyH*0.21, hy+bodyH*0.01, bodyH*0.115, bodyH*0.085, -0.08, 0, 6.29); ctx.fill();
-  // 角（兩根，朝前上方軟倒）+ 耳朵
-  ctx.strokeStyle=darkCol; ctx.lineWidth=bodyH*0.032; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(hx-bodyH*0.13, hy-bodyH*0.13); ctx.lineTo(hx-bodyH*0.24, hy-bodyH*0.27); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(hx-bodyH*0.02, hy-bodyH*0.145); ctx.lineTo(hx-bodyH*0.05, hy-bodyH*0.30); ctx.stroke();
+  ctx.beginPath(); ctx.ellipse(hx+hs*1.18, hy+hs*0.09, hs*0.5, hs*0.32, -0.1, 0, 6.29); ctx.fill();
+  ctx.restore();
+  // 鼻孔（吻部上一個）
+  ctx.fillStyle='#3a2410';
+  ctx.beginPath(); ctx.ellipse(hx+hs*1.30, hy+hs*0.06, hs*0.09, hs*0.12, 0.05, 0, 6.29); ctx.fill();
+  // 角（兩根，朝前上方微軟倒）+ 耳朵
+  ctx.strokeStyle=darkCol; ctx.lineWidth=bodyH*0.028; ctx.lineCap='round';
+  ctx.beginPath(); ctx.moveTo(hx-hs*0.45, hy-hs*0.55); ctx.lineTo(hx-hs*0.72, hy-hs*1.05); ctx.stroke();
+  ctx.beginPath(); ctx.arc(hx-hs*0.72, hy-hs*1.05, hs*0.10, 0, 6.29); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(hx-hs*0.16, hy-hs*0.60); ctx.lineTo(hx-hs*0.28, hy-hs*1.15); ctx.stroke();
+  ctx.beginPath(); ctx.arc(hx-hs*0.28, hy-hs*1.15, hs*0.12, 0, 6.29); ctx.fill();
   ctx.fillStyle=bodyCol;
-  ctx.beginPath(); ctx.ellipse(hx-bodyH*0.27, hy-bodyH*0.06, bodyH*0.09, bodyH*0.045, -0.4, 0, 6.29); ctx.fill();
-  // ✕ 眼（打叉＝死掉，大而清楚）
-  ctx.strokeStyle='#1c1c1f'; ctx.lineWidth=bodyH*0.06; ctx.lineCap='round';
-  const ex = hx+bodyH*0.03, ey = hy-bodyH*0.02;
-  ctx.beginPath(); ctx.moveTo(ex-bodyH*0.10, ey-bodyH*0.10); ctx.lineTo(ex+bodyH*0.10, ey+bodyH*0.10); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(ex+bodyH*0.10, ey-bodyH*0.10); ctx.lineTo(ex-bodyH*0.10, ey+bodyH*0.10); ctx.stroke();
-  // 順便畫一抹白眼球底，讓✕更跳
+  ctx.beginPath(); ctx.ellipse(hx-hs*1.02, hy+hs*0.05, hs*0.30, hs*0.15, -0.55, 0, 6.29); ctx.fill();
+  // ---- ✕ 眼（白眼球底 + 黑色大叉）----
+  const ex = hx+hs*0.36, ey = hy-hs*0.10;
   ctx.fillStyle='#fff8ec';
-  ctx.beginPath(); ctx.ellipse(ex, ey, bodyH*0.115, bodyH*0.09, 0, 0, 6.29); ctx.fill();
-  ctx.strokeStyle='#1c1c1f'; ctx.lineWidth=bodyH*0.058; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(ex-bodyH*0.095, ey-bodyH*0.095); ctx.lineTo(ex+bodyH*0.095, ey+bodyH*0.095); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(ex+bodyH*0.095, ey-bodyH*0.095); ctx.lineTo(ex-bodyH*0.095, ey+bodyH*0.095); ctx.stroke();
+  ctx.beginPath(); ctx.ellipse(ex, ey, hs*0.34, hs*0.26, 0, 0, 6.29); ctx.fill();
+  ctx.strokeStyle='#1c1c1f'; ctx.lineWidth=hs*0.17; ctx.lineCap='round';
+  ctx.beginPath(); ctx.moveTo(ex-hs*0.27, ey-hs*0.27); ctx.lineTo(ex+hs*0.27, ey+hs*0.27); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(ex+hs*0.27, ey-hs*0.27); ctx.lineTo(ex-hs*0.27, ey+hs*0.27); ctx.stroke();
 }
-
 function acacia(x, ground, th){
   // 金合歡（傘狀樹）
   const tw=th*1.4, tr=th*0.34;
@@ -755,13 +816,13 @@ function drawScene(n,t){
     ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.795,gy-sH(43),6,4,0,0,6.29);ctx.fill();
   } else if(n===5){ // 適者生存：短的餓死、長的活下來
     // 左：短脖子餓死（趴在地上 + 眼睛✕ + 頭上烏雲）
-    giraffeDead(W*0.20, gy, sH(11));
+    giraffeDead(W*0.16, gy, sH(11));
     ctx.fillStyle='#9aa5ad';
-    ctx.beginPath();ctx.ellipse(W*0.20,sH(56),sH(6),sH(2.2),0,0,6.29);ctx.fill();
-    ctx.beginPath();ctx.ellipse(W*0.20-sH(3),sH(58),sH(3.4),sH(2),0,0,6.29);ctx.fill();
-    ctx.beginPath();ctx.ellipse(W*0.20+sH(3),sH(58),sH(3.4),sH(2),0,0,6.29);ctx.fill();
+    ctx.beginPath();ctx.ellipse(W*0.18,sH(56),sH(6),sH(2.2),0,0,6.29);ctx.fill();
+    ctx.beginPath();ctx.ellipse(W*0.18-sH(3),sH(58),sH(3.4),sH(2),0,0,6.29);ctx.fill();
+    ctx.beginPath();ctx.ellipse(W*0.18+sH(3),sH(58),sH(3.4),sH(2),0,0,6.29);ctx.fill();
     ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.2)}px sans-serif`;ctx.textAlign='center';
-    ctx.fillText('短的：餓死了……',W*0.20,sH(9));
+    ctx.fillText('短的：餓死了……',W*0.18,sH(9));
     // 右：長脖子活下來吃葉子
     acacia(W*0.82,gy,sH(46));
     giraffe(W*0.68,gy,sH(13),sH(17),'happy',t*0.5);

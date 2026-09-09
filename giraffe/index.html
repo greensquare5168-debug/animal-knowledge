@@ -676,9 +676,9 @@ function giraffeDead(x, ground, bodyH){
   ctx.quadraticCurveTo(x-bodyH*1.0, ground+bodyH*0.13, x-bodyH*0.87, ground+bodyH*0.16); ctx.stroke();
   // ---- 脖子（跟站姿一樣的錐形：頸根寬、頭端細 + 背緣鬃毛，只是方向變成垂下）----
   const nBase = bodyH*0.30, nTip = bodyH*0.15;   // 頸根/頸頂寬（站姿比例）
-  const nx1 = x + bodyH*0.44, ny1 = ground - bodyH*0.70;   // 頸根（身體前端上）
-  const hx = x + bodyH*1.00, hy = ground - bodyH*0.10;     // 頭中心（垂地、身體外）
-  const mcx = x + bodyH*0.78, mcy = ground - bodyH*0.40;   // 脖子彎曲中點
+  const nx1 = x + bodyH*0.78, ny1 = ground - bodyH*0.80;   // 頸根（身體前端邊緣頂部）
+  const hx = x + bodyH*1.06, hy = ground - bodyH*0.10;     // 頭中心（垂地、身體外側）
+  const mcx = x + bodyH*1.00, mcy = ground - bodyH*0.45;   // 脖子彎曲中點
   // 錐形填色（兩側邊緣沿垂下曲線）
   ctx.fillStyle = bodyCol;
   ctx.beginPath();

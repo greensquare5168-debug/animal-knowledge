@@ -791,6 +791,18 @@ function grass(t){
   ctx.fillStyle='#5aa848';
   for(let i=0;i<60;i++){const gx=(i*29+t*10)%(W+40)-20;ctx.fillRect(gx,groundY()+2,2.5,5+((i*13)%7));}
 }
+// 脖子強調線（第一幕最後一句：脖子左右各 3 條閃爍短線）
+function neckLines(t){
+  const cx = W*0.45, gap = W*0.045, len = W*0.055;
+  const blink = 0.7 + 0.3*Math.sin(t*9);
+  ctx.strokeStyle = 'rgba(224,90,20,'+blink.toFixed(2)+')';
+  ctx.lineWidth = Math.max(3, sH(0.55)); ctx.lineCap='round';
+  for(let i=0;i<3;i++){
+    const yy = H*(0.24 + i*0.13);
+    ctx.beginPath(); ctx.moveTo(cx-gap-len, yy); ctx.lineTo(cx-gap, yy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx+gap, yy); ctx.lineTo(cx+gap+len, yy); ctx.stroke();
+  }
+}
 // 光禿禿地面（整片土黃 + 稀疏枯草）
 function bareGround(){
   ctx.fillStyle='#dcc98f';
@@ -835,6 +847,7 @@ function drawScene(n,t){
   if(n===0){ // 開場：真實照片背景（AI 生成），未載入時用卡通版
     if(scene0Img.complete && scene0Img.naturalWidth>0){
       ctx.drawImage(scene0Img, 0, 0, W, H);
+      if(sentIdx === 4){ neckLines(t); }   // 講到「我的脖子為什麼這麼長呀？」
       // 浮動問號（右上）
       const qy=Math.sin(t*2)*3;
       ctx.fillStyle='rgba(255,255,255,.92)';ctx.font=`bold ${sH(8)}px sans-serif`;ctx.textAlign='center';
@@ -954,6 +967,7 @@ function setScene(i){
   t0=performance.now();
 }
 let autoTimer=null;
+let sentIdx=0;   // 目前顯示的句子編號（幕內）
 function stopAudio(){ if(audio){audio.pause();audio=null;} if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} }
 // 進度軌拖曳跳轉（12 幕等分：拖曳中預覽該幕，放開才播放）
 const seekEl=document.querySelector('.seek');
@@ -975,6 +989,7 @@ seekEl.addEventListener('pointercancel',()=>{ seekDrag=false; playScene(seekTarg
 function playScene(i){
   setScene(i);
   stopAudio();
+  sentIdx = 0;
   if(AUDIO[i].f){
     audio=new Audio(AUDIO[i].f);
     audio.playbackRate=1;
@@ -989,6 +1004,7 @@ function playScene(i){
     function nextSent(){
       if(!playing) return;
       si++;
+      sentIdx = si;
       if(si < sents.length){
         document.getElementById('sub').textContent = sents[si];
         autoTimer = setTimeout(nextSent, sdur*1000);

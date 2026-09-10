@@ -865,12 +865,10 @@ function drawScene(n,t){
     bareGround();
     acacia(W*0.50,gy,sH(44));
     giraffe(W*0.30,gy,sH(14),sH(13),'happy',t);   // 長脖子吃葉子（會點頭）
-    if(si>=4){   // 說「時間長了」：短小那隻同一隻只是動作變成倒地死（鏡像）；不增加新長頸鹿
+    if(si>=4){   // 說「時間長了」：短小那隻同一隻只是動作變成倒地死（鏡像）；不增加新長頸鹿、不加文字
       ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
       giraffeDead(0, gy, sH(13));
       ctx.restore();
-      ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3)}px sans-serif`;ctx.textAlign='center';
-      ctx.fillText('短的：餓死了……',W*0.72,sH(9));
     } else {
       // 短小想吃吃不到（reach 動畫）
       ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>🦒 長頸鹿知識小站</title>
+<title>長頸鹿知識小站</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:'Microsoft JhengHei','PingFang TC',sans-serif;background:#eaf3e0;min-height:100vh;color:#4a3b2a}
@@ -60,15 +60,14 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 <body>
 <div id="layout">
   <aside id="sidebar">
-    <div class="logo">🦒</div>
-    <div class="site">知識補給站<br>自然知識-長頸鹿</div>
+        <div class="site">知識補給站<br>自然知識-長頸鹿</div>
     <a class="back" href="../">← 回自然知識</a>
   </aside>
 
   <main id="main">
     <!-- Q1 動畫解說 -->
     <section class="panel active" id="q1">
-      <h2>🦒 為什麼長頸鹿的脖子這麼長？</h2>
+      <h2>為什麼長頸鹿的脖子這麼長？</h2>
       <div class="player">
         <div class="stage"><canvas id="cv"></canvas>
           <div class="dots" id="dots"></div>
@@ -811,28 +810,8 @@ function bareGround(){
 }
 
 // 場景繪圖（每幕 t=幕內秒數）
-function drawTheoryTag(n){
-  if(n===0) return;   // 第1幕自我介紹先不標學說
-  // 左上角學說標示
-  const tag = (n>=3) ? '💪 用進廢退說' : '🌍 天擇說';
-  ctx.font=`bold ${sH(2.6)}px sans-serif`;
-  const tw = ctx.measureText(tag).width;
-  const px = sH(1.4), py = sH(1.4), ph = sH(4.4), pw = tw + sH(3.2);
-  ctx.fillStyle='rgba(255,255,255,.88)';
-  ctx.strokeStyle='rgba(160,132,90,.55)'; ctx.lineWidth=1.5;
-  ctx.beginPath();
-  ctx.moveTo(px+ph/2, py);
-  ctx.arcTo(px+pw, py, px+pw, py+ph, ph/2);
-  ctx.arcTo(px+pw, py+ph, px, py+ph, ph/2);
-  ctx.arcTo(px, py+ph, px, py, ph/2);
-  ctx.arcTo(px, py, px+pw, py, ph/2);
-  ctx.closePath(); ctx.fill(); ctx.stroke();
-  ctx.fillStyle='#8a6a4a'; ctx.textAlign='left'; ctx.textBaseline='middle';
-  ctx.fillText(tag, px+sH(1.6), py+ph/2+sH(0.1));
-  ctx.textBaseline='alphabetic';
-}
 function drawScene(n,t){
-  if(n>=3){ drawLamarckScene(n>=5 ? n : n-2, t); drawTheoryTag(n); return; }   // 幕4-6→LM n1,n2,n5
+  if(n>=3){ drawLamarckScene(n>=5 ? n : n-2, t); return; }   // 幕4-6→LM n1,n2,n5
   ctx.clearRect(0,0,W,H);
   const gy=groundY();
   // 背景漸層(已在CSS) + 遠山
@@ -871,7 +850,6 @@ function drawScene(n,t){
       ctx.restore();
     }
   }
-  drawTheoryTag(n);
 }
 
 // ===== 用進廢退說（拉馬克）場景 =====

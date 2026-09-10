@@ -7,13 +7,18 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Microsoft JhengHei','PingFang TC',sans-serif;background:linear-gradient(160deg,#fff6e8,#eaf6e0);min-height:100vh}
-.wrap{max-width:900px;margin:0 auto;padding:30px 20px}
+.wrap{max-width:960px;margin:0 auto;padding:30px 20px}
 h1{text-align:center;color:#5a8a3a;font-size:26px;margin-bottom:6px}
 .sub{text-align:center;color:#8a7a5a;font-size:14px;margin-bottom:26px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
-.card{background:#fff;border-radius:20px;padding:26px 18px;text-align:center;text-decoration:none;color:#4a3b2a;box-shadow:0 4px 16px rgba(0,0,0,.08);transition:transform .15s,box-shadow .15s;border:3px solid #f0e6d2}
-.card:hover{transform:translateY(-5px);box-shadow:0 10px 26px rgba(0,0,0,.14)}
-.card .ico{font-size:52px;display:block;margin-bottom:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.card{background:#fff;border-radius:20px;text-decoration:none;color:#4a3b2a;box-shadow:0 4px 16px rgba(0,0,0,.08);transition:transform .15s,box-shadow .15s;border:3px solid #f0e6d2;overflow:hidden;display:block}
+.card:hover{transform:translateY(-5px);box-shadow:0 12px 28px rgba(0,0,0,.16)}
+.cover{position:relative;aspect-ratio:16/9;background:#eef3e2;overflow:hidden}
+.cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+.card:hover .cover img{transform:scale(1.06)}
+.cover .tag{position:absolute;left:10px;top:10px;background:rgba(255,255,255,.88);border-radius:12px;padding:2px 10px;font-size:13px;font-weight:bold;color:#5a4632;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.cover .soon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(40,40,40,.35);color:#fff;font-size:15px;font-weight:bold;letter-spacing:2px}
+.card .body{padding:14px 16px 18px;text-align:center}
 .card .nm{font-size:19px;font-weight:bold;color:#5a4632}
 .card .ds{font-size:13px;color:#9a8a6a;margin-top:6px;line-height:1.6}
 .card .bdg{display:inline-block;margin-top:10px;font-size:12px;background:#ffe9c4;color:#c07a22;border-radius:14px;padding:3px 12px}
@@ -26,20 +31,37 @@ h1{text-align:center;color:#5a8a3a;font-size:26px;margin-bottom:6px}
   <div class="sub">點選動物，看可愛的動畫解說學知識！🎬（持續新增中）</div>
   <div class="grid">
     <a class="card" href="giraffe/">
-      <span class="ico">🦒</span>
-      <div class="nm">長頸鹿</div>
-      <div class="ds">為什麼脖子這麼長？<br>舌頭為什麼是紫色的？<br>脖子長怎麼喝水？</div>
-      <span class="bdg">🎬 動畫解說</span>
+      <div class="cover">
+        <img src="cover_giraffe.jpg" alt="長頸鹿">
+        <span class="tag">🦒 長頸鹿</span>
+      </div>
+      <div class="body">
+        <div class="nm">長頸鹿</div>
+        <div class="ds">為什麼脖子這麼長？<br>舌頭為什麼是紫色的？<br>脖子長怎麼喝水？</div>
+        <span class="bdg">🎬 動畫解說</span>
+      </div>
     </a>
-    <a class="card" href="#" style="opacity:.55;pointer-events:none">
-      <span class="ico">🐫</span>
-      <div class="nm">駱駝</div>
-      <div class="ds">製作中…</div>
+    <a class="card" href="#" style="pointer-events:none">
+      <div class="cover">
+        <img src="cover_camel.jpg" alt="駱駝">
+        <span class="tag">🐫 駱駝</span>
+        <span class="soon">製作中</span>
+      </div>
+      <div class="body">
+        <div class="nm">駱駝</div>
+        <div class="ds">製作中…</div>
+      </div>
     </a>
-    <a class="card" href="#" style="opacity:.55;pointer-events:none">
-      <span class="ico">🐨</span>
-      <div class="nm">無尾熊</div>
-      <div class="ds">製作中…</div>
+    <a class="card" href="#" style="pointer-events:none">
+      <div class="cover">
+        <img src="cover_koala.jpg" alt="無尾熊">
+        <span class="tag">🐨 無尾熊</span>
+        <span class="soon">製作中</span>
+      </div>
+      <div class="body">
+        <div class="nm">無尾熊</div>
+        <div class="ds">製作中…</div>
+      </div>
     </a>
   </div>
   <div class="foot">知識補給站・動物知識 延伸內容</div>

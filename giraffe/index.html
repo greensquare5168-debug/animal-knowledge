@@ -908,23 +908,28 @@ function drawLamarckScene(n,t){
   } else if(n===2){ // 伸長脖子→吃到葉（第5+6幕合一，si 0-3 伸長 / 4-9 吃到）
     acacia(W*0.50,gy,sH(44));
     const si = (typeof sentIdx==='number') ? sentIdx : 0;
+    const bN=sH(14), hwN=bN*0.56, hsN=bN*0.56;
+    const neckFull=sH(13);                                     // 脖子全伸長度（頭剛好碰到樹葉）
+    const hpYN=gy-bN*1.25-sH(7)-neckFull;                      // 全伸時的頭中心 y
+    const leafXL=W*0.30+hwN*1.18*1.15+hsN*1.05;                // 左隻：嘴前方的嫩葉
+    const leafXR=W*0.70-(hwN*1.18*1.15+hsN*1.05);              // 右隻（鏡射）：嘴前方的嫩葉
     if(si<=3){
-      // 伸長階段：脖子持續變長
-      const neckGrow = sH(4)+Math.min(sH(9),t*sH(5));
-      giraffe(W*0.30,gy,sH(14),neckGrow,'happy',t,0.72);
+      // 伸長階段：脖子一路伸長，最後頭碰到樹葉
+      const neckGrow = sH(4)+Math.min(neckFull-sH(4),t*sH(6));
+      giraffe(W*0.30,gy,bN,neckGrow,'happy',t);
       ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
-      giraffe(0,gy,sH(14),sH(4)+Math.min(sH(9),(t*0.8+0.4)*sH(5)),'happy',t*0.8,0.72);
+      giraffe(0,gy,bN,sH(4)+Math.min(neckFull-sH(4),(t*0.8+0.4)*sH(6)),'happy',t*0.8);
       ctx.restore();
       ctx.fillStyle='#8a6a4a';ctx.font=`bold ${sH(3.6)}px sans-serif`;ctx.textAlign='center';
       ctx.fillText('伸～伸～努力伸長脖子！',W*0.5,sH(9));
     } else {
-      // 吃到葉階段：兩隻長脖子都吃到高處嫩葉
-      giraffe(W*0.30,gy,sH(14),sH(13),'happy',t);
-      ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.545,gy-sH(41),6,4,0,0,6.29);ctx.fill();
+      // 吃到葉階段：兩隻長脖子都吃到高處嫩葉（葉子畫在嘴巴正前方）
+      giraffe(W*0.30,gy,bN,neckFull,'happy',t);
+      ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(leafXL,hpYN,7,4.5,0,0,6.29);ctx.fill();
       ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
-      giraffe(0,gy,sH(14),sH(13),'happy',t*0.8);
+      giraffe(0,gy,bN,neckFull,'happy',t*0.8);
       ctx.restore();
-      ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(W*0.455,gy-sH(41),6,4,0,0,6.29);ctx.fill();
+      ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(leafXR,hpYN,7,4.5,0,0,6.29);ctx.fill();
       sparkle(W*0.50-sH(2),gy-sH(42),t,'#fff3b0');
     }
   } else if(n===3){ // 脖子長了終於吃到高處嫩葉

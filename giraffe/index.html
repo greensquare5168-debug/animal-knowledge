@@ -676,25 +676,27 @@ function giraffeDead(x, ground, bodyH){
   ctx.quadraticCurveTo(x-bodyH*1.09, ground-bodyH*0.19, x-bodyH*0.96, ground-bodyH*0.17); ctx.stroke();
   // ---- 脖子（跟站姿一樣的錐形：頸根寬、頭端細 + 背緣鬃毛，只是方向變成垂下）----
   const nBase = bodyH*0.30, nTip = bodyH*0.15;   // 頸根/頸頂寬（站姿比例）
-  const nx1 = x + bodyH*0.68, ny1 = ground - bodyH*0.70;   // 頸根貼在身體前緣（邊緣連著身體）
   const hx = x + bodyH*1.06, hy = ground - bodyH*0.10;     // 頭中心（垂地、身體外側）
   const mcx = x + bodyH*1.00, mcy = ground - bodyH*0.45;   // 脖子彎曲中點
-  // 錐形填色（兩側邊緣沿垂下曲線）
+  // 頸根兩端貼著身體前緣輪廓（上背側、下腹側）：不凸出、也不縮太深
+  const nTx = x + bodyH*0.630, nTy = ground - bodyH*0.870;
+  const nBx = x + bodyH*0.675, nBy = ground - bodyH*0.550;
+  // 錐形填色（兩側邊緣沿垂下曲線；底邊順著身體前緣斜切）
   ctx.fillStyle = bodyCol;
   ctx.beginPath();
-  ctx.moveTo(nx1, ny1-nBase/2);
+  ctx.moveTo(nTx, nTy);
   ctx.quadraticCurveTo(mcx, mcy-nBase*0.55, hx-bodyH*0.10, hy-nTip/2);
   ctx.lineTo(hx-bodyH*0.10, hy+nTip/2);
-  ctx.quadraticCurveTo(mcx, mcy+nBase*0.4, nx1, ny1+nBase/2);
-  ctx.quadraticCurveTo(nx1-bodyH*0.14, ny1+nBase*0.10, nx1-bodyH*0.13, ny1-nBase*0.45);   // 沿身體前緣往內收
-  ctx.quadraticCurveTo(nx1-bodyH*0.07, ny1-nBase*0.90, nx1, ny1-nBase/2);                // 回接頸根背側（不留縫）
+  ctx.quadraticCurveTo(mcx, mcy+nBase*0.4, nBx, nBy);
+  ctx.quadraticCurveTo(nBx-bodyH*0.12, nBy-bodyH*0.04, nTx-bodyH*0.09, nTy+bodyH*0.05);   // 沿身體前緣往內收（不留縫）
+  ctx.quadraticCurveTo(nTx-bodyH*0.04, nTy+bodyH*0.02, nTx, nTy);
   ctx.closePath(); ctx.fill();
-  // 頸根圓弧（寬端融入身體，不留縫）
+  // 頸根圓弧（寬端融入身體，不留縫、不凸出）
   ctx.fillStyle = bodyCol;
-  ctx.beginPath(); ctx.arc(nx1+bodyH*0.07, ny1+bodyH*0.02, nBase/2+bodyH*0.055, 0, 6.29); ctx.fill();
-  // 背緣鬃毛（深棕脊線，沿外側）
+  ctx.beginPath(); ctx.arc(nTx-bodyH*0.02, nTy+bodyH*0.16, bodyH*0.15, 0, 6.29); ctx.fill();
+  // 背緣鬃毛（深棕脊線，從身體邊緣長出）
   ctx.strokeStyle = darkCol; ctx.lineWidth = bodyH*0.05; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(nx1, ny1-nBase/2-bodyH*0.02);
+  ctx.beginPath(); ctx.moveTo(nTx+bodyH*0.01, nTy-bodyH*0.01);
   ctx.quadraticCurveTo(mcx, mcy-nBase*0.62, hx-bodyH*0.11, hy-nTip/2-bodyH*0.02);
   ctx.stroke();
   // ---- 頭：直接複製站姿頭部（淚滴+吻部+角+耳），尺寸 hs=0.56b 同站姿；眼睛改✕ ----

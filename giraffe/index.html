@@ -887,14 +887,11 @@ function drawLamarckScene(n,t){
       giraffe(0,gy,bN,sH(4)+(neckFull-sH(4))*prog2,'happy',t*0.8);
       ctx.restore();
     } else {
-      // 吃到葉階段：兩隻長脖子都吃到高處嫩葉（葉子畫在嘴巴正前方）
+      // 後續句：長脖子伸到底（不加葉子、不加亮光）
       giraffe(W*0.30,gy,bN,neckFull,'happy',t);
-      ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(leafXL,hpYN,7,4.5,0,0,6.29);ctx.fill();
       ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
       giraffe(0,gy,bN,neckFull,'happy',t*0.8);
       ctx.restore();
-      ctx.fillStyle='#63b847';ctx.beginPath();ctx.ellipse(leafXR,hpYN,7,4.5,0,0,6.29);ctx.fill();
-      sparkle(W*0.50-sH(2),gy-sH(42),t,'#fff3b0');
     }
   } else if(n===3){ // 脖子長了終於吃到高處嫩葉
     acacia(W*0.72,gy,sH(46));

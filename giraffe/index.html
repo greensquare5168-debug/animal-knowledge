@@ -861,14 +861,7 @@ function drawScene(n,t){
     bareGround();
     acacia(W*0.50,gy,sH(44));
     giraffe(W*0.30,gy,sH(14),sH(13),'happy',t);   // 長脖子吃葉子（會點頭）
-    if(si>=6){   // 脖子長的長頸鹿活了下來：長脖子們在一起 + 短小同一隻倒地死（右側）
-      giraffe(W*0.16,gy,sH(14),sH(13),'happy',t);
-      giraffe(W*0.42,gy,sH(12),sH(10),'happy',t*0.6);
-      ctx.save(); ctx.translate(W*0.78,0); ctx.scale(-1,1);
-      giraffeDead(0, gy, sH(13));
-      ctx.restore();
-      sparkle(W*0.3,sH(12),t,'#ffd98a');
-    } else if(si>=4){   // 說「時間長了」：同一隻短小只是動作變成倒地死（鏡像）
+    if(si>=4){   // 說「時間長了」：短小那隻同一隻只是動作變成倒地死（鏡像）；不增加新長頸鹿
       ctx.save(); ctx.translate(W*0.70,0); ctx.scale(-1,1);
       giraffeDead(0, gy, sH(13));
       ctx.restore();

@@ -10,8 +10,8 @@ body{font-family:'Microsoft JhengHei','PingFang TC',sans-serif;background:linear
 .wrap{max-width:960px;margin:0 auto;padding:30px 20px}
 h1{text-align:center;color:#5a8a3a;font-size:26px;margin-bottom:6px}
 .sub{text-align:center;color:#8a7a5a;font-size:14px;margin-bottom:26px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
-.card{background:#fff;border-radius:20px;text-decoration:none;color:#4a3b2a;box-shadow:0 4px 16px rgba(0,0,0,.08);transition:transform .15s,box-shadow .15s;border:3px solid #f0e6d2;overflow:hidden;display:block}
+.grid{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
+.card{width:min(340px,100%);background:#fff;border-radius:20px;text-decoration:none;color:#4a3b2a;box-shadow:0 4px 16px rgba(0,0,0,.08);transition:transform .15s,box-shadow .15s;border:3px solid #f0e6d2;overflow:hidden;display:block}
 .card:hover{transform:translateY(-5px);box-shadow:0 12px 28px rgba(0,0,0,.16)}
 .cover{position:relative;aspect-ratio:16/9;background:#eef3e2;overflow:hidden}
 .cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
@@ -37,28 +37,6 @@ h1{text-align:center;color:#5a8a3a;font-size:26px;margin-bottom:6px}
       </div>
       <div class="body">
         <div class="nm">長頸鹿</div>
-      </div>
-    </a>
-    <a class="card" href="#" style="pointer-events:none">
-      <div class="cover">
-        <img src="cover_camel.jpg" alt="駱駝">
-        <span class="tag">駱駝</span>
-        <span class="soon">製作中</span>
-      </div>
-      <div class="body">
-        <div class="nm">駱駝</div>
-        <div class="ds">製作中…</div>
-      </div>
-    </a>
-    <a class="card" href="#" style="pointer-events:none">
-      <div class="cover">
-        <img src="cover_koala.jpg" alt="無尾熊">
-        <span class="tag">無尾熊</span>
-        <span class="soon">製作中</span>
-      </div>
-      <div class="body">
-        <div class="nm">無尾熊</div>
-        <div class="ds">製作中…</div>
       </div>
     </a>
   </div>

@@ -742,6 +742,9 @@ function giraffeDead(x, ground, bodyH){
   const ex2 = hxx+hs*0.09, ey2 = hyy-hs*0.10;
   ctx.beginPath(); ctx.moveTo(ex2-hs*0.085, ey2-hs*0.085); ctx.lineTo(ex2+hs*0.085, ey2+hs*0.085); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(ex2+hs*0.085, ey2-hs*0.085); ctx.lineTo(ex2-hs*0.085, ey2+hs*0.085); ctx.stroke();
+  // 鼻孔（側面只看到一個，畫在吻部前端；與站姿同位置）
+  ctx.fillStyle = '#2b1a08';
+  ctx.beginPath(); ctx.ellipse(hxx+hs*0.74, hyy+hs*0.04, hs*0.052, hs*0.07, 0.05, 0, 6.29); ctx.fill();
 // ---- 腿（跟站姿一樣粗一樣長，在身體下面沿地向前後伸，共四條）----
   const legW = sH(1.85);
   ctx.strokeStyle = bodyCol; ctx.lineWidth = legW; ctx.lineCap='round';

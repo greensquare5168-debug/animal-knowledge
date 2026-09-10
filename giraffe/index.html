@@ -676,7 +676,7 @@ function giraffeDead(x, ground, bodyH){
   ctx.quadraticCurveTo(x-bodyH*1.09, ground-bodyH*0.19, x-bodyH*0.96, ground-bodyH*0.17); ctx.stroke();
   // ---- 脖子（跟站姿一樣的錐形：頸根寬、頭端細 + 背緣鬃毛，只是方向變成垂下）----
   const nBase = bodyH*0.30, nTip = bodyH*0.15;   // 頸根/頸頂寬（站姿比例）
-  const nx1 = x + bodyH*0.58, ny1 = ground - bodyH*0.70;   // 頸根縮進肩部內（與身體無縫）
+  const nx1 = x + bodyH*0.68, ny1 = ground - bodyH*0.70;   // 頸根貼在身體前緣（邊緣連著身體）
   const hx = x + bodyH*1.06, hy = ground - bodyH*0.10;     // 頭中心（垂地、身體外側）
   const mcx = x + bodyH*1.00, mcy = ground - bodyH*0.45;   // 脖子彎曲中點
   // 錐形填色（兩側邊緣沿垂下曲線）
@@ -686,6 +686,8 @@ function giraffeDead(x, ground, bodyH){
   ctx.quadraticCurveTo(mcx, mcy-nBase*0.55, hx-bodyH*0.10, hy-nTip/2);
   ctx.lineTo(hx-bodyH*0.10, hy+nTip/2);
   ctx.quadraticCurveTo(mcx, mcy+nBase*0.4, nx1, ny1+nBase/2);
+  ctx.quadraticCurveTo(nx1-bodyH*0.14, ny1+nBase*0.10, nx1-bodyH*0.13, ny1-nBase*0.45);   // 沿身體前緣往內收
+  ctx.quadraticCurveTo(nx1-bodyH*0.07, ny1-nBase*0.90, nx1, ny1-nBase/2);                // 回接頸根背側（不留縫）
   ctx.closePath(); ctx.fill();
   // 頸根圓弧（寬端融入身體，不留縫）
   ctx.fillStyle = bodyCol;

@@ -956,7 +956,7 @@ function playScene(i){
   const sents = AUDIO[i].sub || [AUDIO[i].t||''];
   const vfs = AUDIO[i].vf || [];
   // 預載下一幕全部語音（換幕時聲音立即跟上）
-  if(AUDIO[i+1]){ (AUDIO[i+1].vf||[]).forEach(f => { const p2 = new Audio(f); p2.preload='auto'; }); }
+  if(AUDIO[i+1]){ (APOOL[i+1]||[]).forEach(pa=>{ if(pa&&pa.readyState<2){ try{pa.load();}catch(e){} } }); }
   function step(){
     if(!playing) return;
     sentT0 = performance.now();
@@ -972,7 +972,8 @@ function playScene(i){
       else { playing=false; document.getElementById('playBtn').textContent='▶'; }
     };
     if(vfs[myIdx]){
-      audio = new Audio(vfs[myIdx]);
+      audio = (APOOL[scene]&&APOOL[scene][myIdx]) || new Audio(vfs[myIdx]);
+      try{ audio.currentTime = 0; }catch(e){}
       audio.playbackRate = 1;
       audio.onended = ()=>{ if(sentIdx===myIdx && playing) goNext(); };
       const sdur = (AUDIO[scene]&&AUDIO[scene].sd)||6;
@@ -981,17 +982,28 @@ function playScene(i){
         window._sentTimer = setTimeout(()=>{ if(sentIdx===myIdx && playing) goNext(); }, sdur*1000);
       };
       audio.onplaying = startTimer;
-      // 語音開始播的瞬間才顯示字幕 → 聲音字幕同步
-      const guard = setTimeout(()=>{ if(sentIdx===myIdx && playing && audio && audio.paused && audio.currentTime===0){ showSent(); goNext(); } }, 4500);
-      audio.play().then(()=>{ clearTimeout(guard); showSent(); if(audio && !audio.paused) startTimer(); })
-                  .catch(()=>{ clearTimeout(guard); showSent(); autoTimer = setTimeout(goNext, 3000); });
+      const beginPlay = ()=>{ if(sentIdx!==myIdx || !playing) return;
+        audio.play().then(()=>{ showSent(); if(audio && !audio.paused) startTimer(); })
+                    .catch(()=>{ showSent(); window._sentTimer = setTimeout(goNext, 3000); });
+      };
+      if(audio.readyState >= 2){ beginPlay(); }
+      else{
+        showSent();   // 先顯示字幕，等音檔就緒才播（修：第一幕第一次沒聲音）
+        let kicked=false;
+        const kick = ()=>{ if(kicked) return; kicked=true; beginPlay(); };
+        audio.addEventListener('canplay', kick, {once:true});
+        audio.addEventListener('loadeddata', kick, {once:true});
+        try{ audio.load(); }catch(e){}
+        setTimeout(kick, 8000);
+      }
     } else {
       showSent();
       window._sentTimer = setTimeout(()=>{ if(sentIdx===myIdx && playing) goNext(); }, 4000);
     }
     // 提前預載接下來 3 句語音（聲音才跟得上字幕）
     for(let pk=1; pk<=3; pk++){
-      if(vfs[myIdx+pk]){ const pa = new Audio(vfs[myIdx+pk]); pa.preload='auto'; }
+      const pa = APOOL[scene] && APOOL[scene][myIdx+pk];
+      if(pa && pa.readyState<2){ try{ pa.load(); }catch(e){} }
     }
   }
   step();
@@ -1032,8 +1044,8 @@ function loop(ts){
     if(scene===undefined||scene===null){scene=0;t0=performance.now();}
     drawScene(scene,t); }
 }
-// 背景預載全部語音（播放時聲音即時、與字幕同步）
-AUDIO.forEach(sc => (sc.vf||[]).forEach(f => { const p = new Audio(f); p.preload='auto'; }));
+const APOOL = AUDIO.map(sc => (sc.vf||[]).map(f => { const a = new Audio(); a.preload='auto'; a.src=f; try{a.load();}catch(e){} return a; }));
+// 背景預載全部語音（保留物件；丟棄會導致載入被中止 → 第一幕第一次沒聲音）
 t0=performance.now();
 requestAnimationFrame(loop);
 </script>
